@@ -1,0 +1,481 @@
+/* Home rhythm: section > group > paragraph. Keep readable text sizes. */
+.home-page {
+  --home-section-space: 120px;
+  --home-content-gap: 64px;
+}
+.home-page > .section {
+  padding-block: var(--home-section-space);
+}
+.home-page .section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px 56px;
+  margin-bottom: var(--home-content-gap);
+}
+.home-page .section-heading > .eyebrow {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.home-page .section-heading-row {
+  display: contents;
+}
+.home-page .section-heading h2 {
+  grid-column: 1;
+  line-height: 1.35;
+}
+.home-page .section-heading .text-link {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  color: var(--color-accent);
+}
+.home-page .section-heading .lead {
+  grid-column: 1;
+  max-width: 48rem;
+  margin: 0;
+  line-height: 1.85;
+  color: var(--color-muted);
+}
+.home-page .about {
+  gap: 56px;
+}
+.home-page .about-label {
+  margin: 0;
+}
+.home-page .profile-layout {
+  gap: 80px;
+}
+.home-page .biography {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  gap: 32px 56px;
+  align-items: start;
+  align-content: start;
+}
+.home-page .biography h3,
+.home-page .bio-lead {
+  grid-column: 1;
+}
+.home-page .bio-lead {
+  font-weight: 400;
+  line-height: 1.8;
+}
+.home-page .biography-copy {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  line-height: 1.9;
+  color: var(--color-muted);
+}
+.home-page .approach {
+  margin-top: 48px;
+  gap: 32px;
+}
+.home-page .approach-intro {
+  gap: 64px;
+}
+.home-page .approach-intro > p {
+  line-height: 1.9;
+  color: var(--color-muted);
+}
+.home-page .principles {
+  gap: 56px;
+}
+.home-page .principles article {
+  padding-top: 32px;
+}
+.home-page .principles h3 {
+  margin-bottom: 32px;
+}
+.home-page .principle-title {
+  margin-bottom: 24px;
+}
+.home-page .principles article > p:last-child {
+  line-height: 1.9;
+  color: var(--color-muted);
+}
+.home-page .project-grid {
+  gap: 40px;
+}
+.home-page .project-card {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 220px auto auto;
+  gap: 28px;
+  min-height: 0;
+  padding: 40px;
+}
+.home-page .project-identity {
+  align-self: start;
+}
+.home-page .project-identity .eyebrow {
+  margin-bottom: 20px;
+}
+.home-page .project-illustration {
+  grid-column: 1;
+  grid-row: 2;
+  height: 220px;
+}
+.home-page .project-description {
+  line-height: 1.9;
+  color: var(--color-muted);
+}
+.home-page .project-keywords {
+  align-self: end;
+}
+.home-page .project-wide {
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  align-content: center;
+  gap: 28px 56px;
+  min-height: 380px;
+  padding: 48px;
+}
+.home-page .project-wide .project-illustration {
+  grid-column: 2;
+  grid-row: 1 / 4;
+  height: 260px;
+}
+.home-page .project-card > .arrow {
+  right: 40px;
+  bottom: 40px;
+}
+.home-page .side-row {
+  min-height: 176px;
+  padding-block: 36px;
+  gap: 32px;
+}
+.home-page .side-row h3 {
+  margin-block: 12px;
+}
+.home-page .side-row > div > p:last-child {
+  color: var(--color-muted);
+  max-width: 48rem;
+}
+.home-page .subsection-title {
+  margin-block: 80px 32px;
+}
+.home-page .experiment-card {
+  padding: 32px;
+  gap: 24px;
+}
+.home-page .experiment-card > p:not(.eyebrow) {
+  color: var(--color-muted);
+  line-height: 1.85;
+}
+.home-page .utilities-grid {
+  gap: 80px;
+}
+.home-page .utilities-grid article {
+  padding-top: 32px;
+  gap: 28px;
+}
+.home-page .utilities-grid article > p:not(.eyebrow) {
+  max-width: 34rem;
+  line-height: 1.9;
+  color: var(--color-muted);
+}
+.home-page .utilities-grid .text-link {
+  margin-top: 8px;
+}
+.home-blog .card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 64px;
+}
+.home-blog .post-card {
+  min-height: 0;
+  padding: 36px 0 40px;
+  border: 0;
+  border-top: 1px solid var(--color-line);
+  background: transparent;
+  gap: 24px;
+}
+.home-blog .post-card h3 {
+  max-width: 34rem;
+  line-height: 1.55;
+}
+.home-blog .post-card > p:not(.eyebrow) {
+  max-width: 34rem;
+  color: var(--color-muted);
+  line-height: 1.9;
+}
+.home-blog .card-meta {
+  padding-top: 8px;
+}
+.home-page .subheading {
+  margin-block: 80px 32px;
+}
+.home-experience > .section-heading + .subheading {
+  margin-top: 0;
+}
+.home-page .skill-list > div {
+  padding-block: 24px;
+  gap: 56px;
+}
+.home-page .skill-list dd {
+  line-height: 1.9;
+  color: var(--color-muted);
+}
+.home-page .experience-row {
+  grid-template-columns: 220px 240px minmax(0, 1fr);
+  align-items: start;
+  gap: 48px;
+  padding-block: 40px;
+}
+.home-page .experience-row > .meta {
+  padding-top: 8px;
+}
+.home-page .experience-row > div:last-child {
+  color: var(--color-muted);
+  line-height: 1.9;
+  gap: 20px;
+}
+.home-page .life-layout {
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 96px;
+}
+.home-page .life-statement {
+  margin-block: 40px 24px;
+  line-height: 1.65;
+}
+.home-page .life-layout > div > p:last-child,
+.home-page .life-categories .preserve-lines {
+  color: var(--color-muted);
+  line-height: 1.9;
+}
+.home-page .life-categories article {
+  padding-block: 32px;
+}
+.home-page .life-categories .eyebrow {
+  margin-bottom: 16px;
+}
+.home-page .life-categories h3 {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+@media (max-width: 1399px) {
+  .home-page .biography {
+    grid-template-columns: 1fr;
+  }
+  .home-page .biography-copy {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: 42rem;
+  }
+  .home-page .principles {
+    gap: 40px;
+  }
+}
+@media (max-width: 1199px) {
+  .home-page {
+    --home-section-space: 96px;
+    --home-content-gap: 48px;
+  }
+  .home-page .section-heading {
+    gap: 24px 32px;
+  }
+  .home-page .section-heading .lead {
+    grid-column: 1 / -1;
+  }
+  .home-page .project-card {
+    padding: 32px;
+    grid-template-rows: auto 200px auto auto;
+  }
+  .home-page .project-illustration {
+    height: 200px;
+  }
+  .home-page .project-wide {
+    grid-template-rows: auto auto auto;
+  }
+  .home-page .project-wide .project-illustration {
+    height: 220px;
+  }
+  .home-page .project-card > .arrow {
+    right: 32px;
+    bottom: 32px;
+  }
+  .home-page .experience-row {
+    grid-template-columns: 160px 180px minmax(0, 1fr);
+    gap: 32px;
+  }
+  .home-page .life-layout,
+  .home-page .utilities-grid {
+    gap: 48px;
+  }
+  .home-blog .card-grid {
+    gap: 16px 48px;
+  }
+}
+@media (max-width: 1023px) {
+  .home-page .principles {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .home-page .principles article {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 24px 40px;
+  }
+  .home-page .principles h3 {
+    grid-row: 1 / 3;
+    align-self: start;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  .home-page .principle-title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  .home-page .principles article > p:last-child {
+    grid-column: 2;
+    max-width: none;
+  }
+  .home-page .project-wide {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 240px auto auto;
+  }
+  .home-page .project-wide h3 {
+    font-size: 1.75rem;
+  }
+  .home-page .project-wide .project-illustration {
+    grid-column: 1;
+    grid-row: 2;
+    height: 240px;
+  }
+  .home-page .experience-row {
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 24px 40px;
+  }
+  .home-page .experience-row > div:last-child {
+    grid-column: 2;
+  }
+}
+@media (max-width: 767px) {
+  .home-page {
+    --home-section-space: 80px;
+    --home-content-gap: 40px;
+  }
+  .home-page .section-heading {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .home-page .section-heading h2 {
+    line-height: 1.5;
+  }
+  .home-page .section-heading .lead {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .home-page .section-heading .text-link {
+    grid-column: 1;
+    grid-row: 4;
+    justify-self: start;
+  }
+  .home-page .section-heading:not(:has(> .lead)) .text-link {
+    grid-row: 3;
+  }
+  .home-page .about {
+    gap: 40px;
+  }
+  .home-page .profile-layout {
+    gap: 40px;
+  }
+  .home-page .biography {
+    gap: 28px;
+  }
+  .home-page .biography-copy {
+    gap: 24px;
+  }
+  .home-page .approach {
+    margin-top: 32px;
+    gap: 24px;
+  }
+  .home-page .approach-intro {
+    gap: 24px;
+  }
+  .home-page .principles {
+    gap: 48px;
+  }
+  .home-page .principles article {
+    display: block;
+    padding-top: 28px;
+  }
+  .home-page .principles h3,
+  .home-page .principle-title {
+    margin-bottom: 24px;
+  }
+  .home-page .project-grid {
+    gap: 32px;
+  }
+  .home-page .project-card,
+  .home-page .project-wide {
+    padding: 28px 24px;
+    gap: 28px;
+  }
+  .home-page .project-wide h3 {
+    font-size: 1.5rem;
+  }
+  .home-page .project-illustration,
+  .home-page .project-wide .project-illustration {
+    height: 200px;
+  }
+  .home-page .project-card > .arrow {
+    right: 24px;
+    bottom: 28px;
+  }
+  .home-page .project-identity .eyebrow {
+    margin-bottom: 20px;
+  }
+  .home-page .side-row {
+    gap: 12px;
+    padding-block: 32px;
+  }
+  .home-page .subsection-title,
+  .home-page .subheading {
+    margin-block: 64px 32px;
+  }
+  .home-page .experiment-card {
+    padding: 28px 24px;
+  }
+  .home-page .utilities-grid {
+    gap: 48px;
+  }
+  .home-page .utilities-grid article {
+    gap: 24px;
+    padding-top: 28px;
+  }
+  .home-blog .card-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .home-blog .post-card {
+    padding-block: 32px 40px;
+    gap: 24px;
+  }
+  .home-page .skill-list > div {
+    gap: 16px;
+    padding-block: 28px;
+  }
+  .home-page .experience-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-block: 32px;
+  }
+  .home-page .experience-row > div:last-child {
+    grid-column: 1;
+  }
+  .home-page .experience-row > .meta {
+    padding-top: 0;
+  }
+  .home-page .life-layout {
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+  .home-page .life-statement {
+    margin-block: 32px 24px;
+  }
+  .home-page .life-categories article {
+    padding-block: 32px;
+  }
+}

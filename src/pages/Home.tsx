@@ -116,7 +116,7 @@ export function ExperienceRows({
 }
 export default function Home() {
   return (
-    <>
+    <div className="home-page">
       <Hero />
       <section id="about" className="section about container" tabIndex={-1}>
         <h2 className="about-label">ABOUT / WONHO CHOI</h2>
@@ -131,19 +131,20 @@ export default function Home() {
               <br />
               사람과 로봇 사이를 연결합니다.
             </p>
-            <p>
-              웹 디자이너와 퍼블리셔로 시작해,
-              <br className="desktop-break" /> 로봇 시스템을 만드는 개발자로
-              영역을 넓혔습니다.
-              <br />
-              작은 코드에도 배려와 체계를 담고,
-              <br className="desktop-break" /> 함께 만드는 사람이 이해할 수 있는
-              구조를 고민합니다.
-              <br />
-              리더암·팔로워암과 교육용 웹·앱을 개발하며,
-              <br className="desktop-break" /> 아이디어를 실제로 작동하는
-              시스템으로 연결합니다.
-            </p>
+            <div className="biography-copy">
+              <p>
+                웹 디자이너와 퍼블리셔로 시작해, 로봇 시스템을 만드는 개발자로
+                영역을 넓혔습니다.
+              </p>
+              <p>
+                작은 코드에도 배려와 체계를 담고, 함께 만드는 사람이 이해할 수
+                있는 구조를 고민합니다.
+              </p>
+              <p>
+                리더암·팔로워암과 교육용 웹·앱을 개발하며, 아이디어를 실제로
+                작동하는 시스템으로 연결합니다.
+              </p>
+            </div>
           </div>
         </div>
         <div className="approach">
@@ -210,7 +211,7 @@ export default function Home() {
         />
         <UtilitiesSummary />
       </section>
-      <section className="section container">
+      <section className="section container home-blog">
         <SectionHeading
           label="04 / TECH BLOG"
           title="엔지니어링 노트"
@@ -227,12 +228,13 @@ export default function Home() {
         <div className="card-grid">
           {posts
             .filter((p) => p.kind === "tech")
+            .slice(0, 4)
             .map((p) => (
               <PostCard post={p} key={p.slug} />
             ))}
         </div>
       </section>
-      <section className="section container">
+      <section className="section container home-experience">
         <SectionHeading
           label="05 / SKILLS & EXPERIENCE"
           title="디자인으로 시작해, 로보틱스로 확장"
@@ -316,6 +318,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
