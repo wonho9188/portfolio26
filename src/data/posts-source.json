@@ -1,0 +1,484 @@
+{
+  "note": "Figma post-detail content. Technical posts remain drafts; unwritten thoughts remain planned. No publication dates are invented.",
+  "posts": [
+    {
+      "kind": "tech",
+      "row": "223:389",
+      "homeRow": "144:808",
+      "title": "50개의 토픽·서비스를 어떻게 설계했을까",
+      "category": "ROS2 · SYSTEM DESIGN",
+      "excerpt": "서버·주행·팔·비전·모바일을 연결한 통신 규약과 디버깅 GUI 설계.",
+      "meta": "DRAFT · Shopee",
+      "sections": [
+        {
+          "title": "여러 모듈이 함께 동작하는 서비스",
+          "p": [
+            "Shopee 프로젝트에서는 메인 서버, 주행 로봇, 로봇팔, 비전, 모바일 사이의 통신을 다뤘습니다. 각 모듈이 주고받을 서비스와 토픽 50개를 설계하고 구현했습니다.",
+            "사용자 요구사항에서 화면과 시나리오, 데이터 구조와 인터페이스까지 이어지는 문서를 함께 정리했습니다."
+          ]
+        },
+        {
+          "title": "통신의 규약과 상태를 함께 읽기",
+          "p": [
+            "사용자 요구사항, ERD, 화면 기획, 시나리오, 시퀀스 다이어그램과 인터페이스 명세서를 작성하고 ROS2 통신을 구현했습니다.",
+            "GUI–메인 서버–로봇 간의 통신 관계를 디버깅 화면으로 시각화했습니다. 여러 터미널을 따로 띄우는 대신 하나의 UI에서 전체 서비스 통신 상태를 모니터링하도록 구성했습니다."
+          ],
+          "bullets": [
+            "모듈별 서비스·토픽의 설계와 구현",
+            "화면과 시나리오를 포함한 인터페이스 문서 관리",
+            "주행 로봇·메인 서버의 통신 상태를 확인하는 디버깅 GUI"
+          ]
+        },
+        {
+          "title": "다음에 더 풀어쓸 질문",
+          "p": [
+            "토픽과 서비스의 경계를 어떤 기준으로 나누었는지, 인터페이스 문서와 실제 통신을 어떻게 맞추었는지 정리할 예정입니다."
+          ]
+        }
+      ],
+      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_219",
+      "slug": "ros2-interfaces",
+      "group": "ros2",
+      "status": "draft"
+    },
+    {
+      "kind": "tech",
+      "row": "223:441",
+      "homeRow": "144:816",
+      "title": "막힌 경로에서 다시 길을 찾는 방법",
+      "category": "C++ · PATH PLANNING",
+      "excerpt": "C++로 직접 구현한 커스텀 플래너와 백트래킹 기반 경로 재생성.",
+      "meta": "DRAFT · Shopee",
+      "sections": [
+        {
+          "title": "경로 생성이 막힌 순간",
+          "p": [
+            "Shopee의 주행 개발에서는 트래킹과 경로 생성을 함께 다뤘습니다. 경로를 생성하다 막혔을 때 다시 움직일 방법을 구성하는 것이 작업의 한 부분이었습니다."
+          ]
+        },
+        {
+          "title": "회전 가능한 위치로 돌아가기",
+          "p": [
+            "별도의 Nav2 플래너 플러그인 없이 C++로 커스텀 플래너를 구현했습니다. 경로가 막히면 방향을 회전할 수 있는 위치까지 돌아가고, 회전한 뒤 경로를 다시 생성하는 백트래킹 방식으로 구성했습니다."
+          ],
+          "bullets": [
+            "경로 생성 중 막힌 상황 확인",
+            "방향 회전이 가능한 위치까지 되돌아가기",
+            "회전 후 경로 재생성"
+          ]
+        },
+        {
+          "title": "다음에 더 풀어쓸 질문",
+          "p": [
+            "되돌아갈 위치를 어떤 기준으로 선택했는지, 경로를 재생성하는 조건과 예외 상황을 실제 구현에 맞춰 정리할 예정입니다."
+          ]
+        }
+      ],
+      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_219",
+      "slug": "backtracking-planner",
+      "group": "planning",
+      "status": "draft"
+    },
+    {
+      "kind": "tech",
+      "row": "223:493",
+      "homeRow": "144:824",
+      "title": "DWB 대신 MPPI를 선택한 이유",
+      "category": "NAV2 · NAVIGATION",
+      "excerpt": "유연한 회전과 후진 주행을 위한 MPPI 적용과 시뮬레이션 기록.",
+      "meta": "DRAFT · Asan Hero",
+      "sections": [
+        {
+          "title": "실제 공간을 시뮬레이션으로 옮기기",
+          "p": [
+            "Asan Hero 프로젝트에서는 실제 환경을 Blender로 모델링하고 ROS2 프로젝트와 연동했습니다. 주행 환경을 다루면서 사용자 화면과 관리자 GUI, 하드웨어 작업도 함께 진행했습니다."
+          ]
+        },
+        {
+          "title": "주행 방식과 GUI 위치 연동",
+          "p": [
+            "주행 알고리즘에 DWB 대신 MPPI 플러그인을 적용해 유연한 회전과 주행이 가능하도록 작업했습니다. 프로젝트 자료에는 MPPI 후진 주행과 AMCL 위치 연동 과정이 함께 정리되어 있습니다.",
+            "AMCL pose 토픽을 발행·구독해 로봇의 위치를 GUI와 연결했습니다."
+          ],
+          "bullets": [
+            "실제 환경을 반영한 3D 시뮬레이션 맵",
+            "DWB에서 MPPI로 주행 플러그인 변경",
+            "AMCL pose를 이용한 GUI 위치 연동"
+          ]
+        },
+        {
+          "title": "다음에 더 풀어쓸 질문",
+          "p": [
+            "플러그인을 바꾸게 된 구체적인 주행 상황과 설정, 회전·후진을 비교한 관찰 내용을 정리할 예정입니다."
+          ]
+        }
+      ],
+      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_302",
+      "slug": "mppi-navigation",
+      "group": "navigation",
+      "status": "draft"
+    },
+    {
+      "kind": "tech",
+      "row": "223:545",
+      "homeRow": "144:833",
+      "title": "2D의 편집 결과를 3D에 반영하는 방법",
+      "category": "REACT · EDITOR STATE",
+      "excerpt": "배치·크기 변경, Undo/Redo와 2D→3D 에디터 상태 연동.",
+      "meta": "DRAFT · 공간 관리 플랫폼",
+      "sections": [
+        {
+          "title": "편집 기능과 화면의 일치",
+          "p": [
+            "공간 관리 플랫폼에서는 가구와 디바이스를 배치하고 편집하는 기능, 2D 변경을 3D 에디터에 반영하는 연동 작업을 맡았습니다.",
+            "탑바, 사이드바, 툴바, 팝업과 에디터뷰를 검토하면서 디자인 파일과 맞지 않는 여백, 크기, 폰트와 세부 표현도 조정했습니다."
+          ]
+        },
+        {
+          "title": "배치와 편집 상태를 연결하기",
+          "p": [
+            "가구·디바이스 배치, 겹침 방지, 클러스터 핀 상세 팝업, 확대·축소, 맵 정렬, Undo/Redo, 크기 조정과 2D–3D 연동을 작업했습니다."
+          ],
+          "bullets": [
+            "가구·디바이스 배치와 겹침 방지",
+            "이전·다음 편집 상태를 다루는 Undo/Redo",
+            "2D의 변경을 3D 에디터에 반영"
+          ]
+        },
+        {
+          "title": "다음에 더 풀어쓸 질문",
+          "p": [
+            "편집 상태를 어디에서 관리했는지, 되돌리기와 2D–3D 동기화를 어떤 순서로 처리했는지 구현 경험을 바탕으로 정리할 예정입니다."
+          ]
+        }
+      ],
+      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_173",
+      "slug": "editor-state",
+      "group": "react",
+      "status": "draft"
+    },
+    {
+      "kind": "tech",
+      "row": "223:597",
+      "homeRow": "144:841",
+      "title": "로그와 CCTV 이미지를 어떻게 연결했을까",
+      "category": "PYQT · TCP / UDP",
+      "excerpt": "TCP로 이벤트 로그를 가져오고, UDP로 CCTV 이미지를 연동한 경험.",
+      "meta": "DRAFT · Gigachad",
+      "sections": [
+        {
+          "title": "기록과 영상을 한 화면에서 보기",
+          "p": [
+            "Gigachad는 무인매장 CCTV 단속 시스템 프로젝트입니다. 감지된 기록과 CCTV 이미지를 사용자 화면에서 확인할 수 있도록 화면을 기획·디자인하고 Python GUI를 구현했습니다."
+          ]
+        },
+        {
+          "title": "데이터의 출처와 통신 경로",
+          "p": [
+            "중앙 서버의 불법행위 로그는 TCP 통신으로 가져오고, AI 서버의 CCTV 이미지는 UDP 통신으로 연동했습니다.",
+            "ERD와 JSON 스키마를 작성하고 더미 데이터를 준비했습니다. 중앙 서버와 AI 서버가 요청한 데이터가 SQL을 통해 읽고 쓰이는지도 확인했습니다."
+          ],
+          "bullets": [
+            "중앙 서버 → TCP → 이벤트 로그",
+            "AI 서버 → UDP → CCTV 이미지",
+            "ERD·JSON 스키마와 데이터 읽기·쓰기 확인"
+          ]
+        },
+        {
+          "title": "다음에 더 풀어쓸 질문",
+          "p": [
+            "로그와 영상의 화면 갱신 과정, 통신 상황을 확인한 방법과 예외 처리를 실제 작업 내용을 기준으로 정리할 예정입니다."
+          ]
+        }
+      ],
+      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_366",
+      "slug": "pyqt-monitoring",
+      "group": "pyqt",
+      "status": "draft"
+    },
+    {
+      "kind": "tech",
+      "row": "223:649",
+      "homeRow": "144:849",
+      "title": "UI 라이브러리가 매번 바뀌던 문제",
+      "category": "DESIGN SYSTEM · NDS",
+      "excerpt": "학습·비용 부담을 줄이기 위한 자체 디자인 시스템과 가이드 웹.",
+      "meta": "DRAFT · Nextree NDS",
+      "sections": [
+        {
+          "title": "프로젝트마다 달라지는 UI 도구",
+          "p": [
+            "프로젝트마다 사용하는 UI 라이브러리가 바뀌면 개발자는 새로운 도구를 다시 공부해야 합니다. 회사에서는 라이브러리 사용 비용도 함께 고려해야 했습니다."
+          ]
+        },
+        {
+          "title": "자체 디자인 시스템과 가이드 웹",
+          "p": [
+            "이런 배경에서 자체 디자인 시스템 NDS를 만드는 프로젝트에 참여했습니다. 여러 컴포넌트와 호환성을 지원하는 시스템과 함께 가이드 문서 웹을 제작했습니다."
+          ],
+          "bullets": [
+            "반복되는 UI를 공통 규칙으로 정리",
+            "컴포넌트와 호환성을 고려한 디자인 시스템",
+            "사용 방법을 전달하는 가이드 문서 웹"
+          ]
+        },
+        {
+          "title": "다음에 더 풀어쓸 질문",
+          "p": [
+            "공통화할 컴포넌트를 어떻게 고르고 사용 규칙을 문서로 전달했는지, 담당한 작업을 중심으로 정리할 예정입니다."
+          ]
+        }
+      ],
+      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_486",
+      "slug": "design-system",
+      "group": "design-system",
+      "status": "draft"
+    },
+    {
+      "kind": "life",
+      "row": "219:340",
+      "title": "바이센티니얼 맨 — 인간과 로봇의 경계",
+      "category": "FILM",
+      "excerpt": "감정과 인간다움은 무엇으로 결정될까. 로봇과 사람 사이의 경계를 생각하게 한 영화.",
+      "meta": "최원호 · 영화 기록",
+      "image": "9609a8b5ac16026c17a0bda64d4585dde88d16e8",
+      "sections": [
+        {
+          "title": "인간이 되고 싶은 로봇",
+          "p": [
+            "로봇과 사람 사이의 경계는 무엇일까요? 인간이 되고픈 로봇은 보통 어색하고 기괴하게 표현되곤 하지만, 이 영화에선 너무나 사랑스럽고 따뜻한 분위기로 표현됩니다.",
+            "사랑스러운 로봇 앤드류를 통해 인간에 대한 근원적인 질문을 하며, 물질과 정신 세계의 적절한 충돌을 일으킵니다."
+          ]
+        },
+        {
+          "title": "경계를 정의할 수 있을까",
+          "p": [
+            "로봇 또한 복잡한 메커니즘을 거쳐 인간과 유사한 감정을 가지게 된다면 어떨까요? 무지개 색을 7개의 색으로만 정의할 수 없는 것처럼 로봇과 인간의 경계도 어느샌가 허물어지는 날이 올지도 모릅니다."
+          ]
+        }
+      ],
+      "quote": "로봇과 사람 사이의 경계는 무엇일까요?",
+      "source": "https://polar-cephalopod-b13.notion.site/Activity-22a483ba22f880c698b9cf8ffde6c7b5",
+      "slug": "bicentennial-man",
+      "group": "films",
+      "status": "record"
+    },
+    {
+      "kind": "life",
+      "row": "219:348",
+      "title": "가타카 — 노력과 인간의 가치",
+      "category": "FILM",
+      "excerpt": "주어진 조건을 넘어 나아가는 마음. 노력과 인간의 가치를 돌아보게 한 이야기.",
+      "meta": "최원호 · 영화 기록",
+      "image": "0869d49549edd95bac90154f29bc94ea930cf72e",
+      "sections": [
+        {
+          "title": "노력은 무엇으로 평가될까",
+          "p": [
+            "인간의 노력이란 무엇일까요? 유전자를 통해 우월한 인간만 남게 된다면, 열등한 인간의 노력은 쓸모없는 걸까요? 누군가의 노력은 특별하고, 누군가의 노력은 별 볼일 없다면 너무나 슬플 것입니다."
+          ]
+        },
+        {
+          "title": "사람의 가치를 지키는 일",
+          "p": [
+            "놀랍게도 우리 모두는 우리 부모의 특별한 사랑의 결과물입니다. 사랑은 누구에게나 특별하고, 그 결과가 우리 자신인 걸 알기에, 우리 또한 특별한 사랑을 하고 특별한 사람들을 마주하며 삽니다.",
+            "이러한 사람의 가치를 훼손하지 않으려고, 우리는 스스로가 우월하든 열등하든 인생을 그저 열심히 살아가는 것 같습니다."
+          ]
+        }
+      ],
+      "quote": "인간의 노력이란 무엇일까요?",
+      "source": "https://polar-cephalopod-b13.notion.site/Activity-22a483ba22f880c698b9cf8ffde6c7b5",
+      "slug": "gattaca",
+      "group": "films",
+      "status": "record"
+    },
+    {
+      "kind": "life",
+      "row": "219:387",
+      "title": "가짜감정",
+      "category": "READING",
+      "excerpt": "자신과 타인의 감정을 이해하고 존중하는 태도에 관한 독서.",
+      "meta": "최원호 · 독서 기록 · 김용태",
+      "sections": [
+        {
+          "title": "마음을 살피는 교양",
+          "p": [
+            "심리학은 인간관계뿐 아니라, 스스로의 정신 건강을 돌보기 위해서도 필요한 교양이라고 생각합니다."
+          ]
+        },
+        {
+          "title": "감정을 이해하고 존중하기",
+          "p": [
+            "누군가의 말 한마디를 섬세하게 다뤄볼 줄 알고 스스로의 감정 상태를 확인하는 것은 나 자신에 대한 메타인지뿐 아니라 타인을 이해하고 존중하는 자세를 길러줍니다."
+          ]
+        }
+      ],
+      "quote": "나 자신과 타인의 감정을 이해하고 존중하는 태도.",
+      "source": "https://polar-cephalopod-b13.notion.site/Activity-22a483ba22f880c698b9cf8ffde6c7b5",
+      "slug": "false-emotions",
+      "group": "reading",
+      "status": "record"
+    },
+    {
+      "kind": "life",
+      "row": "219:396",
+      "title": "지적 대화를 위한 넓고 얕은 지식",
+      "category": "READING",
+      "excerpt": "역사·경제·정치·사회·윤리를 연결하며 세상을 바라보는 관점을 넓힌 책.",
+      "meta": "최원호 · 독서 기록 · 채사장",
+      "sections": [
+        {
+          "title": "대화를 넓히는 배경 지식",
+          "p": [
+            "일상적인 대화를 할 때 가십거리 이야기만 하지는 않습니다. 기본 교양이 어느 정도는 필요한데, 책 하나를 추천한다면 이 책을 추천할 것 같습니다."
+          ]
+        },
+        {
+          "title": "하나의 이야기로 읽는 세계",
+          "p": [
+            "저자의 입담을 통해 재미뿐 아니라 역사, 경제, 정치, 사회, 윤리의 다양한 장르를 하나의 이야기로 이어 설명해 현실 세계의 세계관을 이해하기 좋습니다."
+          ]
+        }
+      ],
+      "quote": "서로 다른 지식을 연결해, 세상을 이해하는 시야를 넓히기.",
+      "source": "https://polar-cephalopod-b13.notion.site/Activity-22a483ba22f880c698b9cf8ffde6c7b5",
+      "slug": "broad-shallow-knowledge",
+      "group": "reading",
+      "status": "record"
+    },
+    {
+      "kind": "life",
+      "row": "219:436",
+      "title": "어떻게 살아갈 것인가",
+      "category": "PHILOSOPHY",
+      "excerpt": "내가 중요하게 여기는 가치와 선택의 기준을 돌아보는 기록.",
+      "meta": "작성 예정 · 철학",
+      "draft": true,
+      "sections": [
+        {
+          "title": "생각을 정리하는 중입니다",
+          "p": [
+            "현재는 제목과 주제를 정리한 단계입니다. 본문은 앞으로 이곳에 차근차근 추가할 예정입니다."
+          ]
+        }
+      ],
+      "slug": "how-to-live",
+      "group": "thoughts",
+      "status": "planned"
+    },
+    {
+      "kind": "life",
+      "row": "219:445",
+      "title": "서로를 이해하는 방법",
+      "category": "RELATIONSHIPS",
+      "excerpt": "감정과 거리, 대화와 배려에 대해 계속 고민하는 자리.",
+      "meta": "작성 예정 · 인간관계",
+      "draft": true,
+      "sections": [
+        {
+          "title": "생각을 정리하는 중입니다",
+          "p": [
+            "현재는 제목과 주제를 정리한 단계입니다. 본문은 앞으로 이곳에 차근차근 추가할 예정입니다."
+          ]
+        }
+      ],
+      "slug": "understanding-others",
+      "group": "thoughts",
+      "status": "planned"
+    },
+    {
+      "kind": "life",
+      "row": "219:454",
+      "title": "겪고 나서 알게 된 것들",
+      "category": "EXPERIENCE",
+      "excerpt": "일과 관계, 사회 속에서 배운 경험과 대처에 관한 생각.",
+      "meta": "작성 예정 · 경험과 대처",
+      "draft": true,
+      "sections": [
+        {
+          "title": "생각을 정리하는 중입니다",
+          "p": [
+            "현재는 제목과 주제를 정리한 단계입니다. 본문은 앞으로 이곳에 차근차근 추가할 예정입니다."
+          ]
+        }
+      ],
+      "slug": "lessons-from-experience",
+      "group": "thoughts",
+      "status": "planned"
+    },
+    {
+      "kind": "life",
+      "row": "219:494",
+      "title": "산업디자인 졸업작품",
+      "category": "DESIGN",
+      "excerpt": "스마트 AI 스피커 디자인 및 자기부상 무선 충전 콘셉트.",
+      "meta": "최원호 · 활동 기록 · 2022",
+      "sections": [
+        {
+          "title": "스마트 AI 스피커 디자인",
+          "p": [
+            "2022년 상명대학교 천안캠퍼스 산업디자인과 졸업작품으로, 애플을 타깃 기업으로 한 스마트 AI 스피커를 디자인했습니다."
+          ]
+        },
+        {
+          "title": "자기부상 무선 충전 콘셉트",
+          "p": [
+            "자기부상 기술을 이용한 공중 무선 충전 콘셉트를 함께 제안했습니다."
+          ]
+        }
+      ],
+      "source": "https://polar-cephalopod-b13.notion.site/Activity-22a483ba22f880c698b9cf8ffde6c7b5",
+      "slug": "graduation-design",
+      "group": "activities",
+      "status": "record"
+    },
+    {
+      "kind": "life",
+      "row": "219:503",
+      "title": "호국미술대전 회화 부문 입상",
+      "category": "DRAWING",
+      "excerpt": "그림을 통해 생각과 감각을 표현한 경험.",
+      "meta": "최원호 · 활동 기록 · 2019",
+      "sections": [
+        {
+          "title": "예술을 통한 만남",
+          "p": [
+            "2019년 호국미술대전에서 ‘예술을 통한 국민과 육군의 만남’을 주제로 회화 부문에 입상했습니다."
+          ]
+        },
+        {
+          "title": "활동 기록",
+          "p": ["노션 활동 페이지에 회화 작업과 입상 기록을 정리해두었습니다."]
+        }
+      ],
+      "source": "https://polar-cephalopod-b13.notion.site/Activity-22a483ba22f880c698b9cf8ffde6c7b5",
+      "slug": "army-art-award",
+      "group": "activities",
+      "status": "record"
+    },
+    {
+      "kind": "life",
+      "row": "219:512",
+      "title": "재현고 합창단 노래올림 반주자",
+      "category": "MUSIC",
+      "excerpt": "다른 사람의 소리에 귀 기울이며 함께 호흡을 맞춘 시간.",
+      "meta": "최원호 · 활동 기록 · 2012–2013",
+      "sections": [
+        {
+          "title": "합창단의 반주자로",
+          "p": [
+            "2012년부터 2013년까지 재현고등학교 합창단 노래올림의 반주자로 활동했습니다."
+          ]
+        },
+        {
+          "title": "함께 연주한 시간",
+          "p": ["함께 호흡을 맞추며 연주한 경험을 활동 기록으로 남겼습니다."]
+        }
+      ],
+      "source": "https://polar-cephalopod-b13.notion.site/Activity-22a483ba22f880c698b9cf8ffde6c7b5",
+      "slug": "choir-accompanist",
+      "group": "activities",
+      "status": "record"
+    }
+  ]
+}

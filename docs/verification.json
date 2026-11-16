@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-16",
+  "local": {
+    "typescript": "passed",
+    "productionBuild": "passed",
+    "automatedTests": { "passed": 10, "failed": 0 },
+    "testedWidths": [320, 375, 768, 1200, 1440],
+    "staticPreviewBase": "/portfolio26/",
+    "staticPreviewPageErrors": 0,
+    "staticPreviewFailedRequests": 0,
+    "visualReview": ["hero dark and light", "mobile hero framing", "profile and principles", "main work illustrations", "main work", "side work", "utilities", "tech blog", "life", "article"],
+    "warning": "The lazy-loaded Three.js chunk is about 535 kB before gzip (about 133 kB compressed); Vite emits its standard 500 kB chunk-size warning."
+  },
+  "remote": { "sourceUploaded": true, "pagesDeployed": false, "authenticatedLogin": "wonho9188", "visibleInstallationAccounts": ["wonho9188", "TheMomentLab"], "phase": "Source uploaded through the GitHub connector; GitHub Actions and Pages verification pending." },
+  "notVerified": ["production GitHub Actions execution", "public GitHub Pages URL", "physical mobile devices", "screen reader output"]
+}

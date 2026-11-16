@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1c1c1c" />
+    <meta
+      name="description"
+      content="로봇 개발자 최원호. 문제를 이해하고, 구조를 설계하며, 현실에서 작동하는 결과를 만듭니다."
+    />
+    <meta property="og:title" content="WONHO makes it real. — 최원호" />
+    <meta
+      property="og:description"
+      content="디자인의 감각과 공학의 정밀함으로, 사람과 로봇 사이를 연결합니다."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
+    <title>WONHO makes it real. — 최원호</title>
+    <script>
+      try {
+        const saved = localStorage.getItem("wonho-theme");
+        document.documentElement.dataset.theme =
+          saved === "dark" || saved === "light"
+            ? saved
+            : matchMedia("(prefers-color-scheme: light)").matches
+              ? "light"
+              : "dark";
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

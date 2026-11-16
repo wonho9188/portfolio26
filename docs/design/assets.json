@@ -1,0 +1,62 @@
+[
+  {
+    "context": "webHomeContext",
+    "name": "imgWonhoChoiRosePinkPortraitPaleBlushBackdrop",
+    "file": "639ca.png",
+    "local": "src/assets/portrait.png"
+  },
+  {
+    "context": "webHomeContext",
+    "name": "imgAiGenerated3DIllustrationRoboticsAppAndOperations",
+    "file": "6a474.png",
+    "local": "src/assets/workstation.png"
+  },
+  {
+    "context": "webHomeContext",
+    "name": "img3DIllustrationLeaderFollowerArms",
+    "file": "3b9ec.png",
+    "local": "src/assets/robot-arms.png"
+  },
+  {
+    "context": "webHomeContext",
+    "name": "img3DIllustrationMazeNavigationRobot",
+    "file": "5bd60.png",
+    "local": "src/assets/robot-maze.png"
+  },
+  {
+    "context": "webHomeContext",
+    "name": "imgNeutralLightField",
+    "file": "c8a84.svg",
+    "local": "src/assets/hero-glow.svg"
+  },
+  {
+    "context": "webHomeContext",
+    "name": "imgLorenzAttractorNonlinearDynamicsStudy",
+    "file": "0f3dd.svg",
+    "local": "src/assets/lorenz-original.svg"
+  },
+  {
+    "context": "webHomeContext",
+    "name": "imgNeutralThoughtField",
+    "file": "d8d48.svg",
+    "local": "src/assets/thought-glow.svg"
+  },
+  {
+    "context": "webHomeContext",
+    "name": "imgLissajousCurveIntersectingPerspectives",
+    "file": "e5ab1.svg",
+    "local": "src/assets/thought-lines.svg"
+  },
+  {
+    "context": "webLifeContext",
+    "name": "imgFilmPoster",
+    "file": "18e34.png",
+    "local": "src/assets/bicentennial-man.png"
+  },
+  {
+    "context": "webLifeContext",
+    "name": "imgFilmPoster1",
+    "file": "f07fb.png",
+    "local": "src/assets/gattaca.png"
+  }
+]

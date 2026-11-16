@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.vite/
+.env*
+!.env.example
+*.local
+docs/design/*-reference.tsx
+artifacts/
+playwright-report/
+test-results/
+/scripts/github-api.mjs
+/scripts/review-layout.mjs
