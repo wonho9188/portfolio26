@@ -1173,6 +1173,15 @@ em {
   font-size: 1rem;
   white-space: nowrap;
 }
+.topic-description {
+  max-width: 840px;
+  margin: -12px 0 32px;
+  line-height: 1.8;
+}
+.article-topic {
+  margin: -32px 0 48px;
+  color: var(--color-accent);
+}
 .post-list {
   display: grid;
   gap: 24px;

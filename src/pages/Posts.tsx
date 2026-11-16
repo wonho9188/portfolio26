@@ -1,7 +1,13 @@
 import { useEffect, useId, useRef } from "react";
 import type { KeyboardEvent } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { lifeGroups, posts, techGroups } from "../data/content";
+import {
+  getTopicPosts,
+  lifeGroups,
+  posts,
+  roboticsTopic,
+  techGroups,
+} from "../data/content";
 import {
   PageHeading,
   TextLink,
@@ -19,7 +25,20 @@ function PostTabs({ kind }: { kind: "tech" | "life" }) {
     ? params.get("topic")!
     : groups[0][0];
   const index = groups.findIndex((g) => g[0] === current);
-  const filtered = posts.filter((p) => p.kind === kind && p.group === current);
+  const isRoboticsTopic = kind === "tech" && current === roboticsTopic.id;
+  const filtered = getTopicPosts(kind, current);
+  useEffect(() => {
+    const list = tabsRef.current;
+    const tab = list?.querySelector<HTMLButtonElement>(
+      '[aria-selected="true"]',
+    );
+    if (!list || !tab) return;
+    const item = tab.getBoundingClientRect();
+    const bounds = list.getBoundingClientRect();
+    if (item.left < bounds.left) list.scrollLeft += item.left - bounds.left;
+    else if (item.right > bounds.right)
+      list.scrollLeft += item.right - bounds.right;
+  }, [current]);
   const select = (n: number, focus = false) => {
     setParams({ topic: groups[n][0] }, { replace: true });
     if (focus) {
@@ -84,6 +103,9 @@ function PostTabs({ kind }: { kind: "tech" | "life" }) {
             {filtered.length === 1 ? "POST" : "POSTS"}
           </p>
         </div>
+        {isRoboticsTopic && (
+          <p className="topic-description">{roboticsTopic.description}</p>
+        )}
         <div className="post-list">
           {filtered.map((p, i) => (
             <PostRow key={p.slug} post={p} number={i + 1} />
@@ -91,8 +113,16 @@ function PostTabs({ kind }: { kind: "tech" | "life" }) {
         </div>
         {!filtered.length && (
           <div className="empty-state">
-            <h3>아직 공개한 글이 없습니다.</h3>
-            <p>다른 주제의 기록도 살펴보세요.</p>
+            <h3>
+              {isRoboticsTopic
+                ? "아직 등록된 개념 블록이 없습니다."
+                : "아직 공개한 글이 없습니다."}
+            </h3>
+            <p>
+              {isRoboticsTopic
+                ? "첫 글이 등록되면 이곳에서 개념 블록을 하나씩 쌓아갈 수 있습니다."
+                : "다른 주제의 기록도 살펴보세요."}
+            </p>
           </div>
         )}
       </section>
@@ -147,7 +177,12 @@ export function Article() {
   }, [post]);
   if (!post) return <NotFound />;
   const base = post.kind === "tech" ? "/blog" : "/life";
-  const siblings = posts.filter((p) => p.kind === post.kind),
+  const isRoboticsTopic =
+    post.kind === "tech" && post.group === roboticsTopic.id;
+  const listUrl = `${base}?topic=${post.group}`;
+  const siblings = isRoboticsTopic
+      ? getTopicPosts(post.kind, post.group)
+      : posts.filter((p) => p.kind === post.kind),
     index = siblings.indexOf(post);
   const next = siblings[index + 1],
     previous = siblings[index - 1];
@@ -155,8 +190,14 @@ export function Article() {
     <article className="container article-page">
       <header className="article-header">
         <div className="breadcrumbs">
-          <TextLink href={`${base}?topic=${post.group}`}>
-            ← {post.kind === "tech" ? "Tech Blog" : "Life & Thoughts"} 목록
+          <TextLink href={listUrl}>
+            ←{" "}
+            {isRoboticsTopic
+              ? roboticsTopic.label
+              : post.kind === "tech"
+                ? "Tech Blog"
+                : "Life & Thoughts"}{" "}
+            목록
           </TextLink>
           <p className="eyebrow">{post.category}</p>
         </div>
@@ -164,6 +205,9 @@ export function Article() {
         <p className="lead">{post.excerpt}</p>
         <p className="meta">최원호 · {post.meta.replace(/^최원호 · /, "")}</p>
       </header>
+      {isRoboticsTopic && (
+        <p className="article-topic">{roboticsTopic.title}</p>
+      )}
       {post.status === "planned" && (
         <aside className="draft-notice">
           <span className="award-chip">작성 예정</span>
@@ -174,7 +218,9 @@ export function Article() {
       )}
       {post.status === "draft" && (
         <p className="draft-notice">
-          기록 초안 · 프로젝트 자료를 바탕으로 정리 중인 기술 노트입니다.
+          {isRoboticsTopic
+            ? "기록 초안 · 로봇의 원리를 쉬운 말로 풀어가며 내용을 다듬고 있습니다."
+            : "기록 초안 · 프로젝트 자료를 바탕으로 정리 중인 기술 노트입니다."}
         </p>
       )}
       <div className="article-layout">
@@ -223,15 +269,17 @@ export function Article() {
         </div>
       </div>
       <nav className="article-pagination" aria-label="다른 글">
-        <Link to={previous ? `${base}/${previous.slug}` : base}>
+        <Link to={previous ? `${base}/${previous.slug}` : listUrl}>
           <span className="eyebrow">
             ← {previous ? "PREVIOUS POST" : "BACK TO POSTS"}
           </span>
           <span>
             {previous?.title ??
-              (post.kind === "tech"
-                ? "Tech Blog 목록"
-                : "Life & Thoughts 목록")}
+              (isRoboticsTopic
+                ? `${roboticsTopic.label} 목록`
+                : post.kind === "tech"
+                  ? "Tech Blog 목록"
+                  : "Life & Thoughts 목록")}
           </span>
         </Link>
         {next && (
@@ -241,7 +289,7 @@ export function Article() {
           </Link>
         )}
       </nav>
-      <TextLink href={`${base}?topic=${post.group}`}>
+      <TextLink href={listUrl}>
         목록으로 돌아가기 <Arrow />
       </TextLink>
     </article>

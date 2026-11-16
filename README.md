@@ -49,6 +49,15 @@ React 19, TypeScript, Vite 8, React Router 7, Three.js를 사용합니다. GitHu
 
 글 추가 시 본문 JSON의 각 글에 고유한 `slug`, `group`, `status`를 함께 입력합니다. 순서를 바꿔도 글 주소와 분류가 바뀌지 않습니다. 새 분류를 만들 때만 `content.ts`의 주제 목록을 수정합니다. 현재는 서버나 CMS 없이 Git에 저장한 콘텐츠를 빌드합니다. 기술 노트는 **초안**, 아직 쓰지 않은 생각 글은 **작성 예정**으로 유지하며 게시일·성과·읽는 시간을 만들어 넣지 않습니다. 원본 PDF나 사내 자료 전체는 저장소에 포함하지 않습니다.
 
+### 차곡차곡, 로보틱스 개념 블록
+
+기술 블로그의 ‘로보틱스 개념 블록’ 탭입니다. 작은 개념을 독립적으로 이해하고 서로 연결해 큰 구조를 알아가는 연재로, 한 주제 아래 여러 상세 글을 등록할 수 있습니다.
+
+- 주제 주소: `/#/blog?topic=robotics-concept-blocks`
+- 글에 `kind: "tech"`, `group: "robotics-concept-blocks"`를 지정하면 이 목록에 모입니다.
+- `seriesOrder`로 읽는 순서를 정합니다. 이 연재의 이전·다음 글은 같은 주제 안에서 연결됩니다.
+- [글 작성 안내](docs/ROBOTICS_CONCEPT_BLOCKS.md)와 [글 데이터 작성 틀](docs/examples/robotics-post.json)을 참고합니다.
+
 기존 회사명 `핑크랩`의 재직 시작은 사용자 제공 정보인 **2026.02**를 유지합니다. 실무 경력과 기타 경험을 분리했고 KDT 두 과정의 최우수상은 칩으로 표시합니다.
 
 ## GitHub Pages

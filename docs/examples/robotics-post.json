@@ -1,0 +1,28 @@
+{
+  "slug": "replace-with-unique-post-address",
+  "kind": "tech",
+  "group": "robotics-concept-blocks",
+  "seriesOrder": 1,
+  "title": "글 제목",
+  "category": "ROBOTICS",
+  "excerpt": "이번 글에서 이해할 개념을 짧게 소개합니다.",
+  "meta": "로보틱스 연재 · 01",
+  "status": "draft",
+  "sections": [
+    {
+      "title": "이번에 이해할 한 가지",
+      "p": ["한 글에서 다룰 개념 하나를 소개합니다."]
+    },
+    {
+      "title": "작게 나눠서 이해하기",
+      "p": [
+        "한 문단에는 소화할 수 있는 크기의 설명을 담습니다.",
+        "다음 이해 단위는 문단을 나누어 연결합니다."
+      ]
+    },
+    {
+      "title": "이해한 내용 연결하기",
+      "p": ["작은 이해가 어떻게 이어지는지 정리합니다."]
+    }
+  ]
+}

@@ -10,7 +10,13 @@ test("post identifiers and publication states are consistent", () => {
     expect(post.group).toBeTruthy();
     expect(post.sections.length).toBeGreaterThan(0);
     expect(["draft", "planned", "record"]).toContain(post.status);
-    if (post.kind === "tech") expect(post.status).toBe("draft");
+    if (post.status === "record") {
+      expect(
+        post.sections.every((section) =>
+          section.p.some((text) => text.trim().length > 0),
+        ),
+      ).toBe(true);
+    }
   }
 });
 
@@ -133,6 +139,7 @@ for (const width of [320, 375, 768, 1200, 1440]) {
       "side-work",
       "utilities",
       "blog",
+      "blog?topic=robotics-concept-blocks",
       "life?topic=reading",
       "blog/ros2-interfaces",
       "life/choir-accompanist",

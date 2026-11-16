@@ -261,6 +261,7 @@ export type Post = {
   sections: Section[];
   source?: string;
   image?: string;
+  seriesOrder?: number;
 };
 const postImages: Record<string, string> = {
   "bicentennial-man": bicentennial,
@@ -272,6 +273,22 @@ export const posts: Post[] = source.posts.map((p) => ({
   status: p.status as Post["status"],
   image: postImages[p.slug],
 }));
+export const roboticsTopic = {
+  id: "robotics-concept-blocks",
+  label: "로보틱스 개념 블록",
+  title: "차곡차곡, 로보틱스 개념 블록",
+  description:
+    "작은 개념을 하나씩 이해하고, 블록처럼 연결해 로봇이라는 큰 구조를 알아갑니다.",
+};
+export function getTopicPosts(kind: Post["kind"], group: string) {
+  return posts
+    .filter((post) => post.kind === kind && post.group === group)
+    .sort(
+      (a, b) =>
+        (a.seriesOrder ?? Number.MAX_SAFE_INTEGER) -
+        (b.seriesOrder ?? Number.MAX_SAFE_INTEGER),
+    );
+}
 export const techGroups = [
   ["ros2", "ROS2", "ROS2와 시스템 설계"],
   ["planning", "Path Planning", "경로를 만드는 방법"],
@@ -279,6 +296,7 @@ export const techGroups = [
   ["react", "React", "화면과 상태를 연결하는 일"],
   ["pyqt", "PyQt", "데이터를 읽는 관제 화면"],
   ["design-system", "Design System", "일관된 경험을 만드는 구조"],
+  [roboticsTopic.id, roboticsTopic.label, roboticsTopic.title],
 ];
 export const lifeGroups = [
   ["films", "영화·이야기", "영화와 이야기"],
