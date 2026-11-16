@@ -52,11 +52,20 @@ for (const [width, normalHeight, compactHeight] of [
     await expect(page.locator("h1")).toHaveText(
       "50개의 토픽·서비스를 어떻게 설계했을까",
     );
-    await scroll(500);
+    await scroll(1000);
     await expect(header).toHaveClass(/is-hidden/);
-    await scroll(380);
+    await scroll(780);
     await expect(header).not.toHaveClass(/is-hidden/);
     await expect.poll(height).toBe(compactHeight);
+    if (width >= 768) {
+      await expect
+        .poll(() =>
+          page
+            .locator(".article-toc")
+            .evaluate((n) => n.getBoundingClientRect().top),
+        )
+        .toBeGreaterThanOrEqual(compactHeight + 16);
+    }
   });
 }
 
