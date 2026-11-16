@@ -1,5 +1,7 @@
 # WONHO makes it real.
 
+[공개 사이트](https://wonho9188.github.io/portfolio26/) · [배포 결과](https://github.com/wonho9188/portfolio26/actions/runs/43802632214)
+
 로봇 개발자 최원호의 2026 포트폴리오. 승인한 **Signal & silence / Warm Rose** 피그마 시안과 웹 스타일 가이드를 React로 구현했습니다.
 
 ## 실행
@@ -58,7 +60,7 @@ React 19, TypeScript, Vite 8, React Router 7, Three.js를 사용합니다. GitHu
 2. 저장소 **Settings → Pages → Source → GitHub Actions**를 선택합니다.
 3. `.github/workflows/pages.yml`이 테스트·빌드·배포를 진행합니다. 처음 설정한 후에는 Actions에서 직접 다시 실행할 수 있습니다.
 
-위 주소는 배포 대상이며, 실제 공개 완료 여부는 Actions와 해당 URL의 응답을 확인해야 합니다. 인증과 배포 상태는 [작업 상태](docs/STATUS.md)에 구분합니다.
+현재 공개 배포와 실제 URL 검증을 완료했습니다. 이후 main의 앱 변경은 Actions에서 검사·빌드·배포됩니다. 상세 검증 범위는 [작업 상태](docs/STATUS.md)와 [검증 기록](docs/verification.json)에 정리합니다.
 
 ## 검사
 

@@ -3,14 +3,72 @@
   "local": {
     "typescript": "passed",
     "productionBuild": "passed",
-    "automatedTests": { "passed": 10, "failed": 0 },
-    "testedWidths": [320, 375, 768, 1200, 1440],
+    "automatedTests": {
+      "passed": 10,
+      "failed": 0
+    },
+    "testedWidths": [
+      320,
+      375,
+      768,
+      1200,
+      1440
+    ],
     "staticPreviewBase": "/portfolio26/",
     "staticPreviewPageErrors": 0,
     "staticPreviewFailedRequests": 0,
-    "visualReview": ["hero dark and light", "mobile hero framing", "profile and principles", "main work illustrations", "main work", "side work", "utilities", "tech blog", "life", "article"],
+    "visualReview": [
+      "hero dark and light",
+      "mobile hero framing",
+      "profile and principles",
+      "main work illustrations",
+      "main work",
+      "side work",
+      "utilities",
+      "tech blog",
+      "life",
+      "article"
+    ],
     "warning": "The lazy-loaded Three.js chunk is about 535 kB before gzip (about 133 kB compressed); Vite emits its standard 500 kB chunk-size warning."
   },
-  "remote": { "sourceUploaded": true, "pagesDeployed": false, "authenticatedLogin": "wonho9188", "visibleInstallationAccounts": ["wonho9188", "TheMomentLab"], "phase": "Source uploaded through the GitHub connector; GitHub Actions and Pages verification pending." },
-  "notVerified": ["production GitHub Actions execution", "public GitHub Pages URL", "physical mobile devices", "screen reader output"]
+  "remote": {
+    "sourceUploaded": true,
+    "pagesDeployed": true,
+    "authenticatedLogin": "wonho9188",
+    "visibleInstallationAccounts": [
+      "wonho9188",
+      "TheMomentLab"
+    ],
+    "phase": "Public GitHub Pages deployment verified",
+    "url": "https://wonho9188.github.io/portfolio26/",
+    "sourceCommit": "c7d889d9ef4cd32fe4beb229bd1dd181439c77af",
+    "workflowRun": "https://github.com/wonho9188/portfolio26/actions/runs/43802632214",
+    "workflowAttempt": 2,
+    "workflowConclusion": "success",
+    "githubAutomatedTestsPassed": 10,
+    "liveVerification": {
+      "date": "2026-11-16",
+      "url": "https://wonho9188.github.io/portfolio26/",
+      "httpStatus": 200,
+      "pages": [
+        "work",
+        "side-work",
+        "utilities",
+        "blog",
+        "life",
+        "blog/ros2-interfaces"
+      ],
+      "themePersistence": true,
+      "articleReload": true,
+      "mobileViewport": 375,
+      "mobileHorizontalOverflow": false,
+      "pageErrors": [],
+      "failedRequests": [],
+      "passed": true
+    }
+  },
+  "notVerified": [
+    "physical mobile devices",
+    "screen reader output"
+  ]
 }

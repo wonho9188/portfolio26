@@ -16,7 +16,10 @@
 
 - `wonho9188` 개인 계정의 GitHub 앱 설치와 저장소 쓰기 권한을 확인했습니다. 이전 업로드 권한 제한은 해결되었습니다.
 - GitHub 연결 기능을 이용해 원본 이미지와 소스를 업로드했습니다. 토큰이나 비밀번호를 출력하거나 파일에 저장하지 않았습니다.
-- GitHub Actions 검사·빌드와 Pages 배포를 진행합니다. 공개 URL은 배포 성공 후 별도로 확인하며, 그전에는 공개 완료로 간주하지 않습니다.
+- GitHub Actions의 자동 검사 10개와 빌드가 성공했고, GitHub Pages 배포를 완료했습니다.
+- 공개 주소: https://wonho9188.github.io/portfolio26/
+- 배포 검증: HTTP 200, 메뉴별 페이지·상세 글 새로고침·테마 저장·375px 모바일 메뉴와 가로 넘침 확인. 페이지 오류와 실패한 파일 요청은 0건입니다.
+- 배포된 앱 소스: c7d889d9ef4cd32fe4beb229bd1dd181439c77af. 실행 결과: https://github.com/wonho9188/portfolio26/actions/runs/43802632214 (attempt 2, success).
 
 ## 범위와 보류 항목
 - 출처가 확인되지 않은 오픈채팅 URL은 추가하지 않았습니다.
