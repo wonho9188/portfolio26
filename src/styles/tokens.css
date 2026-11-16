@@ -166,6 +166,7 @@
   --content-max: 82rem;
   --article-max: 52.5rem;
   --header-height: 5.5rem;
+  --header-compact-height: 4rem;
   --motion-fast: 160ms;
   --motion-theme: 220ms;
   --motion-slow: 300ms;
@@ -207,6 +208,7 @@
   :root {
     --page-gutter: 2rem;
     --header-height: 4rem;
+    --header-compact-height: 3.5rem;
   }
 }
 @media (max-width: 767px) {

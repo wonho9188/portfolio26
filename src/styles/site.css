@@ -4,7 +4,7 @@
 html {
   font-size: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: 32px;
+  scroll-padding-top: calc(var(--header-compact-height) + 24px);
 }
 body {
   margin: 0;
@@ -165,17 +165,36 @@ em {
 .skip-link:focus {
   top: 12px;
 }
+.header-slot {
+  height: var(--header-height);
+}
 .site-header {
-  position: relative;
+  position: fixed;
+  inset: 0 0 auto;
   z-index: 20;
   background: var(--color-background);
+  max-height: 100svh;
+  overflow-y: auto;
+  transform: translateY(0);
+  transition: transform 180ms var(--ease-standard);
+}
+.site-header.is-hidden {
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+.site-header.is-compact {
+  box-shadow: 0 1px 0 var(--color-line);
+}
+.site-header.is-compact .header-inner {
+  height: var(--header-compact-height);
 }
 .header-inner {
-  height: 88px;
+  height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
+  transition: height 180ms var(--ease-standard);
 }
 .brand {
   display: flex;
@@ -1413,9 +1432,6 @@ em {
   }
   .menu-button {
     display: inline-block;
-  }
-  .header-inner {
-    height: 64px;
   }
   .hero-statement {
     width: min(780px, calc(100% - 96px));

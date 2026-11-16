@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { links, navigation } from "../data/content";
 import { Arrow, IconMoon, IconSun, TextLink, scrollTo } from "./primitives";
 import { useTheme } from "./ThemeProvider";
+import { useHeaderScroll } from "./useHeaderScroll";
 
 export function Header() {
   const { theme, toggle } = useTheme();
@@ -10,6 +11,10 @@ export function Header() {
   const button = useRef<HTMLButtonElement>(null);
   const nav = useRef<HTMLElement>(null);
   const location = useLocation();
+  const { atTop, hidden, headerRef, reveal } = useHeaderScroll(
+    open,
+    location.pathname,
+  );
   useEffect(() => setOpen(false), [location.pathname]);
   useEffect(() => {
     if (!open) return;
@@ -45,61 +50,67 @@ export function Header() {
     return () => media.removeEventListener("change", reset);
   }, []);
   return (
-    <header className="site-header">
-      <div className="container header-inner">
-        <Link
-          className="brand"
-          to="/"
-          aria-label="WONHO 홈"
-          onClick={() => {
-            if (location.pathname === "/") scrollTo("main");
-          }}
-        >
-          <strong>WONHO</strong>
-          <span>ROBOTICS DEVELOPER</span>
-        </Link>
-        <div className="header-actions">
-          <nav className="desktop-nav" aria-label="주 메뉴">
-            {navigation.map((n) => (
-              <NavLink key={n.to} to={n.to}>
-                {n.label}
-              </NavLink>
-            ))}
-          </nav>
-          <button
-            className="theme-button"
-            onClick={toggle}
-            aria-label={`${theme === "dark" ? "라이트" : "다크"} 모드로 전환`}
-          >
-            {theme === "dark" ? <IconSun /> : <IconMoon />}
-            <span>{theme === "dark" ? "라이트" : "다크"}</span>
-          </button>
-          <button
-            ref={button}
-            className="menu-button"
-            aria-expanded={open}
-            aria-controls="compact-menu"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? "닫기" : "메뉴"}
-          </button>
-        </div>
-      </div>
-      <nav
-        ref={nav}
-        id="compact-menu"
-        className="compact-nav container"
-        hidden={!open}
-        aria-label="접힌 주 메뉴"
+    <div className="header-slot">
+      <header
+        ref={headerRef}
+        className={`site-header${atTop ? "" : " is-compact"}${hidden && !open ? " is-hidden" : ""}`}
+        onFocusCapture={reveal}
       >
-        {navigation.map((n) => (
-          <NavLink key={n.to} to={n.to} onClick={() => setOpen(false)}>
-            {n.label}
-            <Arrow />
-          </NavLink>
-        ))}
-      </nav>
-    </header>
+        <div className="container header-inner">
+          <Link
+            className="brand"
+            to="/"
+            aria-label="WONHO 홈"
+            onClick={() => {
+              if (location.pathname === "/") scrollTo("main");
+            }}
+          >
+            <strong>WONHO</strong>
+            <span>ROBOTICS DEVELOPER</span>
+          </Link>
+          <div className="header-actions">
+            <nav className="desktop-nav" aria-label="주 메뉴">
+              {navigation.map((n) => (
+                <NavLink key={n.to} to={n.to}>
+                  {n.label}
+                </NavLink>
+              ))}
+            </nav>
+            <button
+              className="theme-button"
+              onClick={toggle}
+              aria-label={`${theme === "dark" ? "라이트" : "다크"} 모드로 전환`}
+            >
+              {theme === "dark" ? <IconSun /> : <IconMoon />}
+              <span>{theme === "dark" ? "라이트" : "다크"}</span>
+            </button>
+            <button
+              ref={button}
+              className="menu-button"
+              aria-expanded={open}
+              aria-controls="compact-menu"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? "닫기" : "메뉴"}
+            </button>
+          </div>
+        </div>
+        <nav
+          ref={nav}
+          id="compact-menu"
+          className="compact-nav container"
+          hidden={!open}
+          aria-label="접힌 주 메뉴"
+        >
+          {navigation.map((n) => (
+            <NavLink key={n.to} to={n.to} onClick={() => setOpen(false)}>
+              {n.label}
+              <Arrow />
+            </NavLink>
+          ))}
+        </nav>
+      </header>
+    </div>
   );
 }
 export function Footer() {
