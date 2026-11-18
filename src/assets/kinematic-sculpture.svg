@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 744" fill="none">
+  <defs>
+    <linearGradient id="ivory" x1="400" y1="330" x2="720" y2="610" gradientUnits="userSpaceOnUse"><stop stop-color="#f5e7da"/><stop offset=".45" stop-color="#c5aaa0"/><stop offset="1" stop-color="#78645d"/></linearGradient>
+    <linearGradient id="rose" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#efb5ce"/><stop offset="1" stop-color="#96626f"/></linearGradient>
+    <g id="joint"><path d="m-26-45 26-7 26 7 19 19 7 26-7 26-19 19-26 7-26-7-19-19-7-26 7-26Z" fill="url(#ivory)" stroke="#efd5c6"/><circle r="30" fill="#362e32" stroke="#937875" stroke-width="3"/><circle r="23" fill="url(#rose)"/><circle r="12" fill="url(#ivory)"/><g fill="#514049"><circle cx="0" cy="-40" r="3"/><circle cx="35" cy="-20" r="3"/><circle cx="35" cy="20" r="3"/><circle cy="40" r="3"/><circle cx="-35" cy="20" r="3"/><circle cx="-35" cy="-20" r="3"/></g></g>
+  </defs>
+  <g transform="translate(720 444) rotate(-6)">
+    <g stroke="#bb879e" stroke-opacity=".36" stroke-dasharray="5 7"><circle cx="-70" cy="-76" r="79"/><circle cx="161" cy="8" r="69"/></g>
+    <g stroke="url(#ivory)" stroke-width="34" stroke-linecap="square"><path d="m-303 21 233-97L161 8 340-61"/></g>
+    <g stroke="#4e3a41" stroke-width="10"><path d="m-278 11 183-76M-42-66 134-2M187-2 312-50"/></g>
+    <g stroke="#d697ae" stroke-width="3"><path d="m-280 29 184-78M-39-47 171 24M192 10 319-38"/></g>
+    <use href="#joint" transform="translate(-303 21)"/><use href="#joint" transform="translate(-70 -76) scale(1.16)"/><use href="#joint" transform="translate(161 8) scale(.92)"/><use href="#joint" transform="translate(340 -61) scale(.58)"/>
+    <g transform="translate(360 -68) rotate(-20)"><path d="M0-11h30v22H0Z" fill="#3b2e34"/><path d="M25-18h39v9H42M25 18h39V9H42" stroke="#d39aaf" stroke-width="6"/></g>
+  </g>
+</svg>

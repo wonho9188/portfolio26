@@ -16,6 +16,7 @@ import "@fontsource/instrument-serif/latin-400-italic.css";
 import "./styles/tokens.css";
 import "./styles/site.css";
 import "./styles/home.css";
+import "./styles/pages.css";
 import App from "./App";
 
 createRoot(document.getElementById("root")!).render(

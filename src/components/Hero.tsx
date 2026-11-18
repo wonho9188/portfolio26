@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import heroGlow from "../assets/hero-glow.svg";
-import fallback from "../assets/ruled-surface-fallback.png";
+import fallback from "../assets/kinematic-sculpture.svg";
 import { scrollTo } from "./primitives";
 const RuledSurface = lazy(() => import("./RuledSurface"));
 export default function Hero() {
