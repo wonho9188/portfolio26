@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
 
 for (const [width, normalHeight, compactHeight] of [
-  [1440, 88, 64],
-  [375, 64, 56],
+  [1440, 72, 56],
+  [375, 56, 48],
 ]) {
   test(`header follows scroll direction without shifting content at ${width}px`, async ({
     page,

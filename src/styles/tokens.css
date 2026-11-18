@@ -165,8 +165,8 @@
   --page-gutter: 4rem;
   --content-max: 82rem;
   --article-max: 52.5rem;
-  --header-height: 5.5rem;
-  --header-compact-height: 4rem;
+  --header-height: 4.5rem;
+  --header-compact-height: 3.5rem;
   --motion-fast: 160ms;
   --motion-theme: 220ms;
   --motion-slow: 300ms;
@@ -207,8 +207,8 @@
 @media (max-width: 1199px) {
   :root {
     --page-gutter: 2rem;
-    --header-height: 4rem;
-    --header-compact-height: 3.5rem;
+    --header-height: 3.5rem;
+    --header-compact-height: 3rem;
   }
 }
 @media (max-width: 767px) {
