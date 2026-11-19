@@ -142,6 +142,7 @@ for (const width of [320, 375, 768, 1200, 1440]) {
       "blog?topic=robotics-concept-blocks",
       "life?topic=reading",
       "blog/ros2-interfaces",
+      "blog/moveit-concept-block",
       "life/choir-accompanist",
     ]) {
       await page.goto(`./#/${route}`);

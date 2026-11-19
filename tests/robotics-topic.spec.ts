@@ -8,6 +8,12 @@ const topicTab = `[role="tab"][id$="-tab-${topic}"]`;
 test("new robotics topic has a persistent URL and an honest empty state", async ({
   page,
 }) => {
+  await page.route("**/src/data/posts-source.json*", (route) =>
+    route.fulfill({
+      contentType: "application/javascript",
+      body: `export default ${JSON.stringify({ ...source, posts: source.posts.filter((post) => post.group !== topic) })};`,
+    }),
+  );
   await page.goto(topicUrl);
   await expect(page.locator(topicTab)).toHaveAttribute("aria-selected", "true");
   await expect(page.locator(topicTab)).toContainText("0");
@@ -40,7 +46,7 @@ test("multiple posts are ordered and stay inside the topic through detail naviga
   await page.route("**/src/data/posts-source.json*", (route) =>
     route.fulfill({
       contentType: "application/javascript",
-      body: `export default ${JSON.stringify({ ...source, posts: [...source.posts, article(2), article(1)] })};`,
+      body: `export default ${JSON.stringify({ ...source, posts: [...source.posts.filter((post) => post.group !== topic), article(2), article(1)] })};`,
     }),
   );
   await page.goto(topicUrl);
