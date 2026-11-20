@@ -1,0 +1,155 @@
+.natural-language-overview {
+  margin-top: 56px;
+}
+.natural-language-lab {
+  padding: clamp(20px, 4vw, 40px);
+  border: 1px solid var(--color-line);
+  border-radius: 20px;
+  background: var(--color-surface);
+}
+.natural-language-overview h3 {
+  font-size: clamp(1.375rem, 3vw, 1.875rem);
+  line-height: 1.65;
+}
+.natural-language-lab h3 {
+  margin-top: 16px;
+}
+.natural-language-overview .natural-language-instruction {
+  margin-top: 16px;
+  color: var(--color-muted);
+  font-size: 1.125rem;
+}
+.natural-language-examples {
+  display: grid;
+  gap: 16px;
+  margin-top: 32px;
+}
+.natural-language-examples button {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 64px;
+  padding: 16px 20px;
+  border: 1px solid var(--color-interactive-line);
+  border-radius: 12px;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font: 500 clamp(1.0625rem, 2.4vw, 1.25rem)/1.8 var(--font-body);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+.natural-language-examples button:hover {
+  background: var(--color-raised);
+  border-color: var(--color-accent);
+}
+.natural-language-examples button[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+  background: var(--color-raised);
+}
+.natural-language-examples svg {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+.natural-language-result {
+  border-top: 1px solid var(--color-line);
+  margin-top: 32px;
+  padding-top: 28px;
+}
+.natural-language-result-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.natural-language-result-heading svg {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+.natural-language-result h4 {
+  font-size: clamp(1.125rem, 2.4vw, 1.375rem);
+  line-height: 1.7;
+}
+.natural-language-result dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin: 24px 0 0;
+}
+.natural-language-result dt {
+  color: var(--color-muted);
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+.natural-language-result dd {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.7;
+}
+.natural-language-overview .natural-language-response {
+  min-height: 3.8em;
+  color: var(--color-accent);
+  font-size: 1.125rem;
+  line-height: 1.9;
+  margin-top: 28px;
+}
+.natural-language-overview .natural-language-caption,
+.natural-language-overview .natural-language-reference {
+  margin-top: 24px;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+.natural-language-explanation {
+  margin-top: 56px;
+}
+.natural-language-explanation h3 {
+  margin-bottom: 24px;
+}
+.natural-language-overview .natural-language-explanation p {
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+}
+.natural-language-connection {
+  margin-top: 56px;
+  padding: 28px 0;
+  border-block: 1px solid var(--color-line);
+}
+.natural-language-overview .natural-language-connection p {
+  margin-top: 16px;
+  font-size: 1.125rem;
+}
+.natural-language-connection a {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--color-accent);
+  font-size: 1.125rem;
+  text-underline-offset: 5px;
+}
+.natural-language-reference a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .natural-language-overview {
+    margin-top: 40px;
+  }
+  .natural-language-examples button {
+    padding: 16px;
+    gap: 12px;
+  }
+  .natural-language-examples svg {
+    width: 26px;
+    height: 26px;
+  }
+  .natural-language-result dl {
+    grid-template-columns: 1fr;
+  }
+  .natural-language-explanation {
+    margin-top: 48px;
+  }
+}

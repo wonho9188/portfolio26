@@ -1,0 +1,146 @@
+.mujoco-overview {
+  margin-top: 56px;
+}
+.mujoco-lab {
+  padding: clamp(20px, 4vw, 40px);
+  border: 1px solid var(--color-line);
+  border-radius: 20px;
+  background: var(--color-surface);
+}
+.mujoco-overview h3 {
+  font-size: clamp(1.375rem, 3vw, 1.875rem);
+  line-height: 1.65;
+}
+.mujoco-lab h3 {
+  margin-top: 16px;
+}
+.mujoco-overview .mujoco-instruction {
+  margin-top: 16px;
+  font-size: 1.125rem;
+  color: var(--color-muted);
+}
+.mujoco-gravity {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.mujoco-lab button {
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 1px solid var(--color-interactive-line);
+  border-radius: 8px;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font: 500 1.0625rem/1.8 var(--font-body);
+  cursor: pointer;
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+.mujoco-lab button:hover {
+  background: var(--color-raised);
+  border-color: var(--color-accent);
+}
+.mujoco-lab button[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+  background: var(--color-raised);
+}
+.mujoco-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 32px auto 0;
+}
+.mujoco-svg-label {
+  font: 500 20px var(--font-body);
+}
+.mujoco-controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--color-line);
+  padding-top: 24px;
+  margin-top: 24px;
+}
+.mujoco-controls label {
+  font-size: 1.125rem;
+}
+.mujoco-controls output {
+  font: 700 1.25rem/1.8 var(--font-mono);
+  color: var(--color-accent);
+}
+.mujoco-controls input {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+.mujoco-controls > span {
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+.mujoco-controls > span:last-child {
+  text-align: right;
+}
+.mujoco-result {
+  min-height: 134px;
+  margin-top: 28px;
+}
+.mujoco-height {
+  color: var(--color-accent);
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+}
+.mujoco-overview .mujoco-result p {
+  margin-top: 16px;
+  font-size: 1.125rem;
+}
+.mujoco-overview .mujoco-caption {
+  margin-top: 24px;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+.mujoco-explanation {
+  margin-top: 56px;
+}
+.mujoco-explanation h3 {
+  margin-bottom: 24px;
+}
+.mujoco-overview .mujoco-explanation p {
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+}
+.mujoco-connection {
+  margin-top: 56px;
+  padding: 28px 0;
+  border-block: 1px solid var(--color-line);
+}
+.mujoco-overview .mujoco-connection p {
+  margin-top: 16px;
+  font-size: 1.125rem;
+}
+.mujoco-connection a {
+  display: inline-block;
+  margin-top: 20px;
+  color: var(--color-accent);
+  font-size: 1.125rem;
+  text-underline-offset: 5px;
+}
+@media (max-width: 600px) {
+  .mujoco-overview {
+    margin-top: 40px;
+  }
+  .mujoco-svg-label {
+    font-size: 30px;
+  }
+  .mujoco-explanation {
+    margin-top: 48px;
+  }
+  .mujoco-result {
+    min-height: 154px;
+  }
+}

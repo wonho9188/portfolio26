@@ -1,0 +1,168 @@
+.nav2-overview {
+  margin-top: 56px;
+}
+.nav2-lab {
+  padding: clamp(20px, 4vw, 40px);
+  border: 1px solid var(--color-line);
+  border-radius: 20px;
+  background: var(--color-surface);
+}
+.nav2-overview h3 {
+  font-size: clamp(1.375rem, 3vw, 1.875rem);
+  line-height: 1.65;
+}
+.nav2-lab h3 {
+  margin-top: 16px;
+}
+.nav2-destinations,
+.nav2-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.nav2-lab button {
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 1px solid var(--color-interactive-line);
+  border-radius: 8px;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font: 500 1.0625rem/1.7 var(--font-body);
+  cursor: pointer;
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+.nav2-lab button:hover {
+  background: var(--color-raised);
+  border-color: var(--color-accent);
+}
+.nav2-lab button[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  background: var(--color-raised);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+.nav2-lab .nav2-step {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-color: var(--color-accent);
+}
+.nav2-lab button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.nav2-map {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  margin: 32px auto 0;
+}
+.nav2-map-symbol {
+  font: 700 24px var(--font-body);
+}
+.nav2-map-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: center;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+  margin-top: 20px;
+}
+.nav2-controls {
+  padding-top: 24px;
+  border-top: 1px solid var(--color-line);
+}
+.nav2-overview .nav2-status {
+  margin-top: 24px;
+  min-height: 3.8em;
+  color: var(--color-accent);
+  font-size: 1.125rem;
+  line-height: 1.9;
+}
+.nav2-overview .nav2-caption,
+.nav2-overview .nav2-reference {
+  margin-top: 24px;
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+}
+.nav2-explanation {
+  margin-top: 56px;
+}
+.nav2-steps {
+  list-style: none;
+  display: grid;
+  gap: 28px;
+  margin: 32px 0;
+  padding: 0;
+}
+.nav2-overview .nav2-steps li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+.nav2-steps li::before {
+  content: none;
+}
+.nav2-steps li > span {
+  padding-top: 5px;
+  color: var(--color-accent);
+  font: 0.9375rem/1.8 var(--font-mono);
+}
+.nav2-steps h4 {
+  font-size: 1.25rem;
+  line-height: 1.7;
+}
+.nav2-overview .nav2-steps p {
+  font-size: 1.125rem;
+  margin-top: 12px;
+}
+.nav2-overview .nav2-explanation > p {
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+}
+.nav2-connection {
+  margin-top: 56px;
+  padding: 28px 0;
+  border-block: 1px solid var(--color-line);
+}
+.nav2-overview .nav2-connection p {
+  margin-top: 16px;
+  font-size: 1.125rem;
+}
+.nav2-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  margin-top: 20px;
+  font-size: 1.125rem;
+  color: var(--color-accent);
+}
+.nav2-reference a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .nav2-overview {
+    margin-top: 40px;
+  }
+  .nav2-explanation {
+    margin-top: 48px;
+  }
+  .nav2-destinations {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .nav2-destinations button {
+    text-align: left;
+  }
+  .nav2-controls {
+    gap: 10px;
+  }
+  .nav2-map-symbol {
+    font-size: 32px;
+  }
+}

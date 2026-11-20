@@ -1,0 +1,7 @@
+{
+  "asset": "src/assets/moveit-goal-to-motion.png",
+  "mode": "Built-in image_gen",
+  "purpose": "MoveIt의 목표 → 관절 각도 → 경로 → 시간표 → 컨트롤러 실행 요청을 설명하는 세 번째 화면의 개념 그림입니다. 실제 로봇 실행이나 MoveIt 화면을 보여주는 검증 자료가 아닙니다.",
+  "sourceImage": "exec-ac51222b-377e-4d3f-abff-71d73e87bea4.png",
+  "direction": "기존 MoveIt 그림과 같은 따뜻한 아이보리·크림·로즈의 정교한 3D 일러스트. 상자 위 목표를 아래로 향하는 집게 손, 관절 각도 호, 장애물을 피하는 점선, 세 관절의 추상적인 시간표와 컨트롤러 전달 선을 한 장에 구성. 텍스트는 이미지에 넣지 않고 웹의 대체 텍스트와 캡션으로 제공합니다."
+}

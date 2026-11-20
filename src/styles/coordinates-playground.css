@@ -1,0 +1,236 @@
+.coordinates-lesson {
+  margin-top: 40px;
+}
+.coordinates-lab {
+  padding: 28px;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  background: var(--color-surface);
+}
+.coordinates-lesson h3 {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  line-height: 1.7;
+  font-weight: 700;
+}
+.coordinates-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.coordinates-toolbar button,
+.coordinates-units button {
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 1px solid var(--color-interactive-line);
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.6;
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+.coordinates-toolbar button:hover,
+.coordinates-units button:hover {
+  border-color: var(--color-accent);
+  background: var(--color-raised);
+}
+.coordinates-units button[aria-pressed="true"] {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: var(--color-raised);
+}
+.coordinates-lab .coordinates-help {
+  margin-top: 24px;
+  font-size: 1.125rem;
+  line-height: 1.85;
+  color: var(--color-muted);
+}
+.coordinates-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 1fr);
+  align-items: start;
+  gap: 28px;
+  margin-top: 28px;
+}
+.coordinates-field {
+  min-width: 0;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-background);
+}
+.coordinates-field svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  touch-action: none;
+  cursor: crosshair;
+}
+.coordinates-field figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 0 16px 20px;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-muted);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.coordinates-controls {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.coordinates-controls .coordinates-origin-label {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+.coordinates-axis-key {
+  display: grid;
+  gap: 4px;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-muted);
+}
+.coordinates-slider > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  font-size: 1rem;
+}
+.coordinates-slider output {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+.coordinates-slider input {
+  width: 100%;
+  height: 44px;
+  margin: 4px 0 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+.coordinates-slider input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.coordinates-units {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.coordinates-controls .coordinates-unit-note {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-muted);
+}
+.coordinates-answer {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 24px;
+  padding-top: 24px;
+  margin-top: 28px;
+  border-top: 1px solid var(--color-line);
+}
+.coordinates-answer > p {
+  font-size: 1.125rem;
+  line-height: 1.9;
+}
+.coordinates-answer > p + p {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  margin-top: 0;
+}
+.coordinates-answer p > span {
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+.coordinates-answer [data-testid="coordinate-pair"] {
+  font: 500 clamp(1.75rem, 3vw, 2.25rem)/1.5 var(--font-mono);
+  color: var(--color-accent);
+}
+.coordinates-agreement,
+.coordinates-origin-explanation {
+  margin-top: 48px;
+}
+.coordinates-agreement dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  margin-top: 28px;
+}
+.coordinates-agreement dl > div {
+  padding-top: 20px;
+  border-top: 1px solid var(--color-line);
+}
+.coordinates-agreement dt {
+  color: var(--color-accent);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.coordinates-agreement dd {
+  display: grid;
+  gap: 8px;
+  font-size: 1.125rem;
+  line-height: 1.85;
+  margin-top: 12px;
+}
+.coordinates-agreement dd strong {
+  font-weight: 500;
+}
+.coordinates-agreement .coordinates-example-note {
+  margin-top: 24px;
+  font-size: 1rem;
+  color: var(--color-muted);
+}
+.coordinates-origin-explanation p {
+  margin-top: 24px;
+}
+.coordinates-lesson .coordinates-word-note {
+  margin-top: 32px;
+  border-left: 3px solid var(--color-accent);
+  padding: 24px;
+  background: var(--color-surface);
+  font-size: 1.25rem;
+  line-height: 1.85;
+}
+@media (max-width: 1000px) {
+  .coordinates-workspace {
+    grid-template-columns: 1fr;
+  }
+  .coordinates-field {
+    width: 100%;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+}
+@media (max-width: 767px) {
+  .coordinates-lab {
+    padding: 24px 16px;
+  }
+  .coordinates-lab .coordinates-help {
+    font-size: 1rem;
+  }
+  .coordinates-answer {
+    grid-template-columns: 1fr;
+  }
+  .coordinates-agreement dl {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .coordinates-lesson .coordinates-word-note {
+    padding: 20px;
+    font-size: 1.125rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .coordinates-toolbar button,
+  .coordinates-units button {
+    transition: none;
+  }
+}

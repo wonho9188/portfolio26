@@ -1,0 +1,265 @@
+.tone-and-feel {
+  margin-top: 48px;
+}
+.tone-feel-definitions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+.tone-feel-definitions > div {
+  padding-top: 24px;
+  border-top: 1px solid var(--color-line);
+}
+.tone-and-feel h3 {
+  margin-top: 20px;
+  font-size: clamp(1.375rem, 3vw, 1.875rem);
+  line-height: 1.7;
+}
+.tone-and-feel .tone-feel-definitions p:not(.eyebrow) {
+  margin-top: 24px;
+  font-size: 1.125rem;
+}
+.tone-and-feel .tone-feel-scope,
+.tone-and-feel .tone-feel-instruction {
+  margin-top: 24px;
+  font-size: 1.125rem;
+  color: var(--color-muted);
+}
+.tone-feel-lab {
+  margin-top: 56px;
+}
+.tone-feel-controls {
+  min-width: 0;
+  border: 0;
+  margin: 28px 0 0;
+  padding: 0;
+}
+.tone-feel-controls legend {
+  font-size: 1.125rem;
+  padding: 0;
+  margin-bottom: 16px;
+}
+.tone-feel-controls > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.tone-feel-controls button,
+.tone-feel-reset {
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 1px solid var(--color-interactive-line);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: 500 1.0625rem/1.8 var(--font-body);
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+.tone-feel-controls button:hover,
+.tone-feel-reset:hover {
+  background: var(--color-raised);
+  border-color: var(--color-accent);
+}
+.tone-feel-controls button[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+  background: var(--color-raised);
+}
+.tone-feel-example {
+  margin: 32px 0 0;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.tone-feel-preview {
+  --mood-background: var(--color-surface);
+  --mood-ink: var(--color-ink);
+  --mood-muted: var(--color-muted);
+  --mood-line: var(--color-line);
+  --mood-action: var(--color-accent);
+  --mood-on-action: var(--color-on-accent);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  min-height: 420px;
+  padding: 40px;
+  color: var(--mood-ink);
+  background: var(--mood-background);
+}
+.tone-feel-preview-label {
+  font: 1rem/1.8 var(--font-mono);
+  color: var(--mood-muted);
+}
+.tone-feel-preview h4 {
+  font: 700 clamp(1.875rem, 4vw, 2.5rem)/1.6 var(--font-body);
+}
+.tone-and-feel .tone-feel-preview-copy {
+  max-width: 34em;
+  font-size: 1.125rem;
+  line-height: 1.9;
+  margin: 0;
+}
+.tone-feel-preview-link {
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 1px solid var(--mood-action);
+  border-radius: 8px;
+  color: var(--mood-on-action);
+  background: var(--mood-action);
+  font-size: 1.125rem;
+  transition: transform 180ms ease;
+}
+.tone-feel-preview-link:hover {
+  transform: translateY(-2px);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.tone-feel-preview-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  width: 100%;
+  border-top: 1px solid var(--mood-line);
+  color: var(--mood-muted);
+  font-size: 1rem;
+}
+.tone-feel-preview[data-look="soft"] {
+  --mood-background: #f7eee6;
+  --mood-ink: #382b29;
+  --mood-muted: #6d514a;
+  --mood-line: #d5bdb3;
+  --mood-action: #8d405d;
+  --mood-on-action: #fff8f0;
+  border-radius: 28px;
+  gap: 32px;
+}
+.tone-feel-preview[data-look="soft"] .tone-feel-preview-label {
+  font: italic 2rem/1.5 var(--font-accent);
+}
+.tone-feel-preview[data-look="soft"] h4 {
+  font-weight: 500;
+}
+.tone-feel-preview[data-look="soft"] .tone-feel-preview-link {
+  border-radius: 999px;
+}
+.tone-feel-preview[data-look="bold"] {
+  --mood-background: #7f3028;
+  --mood-ink: #fff6ef;
+  --mood-muted: #f4d1c4;
+  --mood-line: #b76e61;
+  --mood-action: #f6dac8;
+  --mood-on-action: #632920;
+  border-left: 6px solid #e9a087;
+}
+.tone-feel-preview[data-look="bold"] .tone-feel-preview-label {
+  font: 700 1.125rem/1.7 var(--font-brand);
+}
+.tone-feel-preview[data-look="bold"] h4 {
+  letter-spacing: -0.04em;
+}
+.tone-feel-preview[data-look="bold"] .tone-feel-preview-link {
+  border-radius: 0;
+  font-weight: 700;
+}
+.tone-feel-example figcaption {
+  padding: 20px 24px;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-muted);
+  font-size: 0.9375rem;
+  line-height: 1.85;
+}
+.tone-feel-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 24px;
+}
+.tone-and-feel .tone-feel-selection p {
+  font-size: 1rem;
+  margin: 0;
+  color: var(--color-accent);
+}
+.tone-feel-selection > span {
+  flex-basis: 100%;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+.tone-feel-reset {
+  margin-top: 24px;
+}
+.tone-feel-workflow {
+  margin-top: 56px;
+}
+.tone-feel-workflow ol {
+  display: grid;
+  gap: 28px;
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+}
+.tone-and-feel .tone-feel-workflow li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+.tone-feel-workflow li::before {
+  content: none;
+}
+.tone-feel-workflow li > span {
+  padding-top: 4px;
+  font: 0.9375rem/1.8 var(--font-mono);
+  color: var(--color-accent);
+}
+.tone-feel-workflow h4 {
+  font-size: 1.25rem;
+  line-height: 1.7;
+}
+.tone-and-feel .tone-feel-workflow p {
+  margin-top: 14px;
+  font-size: 1.125rem;
+}
+.tone-feel-closing {
+  margin-top: 56px;
+  border-block: 1px solid var(--color-line);
+  padding-block: 28px;
+}
+.tone-feel-closing h3 {
+  margin-top: 0;
+}
+.tone-and-feel .tone-feel-closing p {
+  margin-top: 24px;
+  font-size: 1.125rem;
+}
+.tone-feel-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  margin-top: 24px;
+  color: var(--color-accent);
+  font-size: 1.125rem;
+}
+.tone-and-feel .tone-feel-source {
+  margin-top: 24px;
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+.tone-feel-source a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .tone-feel-definitions {
+    grid-template-columns: 1fr;
+  }
+  .tone-feel-preview {
+    padding: 28px 24px;
+  }
+  .tone-feel-lab,
+  .tone-feel-workflow {
+    margin-top: 48px;
+  }
+}

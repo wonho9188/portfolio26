@@ -1,0 +1,130 @@
+.moveit-versions {
+  margin-top: 40px;
+}
+.moveit-version-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 1.25rem;
+  line-height: 1.85;
+}
+.moveit-version-table caption {
+  text-align: left;
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  margin-bottom: 28px;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.moveit-version-table th,
+.moveit-version-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 24px 16px;
+  border-bottom: 1px solid var(--color-line);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.moveit-version-table th:first-child {
+  width: 26%;
+}
+.moveit-version-table thead th {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+.moveit-version-table tbody th {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+.moveit-versions .moveit-version-summary {
+  margin-top: 40px;
+}
+.moveit-versions .moveit-version-support {
+  margin-top: 28px;
+  color: var(--color-muted);
+  font-size: 1.125rem;
+  line-height: 1.85;
+}
+.moveit-version-support .text-link {
+  color: var(--color-accent);
+  font-size: 1rem;
+  margin-top: 12px;
+}
+.moveit-version-choice {
+  margin-top: 40px;
+  padding: 28px;
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-surface);
+}
+.moveit-version-choice h3 {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.7;
+}
+.moveit-version-choice p {
+  margin-top: 20px;
+  font-size: 1.25rem;
+  line-height: 1.85;
+}
+.moveit-version-reference {
+  margin-top: 28px;
+  color: var(--color-accent);
+}
+@media (max-width: 767px) {
+  .moveit-version-table caption {
+    display: block;
+    width: 100%;
+  }
+  .moveit-version-table,
+  .moveit-version-table tbody {
+    display: block;
+  }
+  .moveit-version-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .moveit-version-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 16px;
+    padding: 24px 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .moveit-version-table tbody th {
+    grid-column: 1 / -1;
+  }
+  .moveit-version-table tbody th,
+  .moveit-version-table td {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    font-size: 1.125rem;
+  }
+  .moveit-version-table tbody th {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+  .moveit-version-table tbody th:first-child {
+    width: 100%;
+  }
+  .moveit-version-table td::before {
+    content: attr(data-version);
+    display: block;
+    color: var(--color-muted);
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .moveit-version-choice {
+    padding: 24px 20px;
+  }
+  .moveit-version-choice p {
+    font-size: 1.125rem;
+  }
+}

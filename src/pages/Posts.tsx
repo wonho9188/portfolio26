@@ -2,6 +2,8 @@ import { useEffect, useId, useRef } from "react";
 import type { KeyboardEvent } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import {
+  articleIllustrations,
+  designTopic,
   getTopicPosts,
   lifeGroups,
   posts,
@@ -15,6 +17,28 @@ import {
   scrollTo,
 } from "../components/primitives";
 import { PostRow } from "../components/Cards";
+import KinematicsLab from "../components/KinematicsLab";
+import CoordinateFramesTF from "../components/CoordinateFramesTF";
+import CoordinatesPlayground from "../components/CoordinatesPlayground";
+import LessonText from "../components/LessonText";
+import TFTransformExamples from "../components/TFTransformExamples";
+import MoveItUsage from "../components/MoveItUsage";
+import MoveItVersions from "../components/MoveItVersions";
+import ROS2Overview from "../components/ROS2Overview";
+import LidarOverview from "../components/LidarOverview";
+import Nav2Overview from "../components/Nav2Overview";
+import NaturalLanguageOverview from "../components/NaturalLanguageOverview";
+import LLMOverview from "../components/LLMOverview";
+import MujocoOverview from "../components/MujocoOverview";
+import TaskPlanningOverview from "../components/TaskPlanningOverview";
+import DesignTrends from "../components/DesignTrends";
+import StyleGuideOverview from "../components/StyleGuideOverview";
+import ReferencePractice from "../components/ReferencePractice";
+import VisualPriority from "../components/VisualPriority";
+import ComponentKinds from "../components/ComponentKinds";
+import ToneAndFeel from "../components/ToneAndFeel";
+import FMSOverview from "../components/FMSOverview";
+import { getLessonSlides } from "../data/lesson-slides";
 
 function PostTabs({ kind }: { kind: "tech" | "life" }) {
   const [params, setParams] = useSearchParams();
@@ -26,6 +50,7 @@ function PostTabs({ kind }: { kind: "tech" | "life" }) {
     : groups[0][0];
   const index = groups.findIndex((g) => g[0] === current);
   const isRoboticsTopic = kind === "tech" && current === roboticsTopic.id;
+  const isDesignTopic = kind === "tech" && current === designTopic.id;
   const filtered = getTopicPosts(kind, current);
   useEffect(() => {
     const list = tabsRef.current;
@@ -106,7 +131,10 @@ function PostTabs({ kind }: { kind: "tech" | "life" }) {
         {isRoboticsTopic && (
           <p className="topic-description">{roboticsTopic.description}</p>
         )}
-        <div className="post-list">
+        {isDesignTopic && (
+          <p className="topic-description">{designTopic.description}</p>
+        )}
+        <div className={`post-list${kind === "tech" ? " tech-post-grid" : ""}`}>
           {filtered.map((p, i) => (
             <PostRow key={p.slug} post={p} number={i + 1} />
           ))}
@@ -171,39 +199,88 @@ export function Life() {
 }
 export function Article() {
   const { slug } = useParams();
+  const [params] = useSearchParams();
   const post = posts.find((p) => p.slug === slug);
+  const lessonSections = post ? getLessonSlides(post) : [];
+  const isScreenLesson =
+    post?.kind === "tech" || post?.presentation === "screens";
+  const requestedScreen = Number(params.get("screen") ?? 1);
+  const screenIndex =
+    isScreenLesson && Number.isInteger(requestedScreen) && requestedScreen >= 1
+      ? Math.min(requestedScreen, lessonSections.length) - 1
+      : 0;
+  const displayedTitle = post?.title;
   useEffect(() => {
-    if (post) document.title = `${post.title} — WONHO`;
-  }, [post]);
+    if (displayedTitle) document.title = `${displayedTitle} — WONHO`;
+  }, [displayedTitle]);
+  const previousScreen = useRef({ slug, screenIndex });
+  const lessonNavigation = useRef<HTMLElement>(null);
+  const lessonDirection = useRef<"previous" | "next" | null>(null);
+  useEffect(() => {
+    if (
+      isScreenLesson &&
+      previousScreen.current.slug === slug &&
+      previousScreen.current.screenIndex !== screenIndex
+    ) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      const direction = lessonDirection.current;
+      const navigationLink = direction
+        ? (lessonNavigation.current?.querySelector<HTMLAnchorElement>(
+            direction === "next" ? "a.lesson-next" : "a.lesson-previous",
+          ) ?? lessonNavigation.current?.querySelector<HTMLAnchorElement>("a"))
+        : null;
+      (navigationLink ?? document.getElementById("main"))?.focus({
+        preventScroll: true,
+      });
+    }
+    lessonDirection.current = null;
+    previousScreen.current = { slug, screenIndex };
+  }, [slug, screenIndex, isScreenLesson]);
   if (!post) return <NotFound />;
   const base = post.kind === "tech" ? "/blog" : "/life";
   const isRoboticsTopic =
     post.kind === "tech" && post.group === roboticsTopic.id;
+  const isDesignTopic = post.kind === "tech" && post.group === designTopic.id;
+  const isConceptIntro =
+    (isRoboticsTopic && (post.sections.length === 1 || isScreenLesson)) ||
+    (isDesignTopic && (post.sections.length === 1 || isScreenLesson));
+  const visibleSections = isScreenLesson
+    ? [lessonSections[screenIndex]]
+    : post.sections;
+  const screenUrl = (index: number) =>
+    `${base}/${post.slug}${index ? `?screen=${index + 1}` : ""}`;
   const listUrl = `${base}?topic=${post.group}`;
-  const siblings = isRoboticsTopic
-      ? getTopicPosts(post.kind, post.group)
-      : posts.filter((p) => p.kind === post.kind),
+  const siblings =
+      isRoboticsTopic || isDesignTopic
+        ? getTopicPosts(post.kind, post.group)
+        : posts.filter((p) => p.kind === post.kind),
     index = siblings.indexOf(post);
   const next = siblings[index + 1],
     previous = siblings[index - 1];
   return (
-    <article className="container article-page">
+    <article
+      className={`container article-page${isConceptIntro ? " concept-intro" : ""}${isScreenLesson ? " screen-lesson" : ""}${isScreenLesson && screenIndex > 0 ? " lesson-continuation" : ""}`}
+    >
       <header className="article-header">
         <div className="breadcrumbs">
           <TextLink href={listUrl}>
             ←{" "}
             {isRoboticsTopic
               ? roboticsTopic.label
-              : post.kind === "tech"
-                ? "Tech Blog"
-                : "Life & Thoughts"}{" "}
+              : isDesignTopic
+                ? designTopic.label
+                : post.kind === "tech"
+                  ? "Tech Blog"
+                  : "Life & Thoughts"}{" "}
             목록
           </TextLink>
           <p className="eyebrow">{post.category}</p>
         </div>
-        <h1>{post.title}</h1>
-        <p className="lead">{post.excerpt}</p>
-        <p className="meta">최원호 · {post.meta.replace(/^최원호 · /, "")}</p>
+        <h1>{displayedTitle}</h1>
+        {(!isScreenLesson || screenIndex === 0) && (
+          <p className="lead">{post.excerpt}</p>
+        )}
+        <p className="meta">{post.meta.replace(/^최원호 · /, "")}</p>
       </header>
       {isRoboticsTopic && (
         <p className="article-topic">{roboticsTopic.title}</p>
@@ -224,19 +301,21 @@ export function Article() {
         </p>
       )}
       <div className="article-layout">
-        <nav className="article-toc" aria-label="이 글의 목차">
-          <p className="eyebrow">ON THIS PAGE</p>
-          {post.sections.map((s, i) => (
-            <button key={s.title} onClick={() => scrollTo(`section-${i}`)}>
-              {String(i + 1).padStart(2, "0")} {s.title}
-            </button>
-          ))}
-          {post.source && (
-            <TextLink href={post.source}>
-              기록의 바탕 보기 <Arrow />
-            </TextLink>
-          )}
-        </nav>
+        {!isConceptIntro && !isScreenLesson && (
+          <nav className="article-toc" aria-label="이 글의 목차">
+            <p className="eyebrow">ON THIS PAGE</p>
+            {post.sections.map((s, i) => (
+              <button key={s.title} onClick={() => scrollTo(`section-${i}`)}>
+                {String(i + 1).padStart(2, "0")} {s.title}
+              </button>
+            ))}
+            {post.source && (
+              <TextLink href={post.source}>
+                기록의 바탕 보기 <Arrow />
+              </TextLink>
+            )}
+          </nav>
+        )}
         <div className="article-body">
           {post.image && (
             <figure className="article-poster">
@@ -249,14 +328,122 @@ export function Article() {
               <figcaption>{post.title.split(" — ")[0]}</figcaption>
             </figure>
           )}
-          {post.sections.map((s, i) => (
-            <section key={s.title} id={`section-${i}`} tabIndex={-1}>
+          {visibleSections.map((s, i) => (
+            <section
+              key={`${s.title}-${screenIndex}`}
+              id={`section-${i}`}
+              tabIndex={-1}
+            >
               <h2>
-                {String(i + 1).padStart(2, "0")} / {s.title}
+                {String((isScreenLesson ? screenIndex : i) + 1).padStart(
+                  2,
+                  "0",
+                )}{" "}
+                / {s.title}
               </h2>
-              {s.p.map((p) => (
-                <p key={p}>{p}</p>
+              {s.illustration && articleIllustrations[s.illustration] && (
+                <figure className="article-illustration">
+                  <img
+                    src={articleIllustrations[s.illustration]}
+                    alt={s.illustrationAlt ?? ""}
+                    decoding="async"
+                  />
+                  {s.illustrationCaption && (
+                    <figcaption>{s.illustrationCaption}</figcaption>
+                  )}
+                </figure>
+              )}
+              {s.p.map((p, paragraphIndex) => (
+                <p
+                  key={p}
+                  className={
+                    s.steps
+                      ? paragraphIndex === 0
+                        ? "lesson-opening"
+                        : "lesson-example"
+                      : undefined
+                  }
+                >
+                  <LessonText text={p} emphasis={s.emphasis} />
+                </p>
               ))}
+              {s.interactive === "kinematics" && (
+                <KinematicsLab part={s.componentPart} />
+              )}
+              {s.interactive === "coordinate-frames" && (
+                <CoordinateFramesTF part={s.componentPart} />
+              )}
+              {s.interactive === "coordinates-playground" && (
+                <CoordinatesPlayground part={s.componentPart} />
+              )}
+              {s.interactive === "tf-transform" && (
+                <TFTransformExamples part={s.componentPart} />
+              )}
+              {s.supplement === "moveit-usage" && (
+                <MoveItUsage part={s.componentPart} />
+              )}
+              {s.supplement === "moveit-versions" && (
+                <MoveItVersions part={s.componentPart} />
+              )}
+              {s.interactive === "ros2-overview" && (
+                <ROS2Overview part={s.componentPart} />
+              )}
+              {s.interactive === "lidar-overview" && (
+                <LidarOverview part={s.componentPart} />
+              )}
+              {s.interactive === "nav2-overview" && (
+                <Nav2Overview part={s.componentPart} />
+              )}
+              {s.interactive === "llm-overview" && (
+                <LLMOverview part={s.componentPart} />
+              )}
+              {s.interactive === "design-trends" && (
+                <DesignTrends part={s.componentPart} />
+              )}
+              {s.interactive === "reference-practice" && (
+                <ReferencePractice part={s.componentPart} />
+              )}
+              {s.interactive === "visual-priority" && (
+                <VisualPriority part={s.componentPart} />
+              )}
+              {s.interactive === "component-kinds" && (
+                <ComponentKinds part={s.componentPart} />
+              )}
+              {s.interactive === "tone-and-feel" && (
+                <ToneAndFeel part={s.componentPart} />
+              )}
+              {s.interactive === "fms-overview" && (
+                <FMSOverview part={s.componentPart} />
+              )}
+              {s.interactive === "style-guide-overview" && (
+                <StyleGuideOverview part={s.componentPart} />
+              )}
+              {s.interactive === "mujoco-overview" && (
+                <MujocoOverview part={s.componentPart} />
+              )}
+              {s.interactive === "task-planning-overview" && (
+                <TaskPlanningOverview part={s.componentPart} />
+              )}
+              {s.interactive === "natural-language-overview" && (
+                <NaturalLanguageOverview part={s.componentPart} />
+              )}
+              {s.steps && (
+                <ol className="lesson-steps">
+                  {s.steps.map((step, stepIndex) => (
+                    <li key={step.title}>
+                      <span className="lesson-step-number" aria-hidden="true">
+                        {stepIndex + 1}
+                      </span>
+                      <div>
+                        <h3>{step.title}</h3>
+                        <p>
+                          <LessonText text={step.body} emphasis={s.emphasis} />
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              )}
               {s.bullets && (
                 <ul>
                   {s.bullets.map((b) => (
@@ -268,27 +455,83 @@ export function Article() {
           ))}
         </div>
       </div>
-      <nav className="article-pagination" aria-label="다른 글">
-        <Link to={previous ? `${base}/${previous.slug}` : listUrl}>
-          <span className="eyebrow">
-            ← {previous ? "PREVIOUS POST" : "BACK TO POSTS"}
-          </span>
-          <span>
-            {previous?.title ??
-              (isRoboticsTopic
-                ? `${roboticsTopic.label} 목록`
-                : post.kind === "tech"
-                  ? "Tech Blog 목록"
-                  : "Life & Thoughts 목록")}
-          </span>
-        </Link>
-        {next && (
-          <Link to={`${base}/${next.slug}`}>
-            <span className="eyebrow">NEXT POST →</span>
-            <span>{next.title}</span>
+      {isScreenLesson && (
+        <nav
+          ref={lessonNavigation}
+          className="lesson-navigation"
+          aria-label="학습 화면"
+        >
+          {screenIndex > 0 ? (
+            <Link
+              className="lesson-control lesson-previous"
+              to={screenUrl(screenIndex - 1)}
+              onClick={() => {
+                lessonDirection.current = "previous";
+              }}
+            >
+              ← 이전 화면
+            </Link>
+          ) : (
+            <button className="lesson-control lesson-previous" disabled>
+              ← 이전 화면
+            </button>
+          )}
+          <p className="meta" aria-live="polite">
+            {screenIndex + 1} / {lessonSections.length}
+          </p>
+          {screenIndex < lessonSections.length - 1 ? (
+            <Link
+              className="lesson-control lesson-next"
+              to={screenUrl(screenIndex + 1)}
+              onClick={() => {
+                lessonDirection.current = "next";
+              }}
+            >
+              다음 화면 →
+            </Link>
+          ) : (
+            <button className="lesson-control lesson-next" disabled>
+              다음 화면 →
+            </button>
+          )}
+        </nav>
+      )}
+      {(isConceptIntro || isScreenLesson) && post.source && (
+        <TextLink className="concept-source" href={post.source}>
+          {post.sourceLabel ??
+            (post.slug === "moveit-concept-block"
+              ? "MoveIt 공식 문서 보기"
+              : isConceptIntro
+                ? "공식 문서 보기"
+                : "기록의 바탕 보기")}{" "}
+          <Arrow />
+        </TextLink>
+      )}
+      {(!post.presentation || screenIndex === lessonSections.length - 1) && (
+        <nav className="article-pagination" aria-label="다른 글">
+          <Link to={previous ? `${base}/${previous.slug}` : listUrl}>
+            <span className="eyebrow">
+              ← {previous ? "PREVIOUS POST" : "BACK TO POSTS"}
+            </span>
+            <span>
+              {previous?.title ??
+                (isRoboticsTopic
+                  ? `${roboticsTopic.label} 목록`
+                  : isDesignTopic
+                    ? `${designTopic.label} 목록`
+                    : post.kind === "tech"
+                      ? "Tech Blog 목록"
+                      : "Life & Thoughts 목록")}
+            </span>
           </Link>
-        )}
-      </nav>
+          {next && (
+            <Link to={`${base}/${next.slug}`}>
+              <span className="eyebrow">NEXT POST →</span>
+              <span>{next.title}</span>
+            </Link>
+          )}
+        </nav>
+      )}
       <TextLink href={listUrl}>
         목록으로 돌아가기 <Arrow />
       </TextLink>

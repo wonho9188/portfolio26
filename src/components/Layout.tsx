@@ -86,12 +86,47 @@ export function Header() {
             </button>
             <button
               ref={button}
+              type="button"
               className="menu-button"
+              aria-label={open ? "메뉴 닫기" : "메뉴"}
               aria-expanded={open}
               aria-controls="compact-menu"
               onClick={() => setOpen(!open)}
             >
-              {open ? "닫기" : "메뉴"}
+              <svg
+                className="menu-icon"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <line
+                  className="menu-icon-line menu-icon-top"
+                  x1="3"
+                  y1="6"
+                  x2="21"
+                  y2="6"
+                />
+                <line
+                  className="menu-icon-line menu-icon-middle"
+                  x1="3"
+                  y1="12"
+                  x2="21"
+                  y2="12"
+                />
+                <line
+                  className="menu-icon-line menu-icon-bottom"
+                  x1="3"
+                  y1="18"
+                  x2="21"
+                  y2="18"
+                />
+              </svg>
             </button>
           </div>
         </div>

@@ -4,6 +4,8 @@
 
 ## 먼저 볼 곳
 
+- 현재 웹의 스타일·컴포넌트 예시: `/blog/style-guide-components` · 디자인 탭의 ‘스타일 가이드와 컴포넌트’. 아래 초기 설계 자료와 구분하며, 웹 예시는 현재 CSS 값과 공통 컴포넌트를 사용합니다.
+
 - [피그마 스타일 가이드](https://www.figma.com/design/uRijW3DcSLT7oSFLqkpoQL/?node-id=251-120)
 - [피그마 컴포넌트 예시](https://www.figma.com/design/uRijW3DcSLT7oSFLqkpoQL/?node-id=253-223)
 - `preview.html`: 브라우저에서 확인하는 HTML/CSS 예시. 같은 폴더의 CSS·JS와 상위 assets 폴더를 함께 사용합니다.
@@ -116,6 +118,8 @@
 
 PC 헤더는 기본 72px·스크롤 중 표시 시 56px, 태블릿·모바일은 기본 56px·스크롤 중 48px입니다. 모드 전환 버튼의 배경은 높이 32px, 텍스트 14px, 아이콘 16px로 줄이되 실제 클릭·터치 영역의 높이는 44px를 유지합니다. 펼친 메뉴와 접힌 메뉴 모두 호버·활성 색상에 180ms 전환을 적용합니다. 모션 줄이기 설정에서는 기존 공통 규칙에 따라 전환 시간을 줄입니다.
 
+접힌 메뉴 버튼은 1200px 미만에서 표시하며, 글자 대신 24px SVG 햄버거 아이콘을 사용합니다. 터치 영역은 44×44px입니다. 메뉴를 열면 위·아래 선이 220ms 동안 교차 회전하고 가운데 선이 사라져 X가 됩니다. 닫으면 반대로 전환합니다. `aria-expanded`·접근성 이름으로 상태를 알리며, Escape로 닫으면 버튼으로 초점을 돌립니다. 모션 줄이기 설정은 공통 규칙을 따릅니다. (2026-11-20)
+
 ### 웹 배너 조형 · 2026-11-18
 
 기존 물결 곡면을 다면체 관절·중공 링크·그리퍼로 이루어진 기하학적 로봇 암으로 변경했습니다. `KinematicSculpture.ts`의 강체 연결은 관절 중심을 공유하고 링크 길이를 유지합니다. 커서에는 관절 각도와 시점이 완만하게 반응합니다. 모션 줄이기, 정지·재생, 화면 밖 렌더링 중단은 유지하며, Three.js가 준비되지 않거나 WebGL을 사용할 수 없으면 같은 조형의 `kinematic-sculpture.svg`를 표시합니다. 색상은 기존 테마의 로즈 포인트와 따뜻한 아이보리 금속을 사용합니다. 실제 로봇의 제어·안전 검증용 모델은 아니며 포트폴리오의 시각 조형입니다.
@@ -192,5 +196,7 @@ PC 헤더는 기본 72px·스크롤 중 표시 시 56px, 태블릿·모바일은
 근거: [W3C 텍스트 대비](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html), [W3C 목표 크기](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html), [MDN 모션 줄이기](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion).
 
 ## 유지보수
+
+홈의 현재 구성은 주행 로봇 월드이며, 기존 배너 아래 본문은 About Me로 이동했습니다. 월드·프로젝트 상세·모바일 카드의 현재 규칙은 [홈 월드 가이드](HOME_WORLD.md)를 따릅니다. 과거 로봇팔 배너 설명은 이전 구현 기록입니다.
 
 색상·타입·간격의 기준은 `spec.json`과 피그마의 WONHO DS 컬렉션입니다. 변경 시 CSS/JSON을 함께 갱신합니다. `build-*.js`는 이번 네이티브 피그마 작성에 사용한 작업 스크립트이며 일반 웹 코드가 아닙니다. 재실행 전에 `state.json`과 생성된 ID를 확인해 중복 컴포넌트를 만들지 않습니다.

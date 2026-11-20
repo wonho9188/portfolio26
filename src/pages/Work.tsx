@@ -6,7 +6,7 @@ import {
   scrollTo,
 } from "../components/primitives";
 import { ProjectCard } from "../components/Cards";
-import { Experiments } from "./Home";
+import { Experiments } from "./AboutMe";
 
 export function MainWork() {
   return (
@@ -80,7 +80,9 @@ export function SideWork() {
                 <p className="eyebrow">
                   0{i + 1} / {i === 0 ? "FREELANCE" : "TEAM PROJECT"}
                 </p>
-                <h3>{p.name}</h3>
+                <h3>
+                  <TextLink href={`/side-work/${p.id}`}>{p.name}</TextLink>
+                </h3>
               </div>
               <div>
                 <h4>{p.title.replace(p.name + " · ", "")}</h4>

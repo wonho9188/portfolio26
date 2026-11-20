@@ -27,37 +27,43 @@ test("home assets, banner controls and theme persist", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "WONHO makes it real.",
   );
-  await expect(page.locator(".ruled-surface")).toHaveAttribute(
+  await expect(page.locator(".rover-renderer")).toHaveAttribute(
     "data-renderer",
     "three.js",
     { timeout: 30000 },
   );
-  await page.mouse.move(1150, 420);
-  await expect
-    .poll(async () =>
-      Number(
-        await page.locator(".ruled-surface").getAttribute("data-deflection"),
-      ),
-    )
-    .toBeGreaterThan(0.1);
+  await expect(page.locator(".world-discovery-card")).toBeVisible();
   await page.getByRole("button", { name: "움직임 멈춤", exact: true }).click();
-  await expect(page.locator(".ruled-surface")).toHaveAttribute(
+  await expect(page.locator(".rover-renderer")).toHaveAttribute(
     "data-motion",
     "paused",
   );
   await page.getByRole("button", { name: "움직임 재생", exact: true }).click();
-  await expect(page.locator(".ruled-surface")).toHaveAttribute(
+  await expect(page.locator(".rover-renderer")).toHaveAttribute(
     "data-motion",
     "playing",
   );
   const old = await page.locator("html").getAttribute("data-theme");
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   await page.getByRole("button", { name: /모드로 전환/ }).click();
   const next = old === "dark" ? "light" : "dark";
   await expect(page.locator("html")).toHaveAttribute("data-theme", next);
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", next);
-  await page.getByRole("button", { name: "Explore my work ↗" }).click();
+  await page.getByRole("link", { name: "Explore my work ↗" }).click();
+  await expect(page.locator("h1")).toHaveText("Main Work.");
+  await page.goto("./#/about");
+  await expect(page.getByAltText("최원호 프로필")).toBeVisible();
+  await page.locator("#main-work").scrollIntoViewIfNeeded();
   await expect(page.locator("#main-work")).toBeInViewport();
+  for (const picture of await page.locator("img").all()) {
+    await picture.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        picture.evaluate((image) => image.complete && image.naturalWidth > 0),
+      )
+      .toBe(true);
+  }
   await page.locator(".site-footer").scrollIntoViewIfNeeded();
   const assets = await page.locator("img").evaluateAll((images) =>
     images
@@ -69,6 +75,12 @@ test("home assets, banner controls and theme persist", async ({ page }) => {
   );
   expect(assets.filter((i) => !i.ok)).toEqual([]);
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await page.screenshot({ path: "artifacts/about-desktop.png" });
+  await page.goto("./");
+  await expect(page.locator(".rover-renderer")).toHaveAttribute(
+    "data-renderer",
+    "three.js",
+  );
   await page.screenshot({ path: "artifacts/home-desktop.png" });
   expect(errors).toEqual([]);
 });
@@ -94,12 +106,14 @@ test("navigation, topic tabs, article, refresh and history work", async ({
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "2D의 편집 결과를 3D에 반영하는 방법",
   );
-  await page
-    .getByRole("navigation", { name: "이 글의 목차" })
-    .getByRole("button")
-    .nth(1)
-    .click();
-  await expect(page.locator("#section-1")).toBeInViewport();
+  await expect(
+    page.getByRole("navigation", { name: "이 글의 목차" }),
+  ).toHaveCount(0);
+  await page.getByRole("link", { name: "다음 화면 →", exact: true }).click();
+  await expect(page.locator(".article-body > section > h2")).toHaveText(
+    "02 / 배치와 편집 상태를 연결하기",
+  );
+  await expect(page.locator(".lesson-navigation .meta")).toHaveText("2 / 3");
   await page.getByRole("link", { name: "← Tech Blog 목록" }).click();
   await expect(page.getByRole("tab", { name: /^React/ })).toHaveAttribute(
     "aria-selected",
@@ -117,6 +131,7 @@ test("navigation, topic tabs, article, refresh and history work", async ({
     page.getByRole("heading", { name: "가짜감정", exact: true }),
   ).toBeVisible();
   for (const [route, heading] of [
+    ["about", "About Me."],
     ["work", "Main Work."],
     ["side-work", "Side Work."],
     ["utilities", "Utilities."],
@@ -135,7 +150,13 @@ for (const width of [320, 375, 768, 1200, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     for (const route of [
       "",
+      "about",
       "work",
+      "work/product",
+      "work/arms",
+      "work/education",
+      "side-work/shopee",
+      "side-work/asan-hero",
       "side-work",
       "utilities",
       "blog",
@@ -143,6 +164,13 @@ for (const width of [320, 375, 768, 1200, 1440]) {
       "life?topic=reading",
       "blog/ros2-interfaces",
       "blog/moveit-concept-block",
+      "blog/moveit-concept-block?screen=2",
+      "blog/moveit-concept-block?screen=3",
+      "blog/moveit-concept-block?screen=4",
+      "blog/moveit-concept-block?screen=5",
+      "blog/moveit-concept-block?screen=6",
+      "blog/moveit-concept-block?screen=7",
+      "blog/moveit-concept-block?screen=8",
       "life/choir-accompanist",
     ]) {
       await page.goto(`./#/${route}`);
@@ -206,7 +234,7 @@ test("reduced motion starts with a paused surface", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: /움직임 재생|모션 줄이기 적용/ }),
   ).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator(".ruled-surface")).toHaveAttribute(
+  await expect(page.locator(".rover-renderer")).toHaveAttribute(
     "data-motion",
     "paused",
     { timeout: 30000 },

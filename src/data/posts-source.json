@@ -485,83 +485,447 @@
       "kind": "tech",
       "group": "robotics-concept-blocks",
       "seriesOrder": 1,
-      "title": "MoveIt이란? 로봇팔의 움직임을 만드는 순서",
+      "title": "MoveIt이란?",
       "category": "CONCEPT BLOCK 01 · MOVEIT 2",
-      "excerpt": "컵 앞에 손을 가져가는 작은 목표부터, 관절 자세와 경로·실행의 역할을 차곡차곡 살펴봅니다.",
+      "excerpt": "로봇팔은 컵까지 어떻게 움직일까요?",
       "meta": "로보틱스 개념 블록 · 01",
       "status": "record",
       "source": "https://moveit.picknik.ai/main/doc/concepts/concepts.html",
       "sections": [
         {
-          "title": "컵 앞에 손을 가져간다면",
+          "title": "로봇팔의 길잡이",
+          "supplement": "moveit-usage",
+          "emphasis": {
+            "strong": ["MoveIt(무브잇)"]
+          },
+          "illustration": "moveit-intro",
+          "illustrationAlt": "로봇팔이 컵을 향해 손을 뻗는 모습을 보여주는 설명용 그림",
           "p": [
-            "책상 위의 컵을 집는 로봇을 떠올려봅시다. 이번 글에서는 컵을 집기 전, 로봇 손을 컵 앞까지 가져가는 움직임 하나에 집중합니다.",
-            "사람에게는 익숙한 행동이지만, 로봇에게는 목표 자세를 정하고 관절을 움직이는 과정이 필요합니다.",
-            "MoveIt(무브잇)은 이런 로봇팔의 움직임을 계획하고 실행을 연결하는 소프트웨어입니다. ROS 2에서는 MoveIt 2를 사용합니다."
+            "“손을 저 컵 앞으로 가져가 줘!”",
+            "MoveIt(무브잇)은 로봇팔을 어떻게 굽히고, 어느 길로 움직일지 계산해 주는 도구예요.",
+            "이렇게 찾은 움직임을 로봇이 실행하도록 연결해 줘요."
           ]
         },
         {
-          "title": "목표에는 위치와 방향이 있습니다",
+          "title": "MoveIt 1과 MoveIt 2",
+          "supplement": "moveit-versions",
+          "emphasis": { "strong": ["ROS 1용", "ROS 2용"] },
           "p": [
-            "컵 앞에 손을 가져가려면 손이 도착할 위치를 알아야 합니다. 컵의 옆을 향할지, 위에서 내려다볼지처럼 손의 방향도 정해야 합니다.",
-            "위치와 방향을 함께 표현한 것을 자세, 즉 pose라고 부릅니다. 로봇팔 끝의 손이나 도구는 엔드 이펙터(end effector)라고 부릅니다.",
-            "여기서는 컵의 위치와 접근 방향을 이미 알고 있다고 가정합니다. 물체를 찾아 위치를 알아내는 과정은 별도로 준비해야 합니다."
+            "가장 큰 차이는 MoveIt 1은 ROS 1용, MoveIt 2는 ROS 2용이라는 점이에요.",
+            "로봇 팔의 움직임을 계획한다는 핵심 역할은 같아요."
           ]
         },
         {
-          "title": "첫 블록: 관절 자세를 찾습니다",
-          "p": [
-            "손을 목표 자세에 놓으려면 어깨·팔꿈치·손목에 해당하는 관절들을 각각 얼마나 움직여야 할까요?",
-            "목표로 하는 손의 자세에서 관절의 값을 거꾸로 구하는 계산을 역기구학, IK(Inverse Kinematics)라고 합니다. MoveIt은 역기구학 해석기를 연결해 이 계산을 수행합니다.",
-            "같은 손의 자세를 만드는 관절 조합이 여러 개일 수도 있고, 팔이 닿지 않아 해를 찾지 못할 수도 있습니다. 목표를 정했다고 항상 가능한 자세가 나오는 것은 아닙니다."
-          ]
+          "title": "모션 플래닝",
+          "emphasis": {
+            "strong": ["모션 플래닝"]
+          },
+          "illustration": "moveit-motion-planning",
+          "illustrationAlt": "로봇팔과 컵 사이의 상자를 피해 가는 길을 점선으로 보여주는 설명용 그림",
+          "p": ["무브잇이 하는 움직임 계산을 모션 플래닝이라고 해요."]
         },
         {
-          "title": "둘째 블록: 도착하는 경로를 찾습니다",
+          "title": "목표를 움직임으로",
+          "emphasis": {
+            "strong": ["IK", "궤적"],
+            "underline": ["각 관절의 실제 움직임 계획"]
+          },
+          "illustration": "moveit-goal-to-motion",
+          "illustrationAlt": "상자 위를 아래로 향하는 로봇 집게 손, 관절의 각도 표시, 장애물을 피하는 점선 경로, 움직임 시간표를 표시하는 컨트롤러를 함께 보여주는 개념 그림",
+          "illustrationCaption": "관절 각도 → 이동 경로 → 움직임 시간표 → 컨트롤러에 실행 요청",
           "p": [
-            "도착했을 때의 자세를 알아도, 그곳까지 가는 움직임은 아직 정해지지 않았습니다. 손끝만 보지 않고 팔꿈치와 다른 링크가 지나갈 공간도 살펴야 합니다.",
-            "MoveIt의 동작 계획은 로봇 모델, 현재 관절 상태, 등록된 주변 물체와 제약을 바탕으로 경로를 찾습니다. 이때 책상과의 충돌뿐 아니라 로봇 몸체 사이의 충돌도 검사합니다.",
-            "이 정보를 모아 관리하는 것이 Planning Scene입니다. 현실의 장애물이 자동으로 모두 반영되는 것은 아니므로, 장면 정보가 실제 환경과 맞도록 제공해야 합니다."
-          ]
-        },
-        {
-          "title": "셋째 블록: 시간과 실행을 연결합니다",
-          "p": [
-            "경로가 어디로 갈지를 나타낸다면, 궤적(trajectory)은 언제 어느 지점을 지날지도 포함합니다.",
-            "MoveIt의 계획 파이프라인은 설정된 관절 속도·가속도 제한 등을 고려해 경로에 시간 정보를 붙일 수 있습니다.",
-            "실행할 때는 만들어진 궤적을 구성된 제어기에 전달합니다. 제어기는 실제 로봇이나 시뮬레이터가 그 움직임을 수행하도록 연결합니다. 계획과 실제 구동은 이어져 있지만 서로 다른 역할입니다."
-          ]
-        },
-        {
-          "title": "시스템에서 각자의 역할을 나눕니다",
-          "p": [
-            "MuJoCo에서 컵을 운반하는 주행형 양팔 로봇을 예로 들어봅시다. ROS 2와 LLM을 함께 사용하는 교육 패키지에서는 다음처럼 역할을 나눕니다."
+            "MoveIt으로 하는 일은 ‘로봇 손의 목표’를 ‘각 관절의 실제 움직임 계획’으로 바꾸는 거예요.",
+            "예를 들어 프로그램이 “오른쪽 집게 손을 상자 위의 이 위치에, 아래를 향하도록 보내 줘”라는 목표를 주면:"
           ],
-          "bullets": [
-            "LLM과 Task Manager: 자연어 요청을 작업 단계로 바꾸고 실행 순서를 관리합니다.",
-            "Nav2: 주행 베이스가 음료대나 상담 테이블까지 이동하도록 합니다.",
-            "MoveIt 2: 로봇팔이 목표 자세에 도달할 움직임을 계획하고 실행을 연결합니다.",
-            "MuJoCo: 가상 로봇과 주변 물체의 물리적 움직임을 시뮬레이션합니다."
+          "steps": [
+            {
+              "title": "관절 각도를 계산해요.",
+              "body": "손을 그곳에 놓으려면 어깨·팔꿈치·손목을 어떻게 굽혀야 하는지 구해요. 이것이 IK예요."
+            },
+            {
+              "title": "팔이 지나갈 길을 찾아요.",
+              "body": "현재 자세에서 목표 자세까지, 작업대나 다른 팔에 부딪히지 않는 움직임을 찾아요."
+            },
+            {
+              "title": "움직임 시간표를 만들어요.",
+              "body": "각 관절이 언제 어느 각도에 도착해야 하는지, 얼마나 빠르게 움직일지 정해요. 이것이 궤적이에요."
+            },
+            {
+              "title": "컨트롤러에 실행을 요청해요.",
+              "body": "계획을 전달하고 완료됐는지 확인해요."
+            }
           ]
         },
         {
-          "title": "컵 집기는 여러 움직임을 연결한 작업입니다",
+          "title": "기구학: FK와 IK",
+          "emphasis": {
+            "strong": ["정기구학", "역기구학"],
+            "underline": ["손의 위치와 방향이 어떻게 달라지는지"]
+          },
+          "interactive": "kinematics",
           "p": [
-            "손을 컵 앞에 놓는 것과 컵을 집어 옮기는 작업 전체는 설명의 크기가 다릅니다. 접근한 뒤에는 그리퍼를 닫고, 컵을 들어 올리고, 옮긴 다음 내려놓는 순서가 필요합니다.",
-            "이 교육 패키지에서는 PickPlace 스킬이 도킹·위치 확인·집기·놓기 등의 순서를 묶고 Nav2와 MoveIt을 호출합니다. MoveIt의 팔 동작 계획은 이 작업을 이루는 구성 요소로 사용됩니다.",
-            "LLM이 무엇을 어떤 순서로 할지 정한 뒤, 로봇 쪽에서 구체적인 이동과 팔 움직임을 계산한다고 연결해 보면 됩니다."
+            "기구학은 로봇의 관절이 움직일 때 손의 위치와 방향이 어떻게 달라지는지 다루는 분야예요. 그 안에 정기구학과 역기구학이 있습니다."
           ]
         },
         {
-          "title": "이번에 쌓은 개념 블록",
+          "title": "좌표계와 TF",
+          "emphasis": {
+            "strong": ["좌표계"]
+          },
+          "interactive": "coordinate-frames",
           "p": [
-            "MoveIt을 처음 만났다면 다음 세 가지를 구분하는 것부터 시작하면 됩니다."
+            "좌표계는 ‘어디를 출발점으로 삼고, 어느 쪽을 앞·옆·위라고 할지 정한 기준’이에요.",
+            "자로 길이를 잴 때 0을 어디에 놓는지 정하는 것과 비슷해요.",
+            "아래에서 ‘로봇 기준’과 ‘카메라 기준’을 번갈아 눌러 보세요. 상자는 그대로인데 숫자가 바뀝니다."
+          ]
+        },
+        {
+          "title": "좌표계, 위치를 말하는 약속",
+          "emphasis": {
+            "strong": ["(3, 2)"]
+          },
+          "interactive": "coordinates-playground",
+          "p": [
+            "좌표계는 물체의 위치를 숫자로 정확하게 말하기 위해 정한 약속이에요.",
+            "운동장에 있는 공의 위치를 친구에게 알려 준다고 생각해 보세요. 운동장 한가운데에서 앞으로 3m, 왼쪽으로 2m라면, 이 기준에서 공의 좌표는 (3, 2)예요."
+          ]
+        },
+        {
+          "title": "TF는 좌표를 어떻게 바꿀까?",
+          "interactive": "tf-transform",
+          "emphasis": {
+            "strong": ["Transform(트랜스폼)"]
+          },
+          "p": [
+            "TF는 Transform(트랜스폼), 즉 ‘변환’을 줄여 부르는 이름이에요.",
+            "방향을 맞추고, 기준점 사이의 거리 차이를 반영해서 좌표를 바꿔요."
+          ]
+        }
+      ],
+      "presentation": "screens"
+    },
+    {
+      "slug": "ros2-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 2,
+      "title": "ROS 2란?",
+      "category": "CONCEPT BLOCK 02 · ROS 2",
+      "excerpt": "로봇의 여러 프로그램이 함께 일하도록 돕는 도구 모음이에요.",
+      "meta": "로보틱스 개념 블록 · 02",
+      "status": "record",
+      "source": "https://docs.ros.org/en/jazzy/index.html",
+      "sourceLabel": "ROS 2 공식 문서 보기",
+      "sections": [
+        {
+          "title": "로봇도 팀워크가 필요해요",
+          "p": [
+            "로봇은 주변을 읽고, 어떻게 움직일지 정하고, 모터를 움직여요. 이 일을 여러 프로그램이 나누어 맡을 수 있어요.",
+            "ROS 2는 이런 프로그램을 만들고, 서로 정보를 주고받도록 돕는 도구와 라이브러리 모음이에요.",
+            "이름은 Robot Operating System 2에서 왔어요. 컴퓨터의 운영체제를 바꾸는 대신, 리눅스 같은 운영체제 위에 설치해서 사용해요."
           ],
-          "bullets": [
-            "관절 자세: 목표 위치와 방향을 만들기 위한 관절의 값.",
-            "경로: 현재 자세에서 목표 자세까지 거쳐 가는 길.",
-            "궤적과 실행: 경로에 시간을 붙이고 제어기에 전달하는 과정."
-          ]
+          "emphasis": {
+            "strong": ["도구와 라이브러리 모음"]
+          },
+          "interactive": "ros2-overview"
+        }
+      ]
+    },
+    {
+      "slug": "lidar-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 3,
+      "title": "LiDAR란?",
+      "category": "CONCEPT BLOCK 03 · LIDAR",
+      "excerpt": "빛을 보내고 받아서, 주변 물체까지의 거리를 재는 센서예요.",
+      "meta": "로보틱스 개념 블록 · 03",
+      "status": "record",
+      "source": "https://oceanservice.noaa.gov/facts/lidar.html",
+      "sourceLabel": "NOAA의 LiDAR 설명 보기",
+      "sections": [
+        {
+          "title": "빛으로 주변을 살펴요",
+          "p": [
+            "LiDAR(라이다)는 레이저 빛을 이용해 물체까지의 거리를 재는 센서예요.",
+            "이름은 Light Detection and Ranging에서 왔어요. 쉽게 말하면 ‘빛으로 찾아내고, 거리를 잰다’는 뜻이에요."
+          ],
+          "emphasis": { "strong": ["물체까지의 거리"] },
+          "interactive": "lidar-overview"
+        }
+      ]
+    },
+    {
+      "slug": "nav2-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 4,
+      "title": "Nav2란?",
+      "category": "CONCEPT BLOCK 04 · NAV2",
+      "excerpt": "주행 로봇이 목적지까지 길을 찾고 이동하도록 돕는 도구 모음이에요.",
+      "meta": "로보틱스 개념 블록 · 04",
+      "status": "record",
+      "source": "https://docs.nav2.org/",
+      "sourceLabel": "Nav2 공식 문서 보기",
+      "sections": [
+        {
+          "title": "‘여기로 와 줘!’를 움직임으로",
+          "p": [
+            "Nav2(내브투)는 Navigation 2의 줄임말이에요. ROS 2에서 주행 로봇의 자율 이동을 돕는 소프트웨어 모음이에요.",
+            "‘안내 데스크로 가 줘’라는 목표를 주면, 로봇의 현재 위치와 주변 정보를 이용해 길을 찾고 이동할 속도를 계산해요."
+          ],
+          "emphasis": { "strong": ["주행 로봇의 자율 이동"] },
+          "interactive": "nav2-overview"
+        }
+      ]
+    },
+    {
+      "slug": "natural-language-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 5,
+      "title": "자연어란?",
+      "category": "CONCEPT BLOCK 05 · NATURAL LANGUAGE",
+      "excerpt": "우리가 일상에서 생각과 마음을 주고받을 때 쓰는 말이에요.",
+      "meta": "로보틱스 개념 블록 · 05",
+      "status": "record",
+      "source": "https://www.ibm.com/think/topics/natural-language-processing",
+      "sourceLabel": "IBM의 자연어 처리 설명 보기",
+      "sections": [
+        {
+          "title": "우리가 평소에 쓰는 말",
+          "p": [
+            "‘안녕’, ‘물 좀 가져다줘’처럼 사람이 일상에서 쓰는 말을 자연어라고 해요. 한국어와 영어가 여기에 속해요.",
+            "입으로 하는 말도, 글로 적은 문장도 자연어예요. 컴퓨터가 실행할 규칙을 정해 놓은 프로그래밍 언어와는 구분해요."
+          ],
+          "emphasis": { "strong": ["사람이 일상에서 쓰는 말"] },
+          "interactive": "natural-language-overview"
+        }
+      ]
+    },
+    {
+      "slug": "llm-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 6,
+      "title": "LLM이란?",
+      "category": "CONCEPT BLOCK 06 · LLM",
+      "excerpt": "많은 글에서 말의 패턴을 배워, 글을 다루고 만들어 내는 AI 모델이에요.",
+      "meta": "로보틱스 개념 블록 · 06",
+      "status": "record",
+      "source": "https://www.ibm.com/think/topics/large-language-models",
+      "sourceLabel": "IBM의 LLM 설명 보기",
+      "sections": [
+        {
+          "title": "많은 글에서 말의 패턴을 배워요",
+          "p": [
+            "LLM은 Large Language Model의 줄임말이에요. 우리말로는 대규모 언어 모델이라고 해요.",
+            "아주 많은 글을 학습해 말의 패턴과 단어 사이의 관계를 배운 AI 모델이에요. 질문에 답하거나 글을 요약하고, 요청의 뜻을 정리하는 데 사용할 수 있어요."
+          ],
+          "emphasis": { "strong": ["대규모 언어 모델"] },
+          "interactive": "llm-overview"
+        }
+      ]
+    },
+    {
+      "slug": "mujoco-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 7,
+      "title": "MuJoCo란?",
+      "category": "CONCEPT BLOCK 07 · MUJOCO",
+      "excerpt": "컴퓨터 속에서 로봇과 물체의 움직임을 실험하는 물리 시뮬레이터예요.",
+      "meta": "로보틱스 개념 블록 · 07",
+      "status": "record",
+      "source": "https://mujoco.readthedocs.io/en/stable/overview.html",
+      "sourceLabel": "MuJoCo 공식 문서 보기",
+      "sections": [
+        {
+          "title": "컴퓨터 안에 로봇 실험실을 만들어요",
+          "p": [
+            "MuJoCo는 로봇과 물체가 힘을 받고, 서로 닿으며 움직이는 모습을 계산하는 물리 시뮬레이터예요.",
+            "이름은 Multi-Joint dynamics with Contact에서 왔어요. 쉽게 말하면 ‘여러 관절과 물체의 접촉을 다루는 움직임 계산’이에요."
+          ],
+          "emphasis": { "strong": ["물리 시뮬레이터"] },
+          "interactive": "mujoco-overview"
+        }
+      ]
+    },
+    {
+      "slug": "task-planning-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 8,
+      "title": "Task Planning이란?",
+      "category": "CONCEPT BLOCK 08 · TASK PLANNING",
+      "excerpt": "목표를 이루려면 어떤 일을 어떤 순서로 해야 할지 정하는 작업 계획이에요.",
+      "meta": "로보틱스 개념 블록 · 08",
+      "status": "record",
+      "source": "https://plansys2.github.io/design/index.html",
+      "sourceLabel": "작업 계획 도구 PlanSys2 공식 설명 보기",
+      "sections": [
+        {
+          "title": "목표까지 필요한 일을 순서대로",
+          "p": [
+            "Task Planning은 우리말로 작업 계획이에요. 현재 상태에서 목표에 도달하려면 어떤 행동을 어떤 순서로 해야 할지 정하는 거예요.",
+            "‘컵을 선반에 옮겨 줘’라는 목표를 받았다면, 컵을 집고, 이동하고, 선반에 놓는 작업으로 나눌 수 있어요."
+          ],
+          "emphasis": { "strong": ["작업 계획"] },
+          "interactive": "task-planning-overview"
+        }
+      ]
+    },
+    {
+      "slug": "design-trends",
+      "kind": "tech",
+      "group": "design",
+      "title": "디자인 트렌드",
+      "category": "DESIGN · WEB & UI",
+      "excerpt": "2026년 웹 디자인 흐름을 살펴보고, 표현과 사용 경험을 함께 생각합니다.",
+      "meta": "자료 확인 · 2026.11.20",
+      "status": "record",
+      "source": "https://www.figma.com/resource-library/web-design-trends/",
+      "sourceLabel": "Figma의 2026 웹 디자인 트렌드 보기",
+      "sections": [
+        {
+          "title": "요즘 화면에서 눈여겨볼 네 가지 표현",
+          "p": [
+            "디자인 트렌드는 여러 화면에서 반복해서 나타나는 표현과 설계 방식의 흐름입니다.",
+            "Figma·Webflow·Squarespace의 2026년 자료에서 네 가지 표현을 골랐습니다. 각 특징은 참고 자료를 바탕으로 정리하고, 적용 메모에는 화면을 만들 때 살펴볼 기준을 담았습니다."
+          ],
+          "interactive": "design-trends"
+        }
+      ]
+    },
+    {
+      "slug": "style-guide-components",
+      "kind": "tech",
+      "group": "design",
+      "title": "스타일 가이드와 컴포넌트",
+      "category": "DESIGN · SYSTEM & COMPONENTS",
+      "excerpt": "색상·폰트·여백의 공통 규칙이 버튼과 카드, 글 목록으로 이어지는 과정을 살펴봅니다.",
+      "meta": "WONHO 사이트 기준 · 2026.11.20",
+      "status": "record",
+      "sections": [
+        {
+          "title": "규칙을 정하고, 화면 조각으로 연결해요",
+          "p": [
+            "스타일 가이드는 색상·글자·간격처럼 화면을 일관되게 만드는 규칙입니다. 컴포넌트는 그 규칙을 적용해 반복해서 쓰는 버튼·카드·목록 같은 화면 조각입니다.",
+            "현재 WONHO 사이트의 실제 스타일과 공통 요소를 예시로 살펴봅니다. 항목을 선택해 기준과 조작 상태를 확인해 보세요."
+          ],
+          "interactive": "style-guide-overview"
+        }
+      ]
+    },
+    {
+      "slug": "design-reference-practice",
+      "kind": "tech",
+      "group": "design",
+      "title": "디자인 감각 늘리는 법 : 레퍼런스 자주 보기",
+      "category": "DESIGN · OBSERVATION & PRACTICE",
+      "excerpt": "좋은 화면을 자주 보고, 좋아 보이는 이유를 기록하고, 내 화면에 적용하는 연습입니다.",
+      "meta": "디자인 관찰 노트 · 2026.11.20",
+      "status": "record",
+      "source": "https://www.nngroup.com/articles/principles-visual-design/",
+      "sourceLabel": "NN/g의 시각 디자인 원칙 읽기",
+      "sections": [
+        {
+          "title": "좋아 보이는 이유를 말로 설명해 봐요",
+          "p": [
+            "디자인 감각을 기르는 연습으로, 좋은 화면을 자주 접하고 좋아 보이는 이유를 관찰해 보세요.",
+            "레퍼런스는 참고할 만한 사례입니다. ‘예쁘다’고 느낀 화면에서 제목의 크기, 정보 사이 간격, 정렬의 기준을 하나씩 살펴보는 거예요."
+          ],
+          "interactive": "reference-practice"
+        }
+      ]
+    },
+    {
+      "slug": "visual-priority",
+      "kind": "tech",
+      "group": "design",
+      "title": "시각적 우선순위(레이아웃, 여백, 크기, 색상)",
+      "category": "DESIGN · VISUAL HIERARCHY",
+      "excerpt": "먼저 보여줄 내용을 정하고, 레이아웃·여백·크기·색상으로 읽는 흐름을 만드는 방법입니다.",
+      "meta": "디자인 기초 · 2026.11.20",
+      "status": "record",
+      "source": "https://www.nngroup.com/articles/visual-hierarchy-ux-definition/",
+      "sourceLabel": "NN/g의 시각적 위계 설명 읽기",
+      "sections": [
+        {
+          "title": "무엇을 먼저 보여줄지 정해요",
+          "p": [
+            "시각적 우선순위는 중요한 정보부터 눈에 들어오도록 화면을 구성하는 것입니다. 시각적 위계라고도 해요.",
+            "레이아웃으로 위치를 정하고, 여백으로 묶음을 나누고, 크기와 색상으로 강조의 차이를 만듭니다."
+          ],
+          "interactive": "visual-priority"
+        }
+      ]
+    },
+    {
+      "slug": "component-kinds",
+      "kind": "tech",
+      "group": "design",
+      "title": "컴포넌트의 종류",
+      "category": "DESIGN · UI COMPONENTS",
+      "excerpt": "버튼·입력창·탭·카드·알림을 역할별로 나누고, 직접 조작하며 쓰임을 살펴봅니다.",
+      "meta": "디자인 기초 · 2026.11.20",
+      "status": "record",
+      "source": "https://designsystem.digital.gov/components/overview/",
+      "sourceLabel": "USWDS의 컴포넌트 설명 보기",
+      "sections": [
+        {
+          "title": "화면 조각을 역할에 따라 나눠요",
+          "p": [
+            "컴포넌트는 화면에서 반복해서 쓰는 요소입니다. 버튼처럼 작은 요소도 있고, 제목·설명·링크를 묶은 카드처럼 여러 요소를 조합한 것도 있어요.",
+            "사용자가 하려는 일을 기준으로 나누면, 어떤 컴포넌트가 필요한지 고르기 쉬워집니다."
+          ],
+          "interactive": "component-kinds"
+        }
+      ]
+    },
+    {
+      "slug": "tone-and-feel",
+      "kind": "tech",
+      "group": "design",
+      "title": "톤 앤 매너와 룩앤필",
+      "category": "DESIGN · IDENTITY & EXPERIENCE",
+      "excerpt": "전달하려는 태도와 화면에서 느끼는 인상을 살펴보고, 문구와 시각 표현을 함께 맞추는 방법입니다.",
+      "meta": "디자인 기초 · 2026.11.20",
+      "status": "record",
+      "source": "https://www.nngroup.com/articles/tone-of-voice-dimensions/",
+      "sourceLabel": "NN/g의 톤 오브 보이스 설명 읽기",
+      "sections": [
+        {
+          "title": "표현의 방향이 하나의 인상으로 이어져요",
+          "p": [
+            "같은 내용을 전해도 차분하게, 친근하게, 대담하게 표현할 수 있어요. 문구와 시각 표현이 함께 화면의 인상을 만듭니다.",
+            "톤 앤 매너와 룩앤필을 구분해 생각하면, 원하는 태도를 색상·글자·여백·조작으로 구체화하는 데 도움이 됩니다."
+          ],
+          "interactive": "tone-and-feel"
+        }
+      ]
+    },
+    {
+      "slug": "fms-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 9,
+      "title": "FMS란?",
+      "category": "CONCEPT BLOCK 09 · FMS",
+      "excerpt": "여러 대의 로봇에 일을 나누고, 상태와 진행 상황을 함께 관리하는 시스템이에요.",
+      "meta": "로보틱스 개념 블록 · 09",
+      "status": "record",
+      "source": "https://robotnik.eu/what-is-fleet-management-in-robotics/",
+      "sourceLabel": "Robotnik의 로봇 FMS 설명 보기",
+      "sections": [
+        {
+          "title": "여러 로봇이 함께 일하도록 조율해요",
+          "p": [
+            "여기서 FMS는 Fleet Management System의 줄임말이에요. 여러 대의 로봇에 작업을 나누고 상태를 관리하는 시스템이에요.",
+            "‘상자를 옮겨 줘’라는 요청이 오면 누가 맡을 수 있는지 살피고, 배정한 작업이 끝났는지도 확인하는 거예요."
+          ],
+          "emphasis": { "strong": ["Fleet Management System"] },
+          "interactive": "fms-overview"
         }
       ]
     }

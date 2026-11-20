@@ -20,13 +20,9 @@ export function ProjectCard({
       <div className="project-identity">
         <p className="eyebrow">{project.category}</p>
         <h3>
-          {detail ? (
-            project.title
-          ) : (
-            <Link to={`/work#${project.id}`} className="stretched-link">
-              {project.title}
-            </Link>
-          )}
+          <Link to={`/work/${project.id}`} className="stretched-link">
+            {project.title}
+          </Link>
         </h3>
       </div>
       <img

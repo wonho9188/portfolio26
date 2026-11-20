@@ -1,0 +1,260 @@
+.component-kinds {
+  margin-top: 48px;
+}
+.component-kinds > h3,
+.component-kind-explanation h3,
+.component-kind-summary h3 {
+  margin-top: 20px;
+  font-size: clamp(1.375rem, 3vw, 1.875rem);
+  line-height: 1.7;
+}
+.component-kinds .component-kinds-intro {
+  margin-top: 24px;
+  font-size: 1.125rem;
+  color: var(--color-muted);
+}
+.component-kind-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.component-kind-options button,
+.component-kind-demo button {
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 1px solid var(--color-interactive-line);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: 500 1.0625rem/1.8 var(--font-body);
+  transition:
+    background-color 180ms,
+    border-color 180ms;
+}
+.component-kind-options button:hover,
+.component-kind-demo button:hover {
+  background: var(--color-raised);
+  border-color: var(--color-accent);
+}
+.component-kind-options button[aria-pressed="true"],
+.component-demo-tabs button[aria-selected="true"] {
+  background: var(--color-raised);
+  border-color: var(--color-accent);
+  box-shadow: inset 0 0 0 1px var(--color-accent);
+}
+.component-kind-explanation {
+  margin-top: 40px;
+}
+.component-kinds .component-kind-explanation > p:not(.eyebrow) {
+  margin-top: 24px;
+  font-size: 1.125rem;
+}
+.component-kind-demo {
+  margin-top: 32px;
+  padding: clamp(20px, 4vw, 36px);
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  background: var(--color-surface);
+}
+.component-kind-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.component-kind-demo .component-kind-primary {
+  color: var(--color-on-accent);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.component-kind-demo .component-kind-primary:hover {
+  background: var(--color-accent-hover);
+}
+.component-kind-demo button:disabled {
+  color: var(--color-muted);
+  border-color: var(--color-line);
+  background: var(--color-disabled-surface);
+  cursor: default;
+}
+.component-kind-link,
+.component-breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-accent);
+  font-size: 1.0625rem;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.component-kinds .component-kind-status {
+  margin-top: 24px;
+  color: var(--color-accent);
+  font-size: 1.125rem;
+}
+.component-kinds .component-kind-help {
+  margin-top: 24px;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+.component-input-fields {
+  display: grid;
+  gap: 24px;
+}
+.component-input-fields label,
+.component-progress-label {
+  display: block;
+  font-size: 1.125rem;
+  margin-bottom: 12px;
+}
+.component-input-fields :is(input:not([type="checkbox"]), select) {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-interactive-line);
+  border-radius: 8px;
+  background: var(--color-background);
+  color: var(--color-ink);
+  font: 1.125rem/1.8 var(--font-body);
+}
+.component-input-fields .component-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  margin: 0;
+}
+.component-checkbox input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--color-accent);
+}
+.component-input-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-line);
+}
+.component-input-preview h4 {
+  flex-basis: 100%;
+  margin-top: 8px;
+  font-size: 1.375rem;
+  line-height: 1.7;
+}
+.component-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  color: var(--color-muted);
+}
+.component-demo-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.component-demo-tabpanel {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-line);
+}
+.component-demo-tabpanel h4 {
+  font-size: 1.25rem;
+  line-height: 1.7;
+}
+.component-kinds .component-demo-tabpanel p {
+  margin-top: 16px;
+  font-size: 1.125rem;
+}
+.component-kind-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.component-kind-card {
+  margin-top: 24px;
+  position: relative;
+}
+.component-kind-card .post-card {
+  position: relative;
+  min-height: 0;
+  padding: 24px;
+}
+.component-kinds .component-kind-card .post-card p {
+  font-size: 1.125rem;
+}
+.component-kind-demo progress {
+  display: block;
+  width: 100%;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--color-accent);
+}
+.component-inline-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin: 28px 0;
+  padding: 24px;
+  border: 1px solid var(--color-interactive-line);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 8px;
+  background: var(--color-background);
+}
+.component-inline-notice > span {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  color: var(--color-accent);
+  font-size: 1rem;
+}
+.component-kinds .component-inline-notice p {
+  margin: 0;
+  font-size: 1.125rem;
+}
+.component-kind-summary {
+  margin-top: 56px;
+  padding-block: 28px;
+  border-block: 1px solid var(--color-line);
+}
+.component-kind-summary h3 {
+  margin-top: 0;
+}
+.component-kinds .component-kind-summary p {
+  margin-top: 24px;
+  font-size: 1.125rem;
+}
+.component-kind-summary > a {
+  display: inline-block;
+  margin-top: 24px;
+  color: var(--color-accent);
+  font-size: 1.125rem;
+}
+@media (max-width: 600px) {
+  .component-kind-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .component-kind-options button {
+    padding-inline: 10px;
+  }
+  .component-inline-notice {
+    padding: 20px 16px;
+    gap: 12px;
+  }
+  .component-kind-card .post-card {
+    padding: 20px;
+  }
+}

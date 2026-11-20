@@ -1,0 +1,14 @@
+{
+  "asset": "src/assets/moveit-intro.png",
+  "mode": "Built-in image_gen",
+  "purpose": "MoveIt이 무엇인지 소개하는 개념 설명용 그림. 실제 로봇 동작 검증 자료가 아닙니다.",
+  "prompt": "Use case: scientific-educational. Create a polished premium editorial 3D illustration for a Korean robotics concept blog, comprehensible at elementary-school level but visually sophisticated, warm ivory and muted rose/copper palette. Simple cream industrial articulated robot arm with three clearly visible circular joints and a two-finger gripper, rose joint inserts, on a compact plinth. Warm off-white seamless background #f7f0e7, soft studio lighting, restrained realistic bevels and materials, gentle contact shadows, generous negative space, landscape composition about 3:2. No text, labels, numbers, logos, faces, decorative UI, wires or extra robots. Make the actual robot coherent, with rigid connected links and plausible joints. Subject: show what a target pose means. One robot arm at left-middle is reaching toward one small rose ceramic cup at right on a low block. The cup is not held. A single very faint ghost silhouette of ONLY the gripper at the goal beside the cup, linked by a subtle dotted rose guide, helps a child see where the hand wants to go. Keep the main robot and cup large and readable on a phone. No obstacle in this image.",
+  "relatedAssets": [
+    {
+      "asset": "src/assets/moveit-motion-planning.png",
+      "mode": "Built-in image_gen",
+      "purpose": "모션 플래닝을 소개하는 두 번째 화면의 설명용 그림. 점선은 손끝 이동을 직관적으로 보여주는 시각적 비유입니다.",
+      "sourceImage": "exec-7f1ea3e5-99fd-4147-a860-8e8c845504bf.png"
+    }
+  ]
+}

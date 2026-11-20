@@ -1,9 +1,13 @@
 import source from "./posts-source.json";
+import type { LessonEmphasis } from "../components/LessonText";
 import workstation from "../assets/workstation.png";
 import arms from "../assets/robot-arms.png";
 import maze from "../assets/robot-maze.png";
 import bicentennial from "../assets/bicentennial-man.png";
 import gattaca from "../assets/gattaca.png";
+import moveitIntro from "../assets/moveit-intro.png";
+import moveitMotionPlanning from "../assets/moveit-motion-planning.png";
+import moveitGoalToMotion from "../assets/moveit-goal-to-motion.png";
 
 export const links = {
   email: "mailto:wonho9188@gmail.com",
@@ -14,6 +18,7 @@ export const links = {
     "https://app.notion.com/p/Activity-22a483ba22f880c698b9cf8ffde6c7b5",
 };
 export const navigation = [
+  { to: "/about", label: "About Me" },
   { to: "/work", label: "Main Work" },
   { to: "/side-work", label: "Side Work" },
   { to: "/utilities", label: "Utilities" },
@@ -248,7 +253,24 @@ export const stages = [
     "배너, 문구와 소개 자료로 제품의 가치를 전달합니다.",
   ],
 ];
-export type Section = { title: string; p: string[]; bullets?: string[] };
+export type Section = {
+  title: string;
+  p: string[];
+  emphasis?: LessonEmphasis;
+  bullets?: string[];
+  illustration?: string;
+  illustrationAlt?: string;
+  illustrationCaption?: string;
+  steps?: { title: string; body: string }[];
+  interactive?: string;
+  supplement?: string;
+  componentPart?: number;
+};
+export const articleIllustrations: Record<string, string> = {
+  "moveit-intro": moveitIntro,
+  "moveit-motion-planning": moveitMotionPlanning,
+  "moveit-goal-to-motion": moveitGoalToMotion,
+};
 export type Post = {
   slug: string;
   kind: "tech" | "life";
@@ -260,8 +282,10 @@ export type Post = {
   group: string;
   sections: Section[];
   source?: string;
+  sourceLabel?: string;
   image?: string;
   seriesOrder?: number;
+  presentation?: "screens";
 };
 const postImages: Record<string, string> = {
   "bicentennial-man": bicentennial,
@@ -271,6 +295,9 @@ export const posts: Post[] = source.posts.map((p) => ({
   ...p,
   kind: p.kind as Post["kind"],
   status: p.status as Post["status"],
+  presentation: ("presentation" in p
+    ? p.presentation
+    : undefined) as Post["presentation"],
   image: postImages[p.slug],
 }));
 export const roboticsTopic = {
@@ -279,6 +306,13 @@ export const roboticsTopic = {
   title: "차곡차곡, 로보틱스 개념 블록",
   description:
     "작은 개념을 하나씩 이해하고, 블록처럼 연결해 로봇이라는 큰 구조를 알아갑니다.",
+};
+export const designTopic = {
+  id: "design",
+  label: "디자인",
+  title: "디자인과 사용자 경험",
+  description:
+    "시각적 표현과 사용 경험을 함께 살피며, 화면을 설계하는 기준을 기록합니다.",
 };
 export function getTopicPosts(kind: Post["kind"], group: string) {
   return posts
@@ -296,6 +330,7 @@ export const techGroups = [
   ["react", "React", "화면과 상태를 연결하는 일"],
   ["pyqt", "PyQt", "데이터를 읽는 관제 화면"],
   ["design-system", "Design System", "일관된 경험을 만드는 구조"],
+  [designTopic.id, designTopic.label, designTopic.title],
   [roboticsTopic.id, roboticsTopic.label, roboticsTopic.title],
 ];
 export const lifeGroups = [

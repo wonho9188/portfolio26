@@ -1,0 +1,122 @@
+.moveit-usage {
+  margin-top: 56px;
+}
+.moveit-usage h3 {
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.7;
+  font-weight: 700;
+}
+.moveit-usage h4 {
+  font-size: clamp(1.375rem, 2.2vw, 1.625rem);
+  line-height: 1.7;
+  font-weight: 700;
+}
+.moveit-usage .moveit-usage-intro {
+  margin-top: 24px;
+}
+.moveit-usage-methods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+}
+.moveit-usage-method {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--color-line);
+}
+.moveit-usage-method p,
+.moveit-usage-method li {
+  font-size: 1.25rem;
+  line-height: 1.85;
+}
+.moveit-usage-method p + p {
+  margin-top: 0;
+}
+.moveit-usage-method code {
+  font: 0.95em/1.85 var(--font-mono);
+}
+.moveit-usage-steps {
+  list-style: decimal;
+  padding-left: 1.5em;
+  margin: 0;
+  font-size: 1.25rem;
+}
+.moveit-usage .moveit-usage-steps li {
+  padding-left: 8px;
+  margin-bottom: 16px;
+}
+.moveit-usage-steps li:last-child {
+  margin-bottom: 0;
+}
+.moveit-usage-steps li::before {
+  content: none;
+}
+.moveit-usage-steps li::marker {
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+.moveit-usage-method .text-link {
+  margin-top: auto;
+  padding-top: 4px;
+  color: var(--color-accent);
+  font-size: 1rem;
+}
+.moveit-code-flow {
+  display: grid;
+  gap: 0;
+  padding: 8px 24px;
+  background: var(--color-surface);
+  border-radius: 12px;
+}
+.moveit-code-flow span {
+  padding-block: 16px;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+.moveit-code-flow span + span {
+  border-top: 1px solid var(--color-line);
+}
+.moveit-usage-analogy {
+  margin-top: 48px;
+  padding: 28px;
+  background: var(--color-surface);
+  border-radius: 12px;
+}
+.moveit-usage-analogy dl {
+  display: grid;
+  gap: 24px;
+  margin-top: 28px;
+}
+.moveit-usage-analogy dl > div {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 24px;
+  font-size: 1.25rem;
+  line-height: 1.85;
+}
+.moveit-usage-analogy dt {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .moveit-usage-methods {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .moveit-usage-method p,
+  .moveit-usage-method li {
+    font-size: 1.125rem;
+  }
+  .moveit-usage-analogy {
+    padding: 24px 20px;
+  }
+  .moveit-usage-analogy dl > div {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    font-size: 1.125rem;
+  }
+}
