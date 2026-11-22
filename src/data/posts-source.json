@@ -1,239 +1,6 @@
 {
-  "note": "Project-based technical notes remain drafts; completed concept lessons are records. Unwritten thoughts remain planned. No publication dates are invented.",
+  "note": "Completed concept lessons are records. Unwritten posts remain planned. No publication dates are invented.",
   "posts": [
-    {
-      "kind": "tech",
-      "row": "223:389",
-      "homeRow": "144:808",
-      "title": "50개의 토픽·서비스를 어떻게 설계했을까",
-      "category": "ROS2 · SYSTEM DESIGN",
-      "excerpt": "서버·주행·팔·비전·모바일을 연결한 통신 규약과 디버깅 GUI 설계.",
-      "meta": "DRAFT · Shopee",
-      "sections": [
-        {
-          "title": "여러 모듈이 함께 동작하는 서비스",
-          "p": [
-            "Shopee 프로젝트에서는 메인 서버, 주행 로봇, 로봇팔, 비전, 모바일 사이의 통신을 다뤘습니다. 각 모듈이 주고받을 서비스와 토픽 50개를 설계하고 구현했습니다.",
-            "사용자 요구사항에서 화면과 시나리오, 데이터 구조와 인터페이스까지 이어지는 문서를 함께 정리했습니다."
-          ]
-        },
-        {
-          "title": "통신의 규약과 상태를 함께 읽기",
-          "p": [
-            "사용자 요구사항, ERD, 화면 기획, 시나리오, 시퀀스 다이어그램과 인터페이스 명세서를 작성하고 ROS2 통신을 구현했습니다.",
-            "GUI–메인 서버–로봇 간의 통신 관계를 디버깅 화면으로 시각화했습니다. 여러 터미널을 따로 띄우는 대신 하나의 UI에서 전체 서비스 통신 상태를 모니터링하도록 구성했습니다."
-          ],
-          "bullets": [
-            "모듈별 서비스·토픽의 설계와 구현",
-            "화면과 시나리오를 포함한 인터페이스 문서 관리",
-            "주행 로봇·메인 서버의 통신 상태를 확인하는 디버깅 GUI"
-          ]
-        },
-        {
-          "title": "다음에 더 풀어쓸 질문",
-          "p": [
-            "토픽과 서비스의 경계를 어떤 기준으로 나누었는지, 인터페이스 문서와 실제 통신을 어떻게 맞추었는지 정리할 예정입니다."
-          ]
-        }
-      ],
-      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_219",
-      "slug": "ros2-interfaces",
-      "group": "ros2",
-      "status": "draft"
-    },
-    {
-      "kind": "tech",
-      "row": "223:441",
-      "homeRow": "144:816",
-      "title": "막힌 경로에서 다시 길을 찾는 방법",
-      "category": "C++ · PATH PLANNING",
-      "excerpt": "C++로 직접 구현한 커스텀 플래너와 백트래킹 기반 경로 재생성.",
-      "meta": "DRAFT · Shopee",
-      "sections": [
-        {
-          "title": "경로 생성이 막힌 순간",
-          "p": [
-            "Shopee의 주행 개발에서는 트래킹과 경로 생성을 함께 다뤘습니다. 경로를 생성하다 막혔을 때 다시 움직일 방법을 구성하는 것이 작업의 한 부분이었습니다."
-          ]
-        },
-        {
-          "title": "회전 가능한 위치로 돌아가기",
-          "p": [
-            "별도의 Nav2 플래너 플러그인 없이 C++로 커스텀 플래너를 구현했습니다. 경로가 막히면 방향을 회전할 수 있는 위치까지 돌아가고, 회전한 뒤 경로를 다시 생성하는 백트래킹 방식으로 구성했습니다."
-          ],
-          "bullets": [
-            "경로 생성 중 막힌 상황 확인",
-            "방향 회전이 가능한 위치까지 되돌아가기",
-            "회전 후 경로 재생성"
-          ]
-        },
-        {
-          "title": "다음에 더 풀어쓸 질문",
-          "p": [
-            "되돌아갈 위치를 어떤 기준으로 선택했는지, 경로를 재생성하는 조건과 예외 상황을 실제 구현에 맞춰 정리할 예정입니다."
-          ]
-        }
-      ],
-      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_219",
-      "slug": "backtracking-planner",
-      "group": "planning",
-      "status": "draft"
-    },
-    {
-      "kind": "tech",
-      "row": "223:493",
-      "homeRow": "144:824",
-      "title": "DWB 대신 MPPI를 선택한 이유",
-      "category": "NAV2 · NAVIGATION",
-      "excerpt": "유연한 회전과 후진 주행을 위한 MPPI 적용과 시뮬레이션 기록.",
-      "meta": "DRAFT · Asan Hero",
-      "sections": [
-        {
-          "title": "실제 공간을 시뮬레이션으로 옮기기",
-          "p": [
-            "Asan Hero 프로젝트에서는 실제 환경을 Blender로 모델링하고 ROS2 프로젝트와 연동했습니다. 주행 환경을 다루면서 사용자 화면과 관리자 GUI, 하드웨어 작업도 함께 진행했습니다."
-          ]
-        },
-        {
-          "title": "주행 방식과 GUI 위치 연동",
-          "p": [
-            "주행 알고리즘에 DWB 대신 MPPI 플러그인을 적용해 유연한 회전과 주행이 가능하도록 작업했습니다. 프로젝트 자료에는 MPPI 후진 주행과 AMCL 위치 연동 과정이 함께 정리되어 있습니다.",
-            "AMCL pose 토픽을 발행·구독해 로봇의 위치를 GUI와 연결했습니다."
-          ],
-          "bullets": [
-            "실제 환경을 반영한 3D 시뮬레이션 맵",
-            "DWB에서 MPPI로 주행 플러그인 변경",
-            "AMCL pose를 이용한 GUI 위치 연동"
-          ]
-        },
-        {
-          "title": "다음에 더 풀어쓸 질문",
-          "p": [
-            "플러그인을 바꾸게 된 구체적인 주행 상황과 설정, 회전·후진을 비교한 관찰 내용을 정리할 예정입니다."
-          ]
-        }
-      ],
-      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_302",
-      "slug": "mppi-navigation",
-      "group": "navigation",
-      "status": "draft"
-    },
-    {
-      "kind": "tech",
-      "row": "223:545",
-      "homeRow": "144:833",
-      "title": "2D의 편집 결과를 3D에 반영하는 방법",
-      "category": "REACT · EDITOR STATE",
-      "excerpt": "배치·크기 변경, Undo/Redo와 2D→3D 에디터 상태 연동.",
-      "meta": "DRAFT · 공간 관리 플랫폼",
-      "sections": [
-        {
-          "title": "편집 기능과 화면의 일치",
-          "p": [
-            "공간 관리 플랫폼에서는 가구와 디바이스를 배치하고 편집하는 기능, 2D 변경을 3D 에디터에 반영하는 연동 작업을 맡았습니다.",
-            "탑바, 사이드바, 툴바, 팝업과 에디터뷰를 검토하면서 디자인 파일과 맞지 않는 여백, 크기, 폰트와 세부 표현도 조정했습니다."
-          ]
-        },
-        {
-          "title": "배치와 편집 상태를 연결하기",
-          "p": [
-            "가구·디바이스 배치, 겹침 방지, 클러스터 핀 상세 팝업, 확대·축소, 맵 정렬, Undo/Redo, 크기 조정과 2D–3D 연동을 작업했습니다."
-          ],
-          "bullets": [
-            "가구·디바이스 배치와 겹침 방지",
-            "이전·다음 편집 상태를 다루는 Undo/Redo",
-            "2D의 변경을 3D 에디터에 반영"
-          ]
-        },
-        {
-          "title": "다음에 더 풀어쓸 질문",
-          "p": [
-            "편집 상태를 어디에서 관리했는지, 되돌리기와 2D–3D 동기화를 어떤 순서로 처리했는지 구현 경험을 바탕으로 정리할 예정입니다."
-          ]
-        }
-      ],
-      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_173",
-      "slug": "editor-state",
-      "group": "react",
-      "status": "draft"
-    },
-    {
-      "kind": "tech",
-      "row": "223:597",
-      "homeRow": "144:841",
-      "title": "로그와 CCTV 이미지를 어떻게 연결했을까",
-      "category": "PYQT · TCP / UDP",
-      "excerpt": "TCP로 이벤트 로그를 가져오고, UDP로 CCTV 이미지를 연동한 경험.",
-      "meta": "DRAFT · Gigachad",
-      "sections": [
-        {
-          "title": "기록과 영상을 한 화면에서 보기",
-          "p": [
-            "Gigachad는 무인매장 CCTV 단속 시스템 프로젝트입니다. 감지된 기록과 CCTV 이미지를 사용자 화면에서 확인할 수 있도록 화면을 기획·디자인하고 Python GUI를 구현했습니다."
-          ]
-        },
-        {
-          "title": "데이터의 출처와 통신 경로",
-          "p": [
-            "중앙 서버의 불법행위 로그는 TCP 통신으로 가져오고, AI 서버의 CCTV 이미지는 UDP 통신으로 연동했습니다.",
-            "ERD와 JSON 스키마를 작성하고 더미 데이터를 준비했습니다. 중앙 서버와 AI 서버가 요청한 데이터가 SQL을 통해 읽고 쓰이는지도 확인했습니다."
-          ],
-          "bullets": [
-            "중앙 서버 → TCP → 이벤트 로그",
-            "AI 서버 → UDP → CCTV 이미지",
-            "ERD·JSON 스키마와 데이터 읽기·쓰기 확인"
-          ]
-        },
-        {
-          "title": "다음에 더 풀어쓸 질문",
-          "p": [
-            "로그와 영상의 화면 갱신 과정, 통신 상황을 확인한 방법과 예외 처리를 실제 작업 내용을 기준으로 정리할 예정입니다."
-          ]
-        }
-      ],
-      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_366",
-      "slug": "pyqt-monitoring",
-      "group": "pyqt",
-      "status": "draft"
-    },
-    {
-      "kind": "tech",
-      "row": "223:649",
-      "homeRow": "144:849",
-      "title": "UI 라이브러리가 매번 바뀌던 문제",
-      "category": "DESIGN SYSTEM · NDS",
-      "excerpt": "학습·비용 부담을 줄이기 위한 자체 디자인 시스템과 가이드 웹.",
-      "meta": "DRAFT · Nextree NDS",
-      "sections": [
-        {
-          "title": "프로젝트마다 달라지는 UI 도구",
-          "p": [
-            "프로젝트마다 사용하는 UI 라이브러리가 바뀌면 개발자는 새로운 도구를 다시 공부해야 합니다. 회사에서는 라이브러리 사용 비용도 함께 고려해야 했습니다."
-          ]
-        },
-        {
-          "title": "자체 디자인 시스템과 가이드 웹",
-          "p": [
-            "이런 배경에서 자체 디자인 시스템 NDS를 만드는 프로젝트에 참여했습니다. 여러 컴포넌트와 호환성을 지원하는 시스템과 함께 가이드 문서 웹을 제작했습니다."
-          ],
-          "bullets": [
-            "반복되는 UI를 공통 규칙으로 정리",
-            "컴포넌트와 호환성을 고려한 디자인 시스템",
-            "사용 방법을 전달하는 가이드 문서 웹"
-          ]
-        },
-        {
-          "title": "다음에 더 풀어쓸 질문",
-          "p": [
-            "공통화할 컴포넌트를 어떻게 고르고 사용 규칙을 문서로 전달했는지, 담당한 작업을 중심으로 정리할 예정입니다."
-          ]
-        }
-      ],
-      "source": "https://docs.google.com/presentation/d/1FRmCMWqPVFUYd9ySCsaYBou0RVl7gKxb23RYdFvpsDQ/edit#slide=id.g3ba71fdc82d_0_486",
-      "slug": "design-system",
-      "group": "design-system",
-      "status": "draft"
-    },
     {
       "kind": "life",
       "row": "219:340",
@@ -345,66 +112,6 @@
       "slug": "broad-shallow-knowledge",
       "group": "reading",
       "status": "record"
-    },
-    {
-      "kind": "life",
-      "row": "219:436",
-      "title": "어떻게 살아갈 것인가",
-      "category": "PHILOSOPHY",
-      "excerpt": "내가 중요하게 여기는 가치와 선택의 기준을 돌아보는 기록.",
-      "meta": "작성 예정 · 철학",
-      "draft": true,
-      "sections": [
-        {
-          "title": "생각을 정리하는 중입니다",
-          "p": [
-            "현재는 제목과 주제를 정리한 단계입니다. 본문은 앞으로 이곳에 차근차근 추가할 예정입니다."
-          ]
-        }
-      ],
-      "slug": "how-to-live",
-      "group": "thoughts",
-      "status": "planned"
-    },
-    {
-      "kind": "life",
-      "row": "219:445",
-      "title": "서로를 이해하는 방법",
-      "category": "RELATIONSHIPS",
-      "excerpt": "감정과 거리, 대화와 배려에 대해 계속 고민하는 자리.",
-      "meta": "작성 예정 · 인간관계",
-      "draft": true,
-      "sections": [
-        {
-          "title": "생각을 정리하는 중입니다",
-          "p": [
-            "현재는 제목과 주제를 정리한 단계입니다. 본문은 앞으로 이곳에 차근차근 추가할 예정입니다."
-          ]
-        }
-      ],
-      "slug": "understanding-others",
-      "group": "thoughts",
-      "status": "planned"
-    },
-    {
-      "kind": "life",
-      "row": "219:454",
-      "title": "겪고 나서 알게 된 것들",
-      "category": "EXPERIENCE",
-      "excerpt": "일과 관계, 사회 속에서 배운 경험과 대처에 관한 생각.",
-      "meta": "작성 예정 · 경험과 대처",
-      "draft": true,
-      "sections": [
-        {
-          "title": "생각을 정리하는 중입니다",
-          "p": [
-            "현재는 제목과 주제를 정리한 단계입니다. 본문은 앞으로 이곳에 차근차근 추가할 예정입니다."
-          ]
-        }
-      ],
-      "slug": "lessons-from-experience",
-      "group": "thoughts",
-      "status": "planned"
     },
     {
       "kind": "life",
@@ -928,6 +635,420 @@
           "interactive": "fms-overview"
         }
       ]
+    },
+    {
+      "slug": "conda-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 10,
+      "title": "콘다란?",
+      "category": "CONCEPT BLOCK 10 · CONDA",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 10",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "lifecycle-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 11,
+      "title": "라이프 사이클",
+      "category": "CONCEPT BLOCK 11 · LIFECYCLE",
+      "excerpt": "ROS 2 노드의 라이프 사이클과 라이프 사이클 매니저(Lifecycle Manager)를 함께 다룰 예정입니다.",
+      "meta": "로보틱스 개념 블록 · 11",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "history-of-mathematicians",
+      "kind": "tech",
+      "group": "math",
+      "title": "수학자의 역사",
+      "category": "MATHEMATICS · HISTORY",
+      "excerpt": "",
+      "meta": "수학사",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "buddhist-philosophy",
+      "kind": "life",
+      "group": "thoughts",
+      "title": "불교 철학",
+      "category": "PHILOSOPHY",
+      "excerpt": "",
+      "meta": "생각",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "cycle-of-suffering-and-happiness",
+      "kind": "life",
+      "group": "thoughts",
+      "parentSlug": "buddhist-philosophy",
+      "title": "괴로움과 행복의 윤회",
+      "category": "PHILOSOPHY",
+      "excerpt": "",
+      "meta": "불교 철학",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "nikaya",
+      "kind": "life",
+      "group": "thoughts",
+      "parentSlug": "buddhist-philosophy",
+      "title": "니까야",
+      "category": "PHILOSOPHY",
+      "excerpt": "",
+      "meta": "불교 철학",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "urdf-mujoco-simulation",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 12,
+      "title": "URDF 구성과 무조코 시뮬레이터에서 오차 없이 실행될 수 있게 만드는 법",
+      "category": "CONCEPT BLOCK 12 · URDF & MUJOCO",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 12",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "data-graph-visualization-habits",
+      "kind": "tech",
+      "group": "design",
+      "title": "데이터 그래프 시각화 습관",
+      "category": "DESIGN · DATA VISUALIZATION",
+      "excerpt": "",
+      "meta": "데이터 시각화",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "careful-with-relationships",
+      "kind": "life",
+      "group": "thoughts",
+      "parentSlug": "buddhist-philosophy",
+      "title": "인연은 함부로 맺지 말기",
+      "category": "PHILOSOPHY",
+      "excerpt": "",
+      "meta": "불교 철학",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "robotics-basics-and-terminology",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 13,
+      "title": "로보틱스 기본 개념 및 용어",
+      "category": "CONCEPT BLOCK 13 · ROBOTICS BASICS",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 13",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "why-odom-is-always-wrong",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 14,
+      "title": "Odom 이 항상 틀리는 이유",
+      "category": "CONCEPT BLOCK 14 · ODOMETRY",
+      "excerpt": "센서 융합으로 주행 추정을 안정시키고, 지도를 기준으로 누적 오차를 보정하는 방법이에요.",
+      "meta": "로보틱스 개념 블록 · 14",
+      "status": "record",
+      "source": "https://docs.nav2.org/jazzy/getting_started/navigation_concepts/state_estimation/",
+      "sourceLabel": "Nav2 공식 위치 추정 문서 보기",
+      "sections": [
+        {
+          "title": "누적되는 오차는 어떻게 보정할까요?",
+          "p": [
+            "바퀴 엔코더로 잰 이동량을 계속 더하면 미끄러짐 같은 작은 오차가 누적돼요. 엔코더와 IMU를 확장 칼만 필터(EKF)로 융합하면 짧은 구간에서 로봇의 움직임을 더 안정적으로 추정할 수 있어요.",
+            "지도 기준 위치는 AMCL처럼 라이다 관측을 지도와 비교하는 방법으로 보정해요. 보정값은 map → odom 변환에 반영하고, odom → base_link 변환은 주행 제어에 필요한 연속성을 유지해요."
+          ],
+          "emphasis": { "strong": ["확장 칼만 필터(EKF)", "map → odom", "odom → base_link"] }
+        }
+      ]
+    },
+    {
+      "slug": "tf-concept-block",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 15,
+      "title": "TF",
+      "category": "CONCEPT BLOCK 15 · TF",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 15",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "pid-control",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 16,
+      "title": "PID 제어",
+      "category": "CONCEPT BLOCK 16 · PID CONTROL",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 16",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "nav2-navigation-step-by-step",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 17,
+      "title": "Nav2 단계별 주행",
+      "category": "CONCEPT BLOCK 17 · NAV2 NAVIGATION",
+      "excerpt": "안내 데스크로 가는 로봇을 따라가며, Nav2가 길을 만들고 장애물에 대응해 목적지까지 주행하는 과정을 살펴봐요.",
+      "meta": "로보틱스 개념 블록 · 17",
+      "status": "record",
+      "source": "https://docs.nav2.org/jazzy/getting_started/navigation_concepts/",
+      "sourceLabel": "Nav2 공식 주행 개념 문서 보기",
+      "sections": [
+        {
+          "title": "목표와 현재 위치를 확인해요",
+          "p": [
+            "복도 입구에 있는 로봇이 안내 데스크 앞으로 가서 데스크를 바라보게 해 볼게요. Nav2의 NavigateToPose 액션에 목적지의 위치와 도착했을 때 바라볼 방향을 함께 전달해요.",
+            "미리 만든 지도를 사용하는 경우, 위치 추정 시스템이 지도 위에서 로봇의 현재 위치와 방향을 추정해요. TF로 좌표계 사이의 관계를 알 수 있어서 현재 자세와 목표 자세를 같은 지도 기준으로 비교할 수 있어요."
+          ],
+          "emphasis": { "strong": ["목적지의 위치와 도착했을 때 바라볼 방향", "같은 지도 기준"] }
+        },
+        {
+          "title": "센서로 장애물을 찾아 비용 지도에 반영해요",
+          "p": [
+            "비용 지도(costmap)는 공간을 격자로 나눠 어디를 지날 수 있고 어디를 피해야 하는지 표시해요. 벽은 정적 지도에서 가져오고, 라이다가 복도의 상자를 감지하면 센서 좌표를 비용 지도의 좌표로 변환해 해당 칸에 장애물을 표시해요.",
+            "센서가 다시 관측한 빈 공간에서는, 지우기 기능을 켠 장애물 레이어가 이전 표시를 지울 수 있어요. 팽창 레이어는 장애물 주변 칸의 비용도 높여 로봇이 벽이나 상자에 바짝 붙는 경로를 덜 선호하게 해요."
+          ],
+          "emphasis": { "strong": ["비용 지도(costmap)", "장애물을 표시", "팽창 레이어"] }
+        },
+        {
+          "title": "플래너가 전역 경로를 만들어요",
+          "p": [
+            "플래너 서버는 ComputePathToPose 요청을 받으면 선택된 플래너에 현재 자세, 목표 자세, 전역 비용 지도를 바탕으로 길을 계산하게 해요. 막힌 구간을 피하면서 복도 입구에서 안내 데스크까지 이어지는 경로를 찾아요.",
+            "이 결과가 패스(path)예요. ROS 2에서는 위치와 방향이 담긴 자세를 순서대로 담은 nav_msgs/msg/Path 메시지로 전달해요. 이 데이터는 로봇이 어디를 지나야 하는지를 알려줘요."
+          ],
+          "emphasis": { "strong": ["전역 비용 지도", "패스(path)", "nav_msgs/msg/Path"] }
+        },
+        {
+          "title": "컨트롤러가 경로를 속도 명령으로 바꿔요",
+          "p": [
+            "FollowPath 요청으로 전역 경로를 받은 컨트롤러는 로봇의 현재 자세와 속도, 가까운 장애물이 표시된 지역 비용 지도를 살펴요. 복도 코너에 접근하면 지금 얼마나 빨리 앞으로 가고 얼마나 빠르게 돌아야 할지 계산해요.",
+            "로봇 베이스는 이 속도 명령을 받아 바퀴를 움직여요. 컨트롤러는 주행 중 들어오는 새 위치와 센서 정보를 바탕으로 다음 속도 명령을 계속 계산해요."
+          ],
+          "emphasis": { "strong": ["지역 비용 지도", "속도 명령"] }
+        },
+        {
+          "title": "주행 중 새 장애물이 생기면 다시 판단해요",
+          "p": [
+            "로봇이 이동하는 도중 누군가 복도에 상자를 놓았다고 해 볼게요. 센서 관측이 지역 비용 지도에 반영되면, 컨트롤러는 가까운 공간에서 실행 가능한 움직임을 다시 계산해요. 감속이나 회피가 가능한지는 컨트롤러와 설정에 따라 달라요.",
+            "상자로 통로가 막혀 전역 비용 지도에도 반영되면, 다음 경로 계산에서 옆 복도를 지나는 새 경로를 찾을 수 있어요. Nav2는 주행 중에도 경로를 다시 계산할 수 있고, 언제 다시 계산할지는 행동 트리 설정에 따라 달라요."
+          ],
+          "emphasis": { "strong": ["실행 가능한 움직임", "행동 트리"] }
+        },
+        {
+          "title": "진행이 멈추면 복구를 시도해요",
+          "p": [
+            "진행 검사기(Progress Checker)는 일정 시간 안에 로봇이 충분히 움직였는지 확인해요. 경로를 만들지 못했거나 따라가다 멈췄다면, 행동 트리가 다음에 할 일을 정해요.",
+            "설정과 실패 원인에 따라 잠시 기다린 뒤 다시 시도하거나, 오래된 관측 표시를 초기화하기 위해 비용 지도를 지운 뒤 다시 계산할 수 있어요. 실제로 통로가 계속 막혀 있고 설정된 시도 횟수 안에 해결하지 못하면 주행 실패를 보고해요."
+          ],
+          "emphasis": { "strong": ["진행 검사기(Progress Checker)", "주행 실패를 보고"] }
+        },
+        {
+          "title": "도착 조건을 확인하고 주행을 마쳐요",
+          "p": [
+            "안내 데스크 앞에 가까워지면 목표 검사기(Goal Checker)가 도착 조건을 확인해요. 위치와 방향을 모두 검사하는 설정에서는 목표 위치와의 거리, 바라보는 방향의 차이가 각각 허용 범위 안에 들어와야 해요.",
+            "도착 조건을 충족하면 주행을 종료하고 성공을 보고해요. 전체 흐름을 한 줄로 보면 목표와 현재 자세 → 비용 지도 → 전역 경로 → 속도 명령 → 도착 확인이에요. 주행하는 동안에는 센서 관측과 제어가 계속되고, 필요에 따라 경로도 갱신해요."
+          ],
+          "emphasis": { "strong": ["목표 검사기(Goal Checker)", "목표와 현재 자세 → 비용 지도 → 전역 경로 → 속도 명령 → 도착 확인"] }
+        }
+      ]
+    },
+    {
+      "slug": "packages-and-stacks",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 18,
+      "title": "패키지와 스택",
+      "category": "CONCEPT BLOCK 18 · PACKAGES & STACKS",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 18",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "llm-and-prompt-engineering",
+      "kind": "tech",
+      "group": "ai-masters",
+      "title": "LLM및프롬프트엔지니어링",
+      "category": "AI MASTERS · LLM",
+      "excerpt": "",
+      "meta": "인공지능 대학원(석사)",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "llm-landscape-2026",
+      "kind": "tech",
+      "group": "ai-masters",
+      "parentSlug": "llm-and-prompt-engineering",
+      "seriesOrder": 1,
+      "title": "26년 LLM 현황",
+      "category": "AI MASTERS · LLM",
+      "excerpt": "",
+      "meta": "LLM및프롬프트엔지니어링",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "data-analysis",
+      "kind": "tech",
+      "group": "ai-masters",
+      "title": "데이터분석",
+      "category": "AI MASTERS · DATA ANALYSIS",
+      "excerpt": "",
+      "meta": "인공지능 대학원(석사)",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "understanding-big-data",
+      "kind": "tech",
+      "group": "ai-masters",
+      "parentSlug": "data-analysis",
+      "seriesOrder": 1,
+      "title": "빅데이터 이해",
+      "category": "AI MASTERS · DATA ANALYSIS",
+      "excerpt": "",
+      "meta": "데이터분석",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "cloud-and-ai",
+      "kind": "tech",
+      "group": "ai-masters",
+      "title": "클라우드와AI",
+      "category": "AI MASTERS · CLOUD & AI",
+      "excerpt": "",
+      "meta": "인공지능 대학원(석사)",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "cloud-computing-concepts",
+      "kind": "tech",
+      "group": "ai-masters",
+      "parentSlug": "cloud-and-ai",
+      "seriesOrder": 1,
+      "title": "클라우드 컴퓨팅 개념",
+      "category": "AI MASTERS · CLOUD & AI",
+      "excerpt": "",
+      "meta": "클라우드와AI",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "full-stack-service-development",
+      "kind": "tech",
+      "group": "ai-masters",
+      "title": "풀스택서비스구축",
+      "category": "AI MASTERS · FULL-STACK DEVELOPMENT",
+      "excerpt": "",
+      "meta": "인공지능 대학원(석사)",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "service-technology-evolution",
+      "kind": "tech",
+      "group": "ai-masters",
+      "parentSlug": "full-stack-service-development",
+      "seriesOrder": 1,
+      "title": "서비스 기술 변화",
+      "category": "AI MASTERS · FULL-STACK DEVELOPMENT",
+      "excerpt": "",
+      "meta": "풀스택서비스구축",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "aruco-markers-vs-uwb",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 19,
+      "title": "아르코 마커와 UWB의 차이",
+      "category": "CONCEPT BLOCK 19 · ARUCO & UWB",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 19",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "behavior-tree",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 20,
+      "title": "Behavior Tree",
+      "category": "CONCEPT BLOCK 20 · BEHAVIOR TREE",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 20",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "groot",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 21,
+      "title": "그루트",
+      "category": "CONCEPT BLOCK 21 · GROOT",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 21",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "gimbal-lock",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 22,
+      "title": "짐벌락",
+      "category": "CONCEPT BLOCK 22 · GIMBAL LOCK",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 22",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "robot-remote-management-ssh",
+      "kind": "tech",
+      "group": "robotics-concept-blocks",
+      "seriesOrder": 23,
+      "title": "로봇 원격 관리(ssh)",
+      "category": "CONCEPT BLOCK 23 · SSH",
+      "excerpt": "",
+      "meta": "로보틱스 개념 블록 · 23",
+      "status": "planned",
+      "sections": []
+    },
+    {
+      "slug": "various-emotions",
+      "kind": "life",
+      "group": "thoughts",
+      "title": "다양한 감정",
+      "category": "EMOTIONS",
+      "excerpt": "",
+      "meta": "생각",
+      "status": "planned",
+      "sections": []
     }
   ]
 }

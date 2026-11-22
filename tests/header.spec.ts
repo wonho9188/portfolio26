@@ -141,13 +141,14 @@ for (const [width, normalHeight, compactHeight] of [
     await expect(header).not.toHaveClass(/is-hidden|is-compact/);
     await expect.poll(height).toBe(normalHeight);
 
-    await page.goto("./#/blog/ros2-interfaces");
-    await expect(page.locator("h1")).toHaveText(
-      "50개의 토픽·서비스를 어떻게 설계했을까",
+    await page.goto("./#/blog/moveit-concept-block?screen=16");
+    await expect(page.locator("h1")).toHaveText("MoveIt이란?");
+    const articleScroll = await page.evaluate(() =>
+      Math.min(1000, document.documentElement.scrollHeight - innerHeight),
     );
-    await scroll(1000);
+    await scroll(articleScroll);
     await expect(header).toHaveClass(/is-hidden/);
-    await scroll(780);
+    await scroll(articleScroll - 220);
     await expect(header).not.toHaveClass(/is-hidden/);
     await expect.poll(height).toBe(compactHeight);
     await expect(page.locator(".article-toc")).toHaveCount(0);

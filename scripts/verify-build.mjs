@@ -55,7 +55,7 @@ try {
     "utilities",
     "blog",
     "life",
-    "blog/ros2-interfaces",
+    "blog/ros2-concept-block",
   ]) {
     await page.goto(url + "#/" + route);
     await page.locator("h1").waitFor();

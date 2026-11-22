@@ -461,15 +461,6 @@ body:has(.screen-lesson) {
 .posts-page .post-row > .arrow {
   align-self: center;
 }
-.posts-page .posts-cross-link {
-  margin-top: var(--page-section-gap);
-  padding-top: 40px;
-}
-.posts-page .posts-cross-link p {
-  max-width: 48rem;
-  color: var(--color-muted);
-  line-height: 1.9;
-}
 .posts-page .empty-state {
   display: grid;
   gap: 20px;

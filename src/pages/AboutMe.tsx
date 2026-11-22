@@ -52,15 +52,9 @@ export function Experiments() {
           <article className="experiment-card" key={e.title}>
             <p className="eyebrow">{e.label}</p>
             <h4>
-              {e.post ? (
-                <Link className="stretched-link" to={`/blog/${e.post}`}>
-                  {e.title}
-                </Link>
-              ) : (
-                <TextLink className="stretched-link" href={e.source!}>
-                  {e.title}
-                </TextLink>
-              )}
+              <TextLink className="stretched-link" href={e.source}>
+                {e.title}
+              </TextLink>
             </h4>
             <p>{e.description}</p>
             <div className="card-meta">
@@ -218,13 +212,7 @@ export default function AboutMe() {
           title="엔지니어링 노트"
           link="기술 글 모아보기"
           href="/blog"
-          description={
-            <>
-              실제 프로젝트에서 맡았던 역할과 마주한 문제를 바탕으로,
-              <br />
-              설계의 이유와 해결 과정을 기록합니다.
-            </>
-          }
+          description="로보틱스 개념과 디자인 원리, 수학을 정리합니다."
         />
         <div className="card-grid">
           {posts

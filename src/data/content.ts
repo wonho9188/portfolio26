@@ -116,7 +116,7 @@ export const experiments = [
     description:
       "GUI–서버–로봇 사이의 통신 상태를 한 화면에서 확인하기 위한 도구.",
     tag: "SYSTEM MONITORING",
-    post: "ros2-interfaces",
+    source: links.slides,
   },
   {
     label: "02 / BUILD",
@@ -280,6 +280,7 @@ export type Post = {
   meta: string;
   status: "draft" | "planned" | "record";
   group: string;
+  parentSlug?: string;
   sections: Section[];
   source?: string;
   sourceLabel?: string;
@@ -314,9 +315,23 @@ export const designTopic = {
   description:
     "시각적 표현과 사용 경험을 함께 살피며, 화면을 설계하는 기준을 기록합니다.",
 };
-export function getTopicPosts(kind: Post["kind"], group: string) {
+export const mathTopic = {
+  id: "math",
+  label: "수학",
+  title: "수학",
+};
+export function getTopicPosts(
+  kind: Post["kind"],
+  group: string,
+  parentSlug?: string,
+) {
   return posts
-    .filter((post) => post.kind === kind && post.group === group)
+    .filter(
+      (post) =>
+        post.kind === kind &&
+        post.group === group &&
+        post.parentSlug === parentSlug,
+    )
     .sort(
       (a, b) =>
         (a.seriesOrder ?? Number.MAX_SAFE_INTEGER) -
@@ -324,14 +339,10 @@ export function getTopicPosts(kind: Post["kind"], group: string) {
     );
 }
 export const techGroups = [
-  ["ros2", "ROS2", "ROS2와 시스템 설계"],
-  ["planning", "Path Planning", "경로를 만드는 방법"],
-  ["navigation", "Navigation", "로봇의 움직임을 설계하며"],
-  ["react", "React", "화면과 상태를 연결하는 일"],
-  ["pyqt", "PyQt", "데이터를 읽는 관제 화면"],
-  ["design-system", "Design System", "일관된 경험을 만드는 구조"],
   [designTopic.id, designTopic.label, designTopic.title],
   [roboticsTopic.id, roboticsTopic.label, roboticsTopic.title],
+  [mathTopic.id, mathTopic.label, mathTopic.title],
+  ["ai-masters", "인공지능 대학원(석사)", "인공지능 대학원(석사)"],
 ];
 export const lifeGroups = [
   ["films", "영화·이야기", "영화와 이야기"],

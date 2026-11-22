@@ -109,9 +109,7 @@ function PostTabs({ kind }: { kind: "tech" | "life" }) {
             onClick={() => select(n)}
           >
             {label}
-            <span>
-              {posts.filter((p) => p.kind === kind && p.group === key).length}
-            </span>
+            <span>{getTopicPosts(kind, key).length}</span>
           </button>
         ))}
       </div>
@@ -165,20 +163,10 @@ export function TechBlog() {
         title="Tech Blog"
         subtitle="작동한 코드 너머, 선택한 이유를 기록합니다."
         description={
-          "실제 프로젝트에서 마주한 문제와 기술적 판단을 바탕으로,\n설계의 이유와 해결 과정을 정리합니다."
+          "로보틱스 개념과 디자인 원리를 예시로 풀어 쓰고,\n수학 주제를 정리합니다."
         }
       />
       <PostTabs kind="tech" />
-      <aside className="posts-cross-link">
-        <h2>코드 밖에서 남은 질문도 기록합니다.</h2>
-        <p>
-          영화와 독서, 철학과 인간관계에 관한 생각은 Life & Thoughts에서
-          이어집니다.
-        </p>
-        <TextLink href="/life">
-          취미와 생각으로 이동 <Arrow />
-        </TextLink>
-      </aside>
     </div>
   );
 }
@@ -203,7 +191,8 @@ export function Article() {
   const post = posts.find((p) => p.slug === slug);
   const lessonSections = post ? getLessonSlides(post) : [];
   const isScreenLesson =
-    post?.kind === "tech" || post?.presentation === "screens";
+    lessonSections.length > 0 &&
+    (post?.kind === "tech" || post?.presentation === "screens");
   const requestedScreen = Number(params.get("screen") ?? 1);
   const screenIndex =
     isScreenLesson && Number.isInteger(requestedScreen) && requestedScreen >= 1
@@ -238,9 +227,12 @@ export function Article() {
   }, [slug, screenIndex, isScreenLesson]);
   if (!post) return <NotFound />;
   const base = post.kind === "tech" ? "/blog" : "/life";
-  const isRoboticsTopic =
-    post.kind === "tech" && post.group === roboticsTopic.id;
-  const isDesignTopic = post.kind === "tech" && post.group === designTopic.id;
+  const topic =
+    post.kind === "tech"
+      ? techGroups.find(([id]) => id === post.group)
+      : undefined;
+  const isRoboticsTopic = topic?.[0] === roboticsTopic.id;
+  const isDesignTopic = topic?.[0] === designTopic.id;
   const isConceptIntro =
     (isRoboticsTopic && (post.sections.length === 1 || isScreenLesson)) ||
     (isDesignTopic && (post.sections.length === 1 || isScreenLesson));
@@ -249,12 +241,19 @@ export function Article() {
     : post.sections;
   const screenUrl = (index: number) =>
     `${base}/${post.slug}${index ? `?screen=${index + 1}` : ""}`;
-  const listUrl = `${base}?topic=${post.group}`;
+  const parent = posts.find((candidate) => candidate.slug === post.parentSlug);
+  const childPosts = getTopicPosts(post.kind, post.group, post.slug);
+  const listUrl = parent
+    ? `${base}/${parent.slug}`
+    : `${base}?topic=${post.group}`;
+  const topicLabel =
+    topic?.[1] ?? (post.kind === "tech" ? "Tech Blog" : "Life & Thoughts");
+  const listLabel = parent?.title ?? `${topicLabel} 목록`;
   const siblings =
-      isRoboticsTopic || isDesignTopic
-        ? getTopicPosts(post.kind, post.group)
-        : posts.filter((p) => p.kind === post.kind),
-    index = siblings.indexOf(post);
+    topic || parent || childPosts.length > 0
+      ? getTopicPosts(post.kind, post.group, post.parentSlug)
+      : posts.filter((p) => p.kind === post.kind && !p.parentSlug);
+  const index = siblings.indexOf(post);
   const next = siblings[index + 1],
     previous = siblings[index - 1];
   return (
@@ -263,21 +262,11 @@ export function Article() {
     >
       <header className="article-header">
         <div className="breadcrumbs">
-          <TextLink href={listUrl}>
-            ←{" "}
-            {isRoboticsTopic
-              ? roboticsTopic.label
-              : isDesignTopic
-                ? designTopic.label
-                : post.kind === "tech"
-                  ? "Tech Blog"
-                  : "Life & Thoughts"}{" "}
-            목록
-          </TextLink>
+          <TextLink href={listUrl}>← {listLabel}</TextLink>
           <p className="eyebrow">{post.category}</p>
         </div>
         <h1>{displayedTitle}</h1>
-        {(!isScreenLesson || screenIndex === 0) && (
+        {post.excerpt && (!isScreenLesson || screenIndex === 0) && (
           <p className="lead">{post.excerpt}</p>
         )}
         <p className="meta">{post.meta.replace(/^최원호 · /, "")}</p>
@@ -285,7 +274,7 @@ export function Article() {
       {isRoboticsTopic && (
         <p className="article-topic">{roboticsTopic.title}</p>
       )}
-      {post.status === "planned" && (
+      {post.status === "planned" && childPosts.length === 0 && (
         <aside className="draft-notice">
           <span className="award-chip">작성 예정</span>
           <p>
@@ -300,8 +289,15 @@ export function Article() {
             : "기록 초안 · 프로젝트 자료를 바탕으로 정리 중인 기술 노트입니다."}
         </p>
       )}
+      {childPosts.length > 0 && (
+        <nav className="post-list" aria-label={`${post.title} 글 목록`}>
+          {childPosts.map((child, index) => (
+            <PostRow key={child.slug} post={child} number={index + 1} />
+          ))}
+        </nav>
+      )}
       <div className="article-layout">
-        {!isConceptIntro && !isScreenLesson && (
+        {visibleSections.length > 0 && !isConceptIntro && !isScreenLesson && (
           <nav className="article-toc" aria-label="이 글의 목차">
             <p className="eyebrow">ON THIS PAGE</p>
             {post.sections.map((s, i) => (
@@ -513,16 +509,7 @@ export function Article() {
             <span className="eyebrow">
               ← {previous ? "PREVIOUS POST" : "BACK TO POSTS"}
             </span>
-            <span>
-              {previous?.title ??
-                (isRoboticsTopic
-                  ? `${roboticsTopic.label} 목록`
-                  : isDesignTopic
-                    ? `${designTopic.label} 목록`
-                    : post.kind === "tech"
-                      ? "Tech Blog 목록"
-                      : "Life & Thoughts 목록")}
-            </span>
+            <span>{previous?.title ?? listLabel}</span>
           </Link>
           {next && (
             <Link to={`${base}/${next.slug}`}>

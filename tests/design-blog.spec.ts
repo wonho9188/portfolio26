@@ -18,14 +18,16 @@ test("design tab opens a sourced trend article and stays within its category", a
     "시각적 우선순위(레이아웃, 여백, 크기, 색상)",
     "컴포넌트의 종류",
     "톤 앤 매너와 룩앤필",
+    "데이터 그래프 시각화 습관",
   ]);
   await page.reload();
   await expect(design).toHaveAttribute("aria-selected", "true");
   await design.focus();
   await page.keyboard.press("ArrowLeft");
-  await expect(
-    page.locator('[role="tab"][id$="-tab-design-system"]'),
-  ).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("tab").last()).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
   await page.keyboard.press("ArrowRight");
   await expect(design).toHaveAttribute("aria-selected", "true");
   await page.getByRole("link", { name: "디자인 트렌드", exact: true }).click();

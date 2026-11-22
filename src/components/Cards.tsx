@@ -90,7 +90,7 @@ export function PostRow({ post, number }: { post: Post; number: number }) {
             {post.title}
           </Link>
         </h3>
-        <p>{post.excerpt}</p>
+        {post.excerpt && <p>{post.excerpt}</p>}
         <p className="meta">{post.meta}</p>
       </div>
       <Arrow />

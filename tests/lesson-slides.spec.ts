@@ -19,6 +19,30 @@ for (const width of [320, 1440]) {
           ...("steps" in s ? s.steps.map((step) => step.body) : []),
         ]),
       ]);
+      if (slides.length === 0) {
+        const parentSlug = "parentSlug" in post ? post.parentSlug : undefined;
+        const indexUrl = parentSlug
+          ? `./#/blog/${parentSlug}`
+          : `./#/blog?topic=${post.group}`;
+        await page.goto(indexUrl);
+        await page.getByRole("link", { name: post.title, exact: true }).click();
+        await expect(page.locator("h1")).toHaveText(post.title);
+        const hasChildren = source.posts.some(
+          (child) => "parentSlug" in child && child.parentSlug === post.slug,
+        );
+        if (hasChildren) {
+          await expect(
+            page.getByRole("navigation", { name: `${post.title} 글 목록` }),
+          ).toBeVisible();
+        } else {
+          await expect(page.locator(".draft-notice")).toContainText("작성 예정");
+        }
+        await page.goto(`./#/blog/${post.slug}?screen=2`);
+        await expect(page.locator("h1")).toHaveText(post.title);
+        await expect(page.locator(".article-body > section")).toHaveCount(0);
+        await expect(page.locator(".lesson-navigation")).toHaveCount(0);
+        continue;
+      }
       for (const [index, slide] of slides.entries()) {
         await page.goto(`./#/blog/${post.slug}?screen=${index + 1}`);
         await expect(page.locator(".article-body > section")).toHaveCount(1);

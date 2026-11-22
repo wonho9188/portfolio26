@@ -23,7 +23,7 @@
 .world-heading h1 em {
   color: var(--color-accent);
   font: italic 400 1.15em/1.1 var(--font-accent);
-  letter-spacing: -0.025em;
+  letter-spacing: 0.015em;
 }
 .world-introduction {
   margin-top: 24px;

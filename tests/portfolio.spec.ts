@@ -8,8 +8,10 @@ test("post identifiers and publication states are consistent", () => {
   for (const post of source.posts) {
     expect(post.slug).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
     expect(post.group).toBeTruthy();
-    expect(post.sections.length).toBeGreaterThan(0);
     expect(["draft", "planned", "record"]).toContain(post.status);
+    if (post.status !== "planned") {
+      expect(post.sections.length).toBeGreaterThan(0);
+    }
     if (post.status === "record") {
       expect(
         post.sections.every((section) =>
@@ -89,36 +91,41 @@ test("navigation, topic tabs, article, refresh and history work", async ({
   page,
 }) => {
   await page.goto("./#/blog");
-  await page.getByRole("tab", { name: /^Navigation/ }).click();
-  await expect(
-    page.getByRole("heading", { name: "DWB 대신 MPPI를 선택한 이유" }),
-  ).toBeVisible();
-  await page.getByRole("tab", { name: /^Navigation/ }).press("ArrowRight");
-  await expect(page.getByRole("tab", { name: /^React/ })).toBeFocused();
-  await page
-    .getByRole("heading", { name: "2D의 편집 결과를 3D에 반영하는 방법" })
-    .getByRole("link")
-    .click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "2D의 편집 결과를 3D에 반영하는 방법",
-  );
+  await expect(page.getByRole("tab")).toHaveCount(4);
+  const designTab = page.getByRole("tab", { name: /^디자인/ });
+  const roboticsTab = page.getByRole("tab", { name: /^로보틱스 개념 블록/ });
+  await expect(designTab).toHaveAttribute("aria-selected", "true");
+  await designTab.press("ArrowRight");
+  await expect(roboticsTab).toBeFocused();
+  await page.getByRole("link", { name: "ROS 2란?", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("ROS 2란?");
   await page.reload();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "2D의 편집 결과를 3D에 반영하는 방법",
-  );
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("ROS 2란?");
   await expect(
     page.getByRole("navigation", { name: "이 글의 목차" }),
   ).toHaveCount(0);
   await page.getByRole("link", { name: "다음 화면 →", exact: true }).click();
   await expect(page.locator(".article-body > section > h2")).toHaveText(
-    "02 / 배치와 편집 상태를 연결하기",
+    "02 / 세 프로그램의 팀워크",
   );
-  await expect(page.locator(".lesson-navigation .meta")).toHaveText("2 / 3");
-  await page.getByRole("link", { name: "← Tech Blog 목록" }).click();
-  await expect(page.getByRole("tab", { name: /^React/ })).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
+  await expect(page.locator(".lesson-navigation .meta")).toHaveText("2 / 4");
+  await page.getByRole("link", { name: "← 로보틱스 개념 블록 목록" }).click();
+  await expect(roboticsTab).toHaveAttribute("aria-selected", "true");
+  const mathTab = page.getByRole("tab", { name: /^수학/ });
+  await mathTab.click();
+  await expect(page).toHaveURL(/#\/blog\?topic=math$/);
+  const mathPosts = page.getByRole("tabpanel", { name: /^수학/ });
+  await expect(mathPosts.locator(".post-row")).toHaveCount(1);
+  await mathPosts.getByRole("link", { name: "수학자의 역사" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("수학자의 역사");
+  await expect(page.locator(".article-pagination a")).toHaveCount(1);
+  await page.getByRole("link", { name: "← 수학 목록" }).click();
+  await expect(mathTab).toHaveAttribute("aria-selected", "true");
+  const aiMastersTab = page.getByRole("tab", { name: /^인공지능 대학원\(석사\)/ });
+  await aiMastersTab.click();
+  await expect(page).toHaveURL(/#\/blog\?topic=ai-masters$/);
+  await page.reload();
+  await expect(aiMastersTab).toHaveAttribute("aria-selected", "true");
   await page
     .getByRole("navigation", { name: "주 메뉴", exact: true })
     .getByRole("link", { name: "Life & Thoughts" })
@@ -145,6 +152,50 @@ test("navigation, topic tabs, article, refresh and history work", async ({
   );
 });
 
+test("removed articles show the not-found screen", async ({ page }) => {
+  for (const route of [
+    "blog/ros2-interfaces",
+    "blog/backtracking-planner",
+    "blog/mppi-navigation",
+    "blog/editor-state",
+    "blog/pyqt-monitoring",
+    "blog/design-system",
+    "life/how-to-live",
+    "life/understanding-others",
+    "life/lessons-from-experience",
+  ]) {
+    await page.goto(`./#/${route}`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "찾는 페이지가 없습니다.",
+    );
+  }
+});
+
+test("Buddhist philosophy groups its article under Thoughts", async ({ page }) => {
+  const title = "괴로움과 행복의 윤회";
+  await page.goto("./#/life");
+  const thoughts = page.getByRole("tab", { name: /^생각/ });
+  await thoughts.click();
+  await expect(page).toHaveURL(/#\/life\?topic=thoughts$/);
+  const posts = page.getByRole("tabpanel", { name: /^생각/ });
+  await expect(
+    posts.getByRole("link", { name: title, exact: true }),
+  ).toHaveCount(0);
+  await posts.getByRole("link", { name: "불교 철학", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("불교 철학");
+  await page
+    .getByRole("navigation", { name: "불교 철학 글 목록" })
+    .getByRole("link", { name: title, exact: true })
+    .click();
+  await expect(page).toHaveURL(/#\/life\/cycle-of-suffering-and-happiness$/);
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
+  await page.getByRole("link", { name: "← 불교 철학", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("불교 철학");
+  await page.locator(".article-header .breadcrumbs a").click();
+  await expect(thoughts).toHaveAttribute("aria-selected", "true");
+});
+
 for (const width of [320, 375, 768, 1200, 1440]) {
   test(`all pages fit ${width}px without cut titles`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
@@ -162,7 +213,7 @@ for (const width of [320, 375, 768, 1200, 1440]) {
       "blog",
       "blog?topic=robotics-concept-blocks",
       "life?topic=reading",
-      "blog/ros2-interfaces",
+      "blog/ros2-concept-block",
       "blog/moveit-concept-block",
       "blog/moveit-concept-block?screen=2",
       "blog/moveit-concept-block?screen=3",
