@@ -80,10 +80,10 @@
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
-html:has(.screen-lesson) {
+html:has(.screen-lesson:not(.graduate-article)) {
   scroll-padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px));
 }
-body:has(.screen-lesson) {
+body:has(.screen-lesson:not(.graduate-article)) {
   padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px));
 }
 .lesson-control {
@@ -231,6 +231,22 @@ body:has(.screen-lesson) {
   max-width: 52rem;
   color: var(--color-muted);
   line-height: 1.85;
+}
+.inner-page:has(> .page-heading--overview) {
+  padding-block-start: clamp(28px, 4vw, 56px);
+}
+.inner-page > .page-heading.page-heading--overview {
+  margin-bottom: clamp(24px, 3.2vw, 44px);
+}
+.inner-page .page-heading--overview .breadcrumbs {
+  row-gap: 8px;
+  margin-bottom: clamp(18px, 2.2vw, 32px);
+}
+.inner-page .page-heading--overview h1 {
+  margin-bottom: clamp(16px, 1.5vw, 24px);
+}
+.inner-page .page-heading--overview .page-subtitle {
+  margin-bottom: 0;
 }
 .inner-page .section-jumps {
   margin-block: 0 40px;
@@ -409,9 +425,6 @@ body:has(.screen-lesson) {
 .posts-page {
   min-height: 0;
 }
-.posts-page .writing-desk {
-  margin-bottom: 32px;
-}
 .posts-page .post-tabs {
   margin-bottom: 48px;
 }
@@ -475,6 +488,91 @@ body:has(.screen-lesson) {
   color: var(--color-muted);
   line-height: 1.9;
 }
+.graduate-reader {
+  display: grid;
+  grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(24px, 4vw, 64px);
+}
+.graduate-sidebar {
+  padding: 12px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+}
+.graduate-sidebar ul {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.graduate-sidebar a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
+}
+.graduate-sidebar a:hover,
+.graduate-sidebar a[aria-current] {
+  background: var(--color-raised);
+  color: var(--color-ink);
+}
+.graduate-sidebar a[aria-current] {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+.graduate-sidebar .graduate-article-links {
+  margin: 4px 0 8px 14px;
+  padding-inline-start: 8px;
+  border-inline-start: 1px solid var(--color-line);
+  font-size: 0.9375rem;
+}
+.graduate-reader .graduate-article {
+  min-width: 0;
+  max-width: 58rem;
+  padding: 0;
+  scroll-margin-top: 100px;
+}
+.graduate-reader .article-header {
+  margin-bottom: 24px;
+}
+.graduate-reader .article-header .breadcrumbs {
+  margin-bottom: 12px;
+}
+.graduate-reader .article-header h2 {
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.45;
+}
+.graduate-reader .article-header .meta,
+.graduate-reader .article-header .lead {
+  margin-top: 12px;
+}
+.graduate-reader .draft-notice {
+  margin: 0;
+  padding: 16px 20px;
+  flex-wrap: wrap;
+}
+.graduate-reader .article-body h3 {
+  margin-bottom: 20px;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.graduate-reader .lesson-navigation {
+  position: static;
+  transform: none;
+  width: 100%;
+  margin-top: 24px;
+  box-shadow: none;
+}
+@media (max-width: 767px) {
+  .graduate-reader {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 .article-page {
   max-width: 1120px;
 }
@@ -515,6 +613,9 @@ body:has(.screen-lesson) {
 }
 .article-body section + section {
   margin-top: 80px;
+}
+.article-source {
+  margin-top: 32px;
 }
 .article-body h2 {
   margin-bottom: 32px;
@@ -582,6 +683,17 @@ body:has(.screen-lesson) {
   }
   .article-layout {
     gap: 56px;
+  }
+}
+@media (min-width: 1024px) {
+  .article-layout:has(> .article-toc) {
+    grid-template: "body toc" / minmax(0, 1fr) 224px;
+  }
+  .article-layout > .article-toc {
+    grid-area: toc;
+  }
+  .article-toc + .article-body {
+    grid-area: body;
   }
 }
 @media (max-width: 1023px) {

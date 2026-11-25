@@ -171,16 +171,82 @@ test("removed articles show the not-found screen", async ({ page }) => {
   }
 });
 
-test("Buddhist philosophy groups its article under Thoughts", async ({ page }) => {
+test("graduate courses open articles beside the sidebar and preserve direct links", async ({
+  page,
+}) => {
+  await page.goto("./#/blog?topic=ai-masters");
+  const sidebar = page.getByRole("navigation", { name: "대학원 과목" });
+  const article = page.locator(".graduate-article");
+  await expect(sidebar).toBeVisible();
+  await expect(
+    article.getByRole("heading", { name: "26년 LLM 현황" }),
+  ).toBeVisible();
+  const sidebarBox = await sidebar.boundingBox();
+  const articleBox = await article.boundingBox();
+  expect(sidebarBox!.x + sidebarBox!.width).toBeLessThan(articleBox!.x);
+
+  const dataCourse = sidebar.getByRole("link", { name: "데이터분석", exact: true });
+  await dataCourse.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(
+    /#\/blog\?topic=ai-masters&article=understanding-big-data$/,
+  );
+  await expect(
+    article.getByRole("heading", { name: "빅데이터 이해" }),
+  ).toBeVisible();
+  await expect(dataCourse).toHaveAttribute("aria-current", "true");
+  await expect(
+    sidebar.getByRole("link", { name: "빅데이터 이해", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
+  await page.reload();
+  await expect(dataCourse).toHaveAttribute("aria-current", "true");
+  await page.goBack();
+  await expect(
+    article.getByRole("heading", { name: "26년 LLM 현황" }),
+  ).toBeVisible();
+
+  await page.goto("./#/blog/cloud-and-ai");
+  await expect(page).toHaveURL(
+    /#\/blog\?topic=ai-masters&article=cloud-computing-concepts$/,
+  );
+  await expect(
+    article.getByRole("heading", { name: "클라우드 컴퓨팅 개념" }),
+  ).toBeVisible();
+  await page.goto("./#/blog/service-technology-evolution");
+  await expect(
+    article.getByRole("heading", { name: "서비스 기술 변화" }),
+  ).toBeVisible();
+  await expect(
+    sidebar.getByRole("link", { name: "풀스택서비스구축", exact: true }),
+  ).toHaveAttribute("aria-current", "true");
+
+  await page.setViewportSize({ width: 375, height: 700 });
+  await dataCourse.click();
+  await expect(article).toBeFocused();
+  await expect(
+    article.getByRole("heading", { name: "빅데이터 이해" }),
+  ).toBeInViewport();
+});
+
+test("Philosophy and Personal Thoughts open their respective articles", async ({
+  page,
+}) => {
   const title = "괴로움과 행복의 윤회";
+  const personalArticles = [
+    "다양한 감정",
+    "AI 시대에는 뭘 위해 노력해야 할까?",
+  ];
   await page.goto("./#/life");
-  const thoughts = page.getByRole("tab", { name: /^생각/ });
-  await thoughts.click();
+  const philosophy = page.getByRole("tab", { name: /^철학/ });
+  await philosophy.click();
   await expect(page).toHaveURL(/#\/life\?topic=thoughts$/);
-  const posts = page.getByRole("tabpanel", { name: /^생각/ });
+  const posts = page.getByRole("tabpanel", { name: /^철학/ });
   await expect(
     posts.getByRole("link", { name: title, exact: true }),
   ).toHaveCount(0);
+  for (const name of personalArticles) {
+    await expect(posts.getByRole("link", { name, exact: true })).toHaveCount(0);
+  }
   await posts.getByRole("link", { name: "불교 철학", exact: true }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("불교 철학");
   await page
@@ -193,7 +259,21 @@ test("Buddhist philosophy groups its article under Thoughts", async ({ page }) =
   await page.getByRole("link", { name: "← 불교 철학", exact: true }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("불교 철학");
   await page.locator(".article-header .breadcrumbs a").click();
-  await expect(thoughts).toHaveAttribute("aria-selected", "true");
+  await expect(philosophy).toHaveAttribute("aria-selected", "true");
+
+  const personalThoughts = page.getByRole("tab", { name: /^나의 생각/ });
+  await personalThoughts.click();
+  await expect(page).toHaveURL(/#\/life\?topic=personal-thoughts$/);
+  const personalPosts = page.getByRole("tabpanel", { name: /^나의 생각/ });
+  await expect(
+    personalPosts.getByRole("link", { name: "불교 철학", exact: true }),
+  ).toHaveCount(0);
+  for (const name of personalArticles) {
+    await personalPosts.getByRole("link", { name, exact: true }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(name);
+    await page.locator(".article-header .breadcrumbs a").click();
+    await expect(personalThoughts).toHaveAttribute("aria-selected", "true");
+  }
 });
 
 for (const width of [320, 375, 768, 1200, 1440]) {
@@ -212,6 +292,7 @@ for (const width of [320, 375, 768, 1200, 1440]) {
       "utilities",
       "blog",
       "blog?topic=robotics-concept-blocks",
+      "blog?topic=ai-masters",
       "life?topic=reading",
       "blog/ros2-concept-block",
       "blog/moveit-concept-block",

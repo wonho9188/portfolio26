@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef } from "react";
 import type { KeyboardEvent } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import {
+  aiMastersTopicId,
   articleIllustrations,
   designTopic,
   getTopicPosts,
@@ -10,6 +11,7 @@ import {
   roboticsTopic,
   techGroups,
 } from "../data/content";
+import type { Post } from "../data/content";
 import {
   PageHeading,
   TextLink,
@@ -39,6 +41,72 @@ import ComponentKinds from "../components/ComponentKinds";
 import ToneAndFeel from "../components/ToneAndFeel";
 import FMSOverview from "../components/FMSOverview";
 import { getLessonSlides } from "../data/lesson-slides";
+
+function graduateArticleUrl(slug: string, screen?: string) {
+  const params = new URLSearchParams({ topic: aiMastersTopicId, article: slug });
+  if (screen) params.set("screen", screen);
+  return `/blog?${params}`;
+}
+
+function GraduateReader({ courses }: { courses: Post[] }) {
+  const [params] = useSearchParams();
+  const requestedSlug = params.get("article");
+  const entries = courses.map((course) => ({
+    course,
+    articles: getTopicPosts("tech", aiMastersTopicId, course.slug),
+  }));
+  const selected =
+    entries.find(
+      ({ course, articles }) =>
+        course.slug === requestedSlug ||
+        articles.some(({ slug }) => slug === requestedSlug),
+    ) ?? entries[0];
+  const article =
+    selected.articles.find(({ slug }) => slug === requestedSlug) ??
+    selected.articles[0] ??
+    selected.course;
+
+  return (
+    <div className="graduate-reader">
+      <nav className="graduate-sidebar" aria-label="대학원 과목">
+        <ul>
+          {entries.map((entry) => {
+            const active = entry === selected;
+            const { course, articles } = entry;
+            return (
+              <li key={course.slug}>
+                <Link
+                  to={graduateArticleUrl((articles[0] ?? course).slug)}
+                  aria-current={active ? "true" : undefined}
+                  className="graduate-course"
+                >
+                  {course.title}
+                </Link>
+                {active && articles.length > 0 && (
+                  <ul className="graduate-article-links">
+                    {articles.map((item) => (
+                      <li key={item.slug}>
+                        <Link
+                          to={graduateArticleUrl(item.slug)}
+                          aria-current={
+                            item.slug === article.slug ? "page" : undefined
+                          }
+                        >
+                          {item.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      <PostArticle post={article} embedded />
+    </div>
+  );
+}
 
 function PostTabs({ kind }: { kind: "tech" | "life" }) {
   const [params, setParams] = useSearchParams();
@@ -86,11 +154,6 @@ function PostTabs({ kind }: { kind: "tech" | "life" }) {
   };
   return (
     <div className="post-collection">
-      {kind === "tech" && (
-        <p className="eyebrow writing-desk">
-          WRITING DESK / 정리 중인 기술 노트
-        </p>
-      )}
       <div
         className="post-tabs"
         role="tablist"
@@ -119,37 +182,43 @@ function PostTabs({ kind }: { kind: "tech" | "life" }) {
         aria-labelledby={`${uid}-tab-${current}`}
         tabIndex={0}
       >
-        <div className="collection-heading">
-          <h2>{groups[index][2]}</h2>
-          <p className="eyebrow">
-            {String(filtered.length).padStart(2, "0")}{" "}
-            {filtered.length === 1 ? "POST" : "POSTS"}
-          </p>
-        </div>
-        {isRoboticsTopic && (
-          <p className="topic-description">{roboticsTopic.description}</p>
-        )}
-        {isDesignTopic && (
-          <p className="topic-description">{designTopic.description}</p>
-        )}
-        <div className={`post-list${kind === "tech" ? " tech-post-grid" : ""}`}>
-          {filtered.map((p, i) => (
-            <PostRow key={p.slug} post={p} number={i + 1} />
-          ))}
-        </div>
-        {!filtered.length && (
-          <div className="empty-state">
-            <h3>
-              {isRoboticsTopic
-                ? "아직 등록된 개념 블록이 없습니다."
-                : "아직 공개한 글이 없습니다."}
-            </h3>
-            <p>
-              {isRoboticsTopic
-                ? "첫 글이 등록되면 이곳에서 개념 블록을 하나씩 쌓아갈 수 있습니다."
-                : "다른 주제의 기록도 살펴보세요."}
-            </p>
-          </div>
+        {current === aiMastersTopicId && filtered.length > 0 ? (
+          <GraduateReader courses={filtered} />
+        ) : (
+          <>
+            <div className="collection-heading">
+              <h2>{groups[index][2]}</h2>
+              <p className="eyebrow">
+                {String(filtered.length).padStart(2, "0")}{" "}
+                {filtered.length === 1 ? "POST" : "POSTS"}
+              </p>
+            </div>
+            {isRoboticsTopic && (
+              <p className="topic-description">{roboticsTopic.description}</p>
+            )}
+            {isDesignTopic && (
+              <p className="topic-description">{designTopic.description}</p>
+            )}
+            <div className={`post-list${kind === "tech" ? " tech-post-grid" : ""}`}>
+              {filtered.map((p, i) => (
+                <PostRow key={p.slug} post={p} number={i + 1} />
+              ))}
+            </div>
+            {!filtered.length && (
+              <div className="empty-state">
+                <h3>
+                  {isRoboticsTopic
+                    ? "아직 등록된 개념 블록이 없습니다."
+                    : "아직 공개한 글이 없습니다."}
+                </h3>
+                <p>
+                  {isRoboticsTopic
+                    ? "첫 글이 등록되면 이곳에서 개념 블록을 하나씩 쌓아갈 수 있습니다."
+                    : "다른 주제의 기록도 살펴보세요."}
+                </p>
+              </div>
+            )}
+          </>
         )}
       </section>
     </div>
@@ -162,9 +231,6 @@ export function TechBlog() {
         label="04 / ENGINEERING NOTES"
         title="Tech Blog"
         subtitle="작동한 코드 너머, 선택한 이유를 기록합니다."
-        description={
-          "로보틱스 개념과 디자인 원리를 예시로 풀어 쓰고,\n수학 주제를 정리합니다."
-        }
       />
       <PostTabs kind="tech" />
     </div>
@@ -177,9 +243,6 @@ export function Life() {
         label="06 / BEYOND ENGINEERING"
         title="Life & Thoughts"
         subtitle="로봇 밖에서, 사람과 세상을 이해하는 시간."
-        description={
-          "영화와 만화, 독서와 철학, 관계와 경험.\n보고 읽고 살아가며 생긴 질문들을 천천히 들여다봅니다."
-        }
       />
       <PostTabs kind="life" />
     </div>
@@ -189,43 +252,80 @@ export function Article() {
   const { slug } = useParams();
   const [params] = useSearchParams();
   const post = posts.find((p) => p.slug === slug);
-  const lessonSections = post ? getLessonSlides(post) : [];
+  if (!post) return <NotFound />;
+  if (post.kind === "tech" && post.group === aiMastersTopicId) {
+    const article = getTopicPosts("tech", aiMastersTopicId, post.slug)[0] ?? post;
+    return (
+      <Navigate
+        to={graduateArticleUrl(article.slug, params.get("screen") ?? undefined)}
+        replace
+      />
+    );
+  }
+  return <PostArticle post={post} />;
+}
+
+function PostArticle({
+  post,
+  embedded = false,
+}: {
+  post: Post;
+  embedded?: boolean;
+}) {
+  const [params] = useSearchParams();
+  const { slug, title } = post;
+  const ArticleTitle = embedded ? "h2" : "h1";
+  const SectionTitle = embedded ? "h3" : "h2";
+  const articleTitleId = useId();
+  const lessonSections = getLessonSlides(post);
   const isScreenLesson =
     lessonSections.length > 0 &&
-    (post?.kind === "tech" || post?.presentation === "screens");
+    (post.kind === "tech" || post.presentation === "screens");
   const requestedScreen = Number(params.get("screen") ?? 1);
   const screenIndex =
     isScreenLesson && Number.isInteger(requestedScreen) && requestedScreen >= 1
       ? Math.min(requestedScreen, lessonSections.length) - 1
       : 0;
-  const displayedTitle = post?.title;
   useEffect(() => {
-    if (displayedTitle) document.title = `${displayedTitle} — WONHO`;
-  }, [displayedTitle]);
+    const previousTitle = document.title;
+    document.title = `${title} — WONHO`;
+    if (embedded) {
+      return () => {
+        document.title = previousTitle;
+      };
+    }
+  }, [title, embedded]);
+  const articleRef = useRef<HTMLElement>(null);
   const previousScreen = useRef({ slug, screenIndex });
   const lessonNavigation = useRef<HTMLElement>(null);
   const lessonDirection = useRef<"previous" | "next" | null>(null);
   useEffect(() => {
-    if (
+    const sameArticle = previousScreen.current.slug === slug;
+    const changedScreen =
       isScreenLesson &&
-      previousScreen.current.slug === slug &&
-      previousScreen.current.screenIndex !== screenIndex
-    ) {
-      window.scrollTo({ top: 0, behavior: "instant" });
+      sameArticle &&
+      previousScreen.current.screenIndex !== screenIndex;
+    const selectedOnMobile =
+      embedded && !sameArticle && matchMedia("(max-width: 767px)").matches;
+    if (changedScreen || selectedOnMobile) {
+      if (embedded) articleRef.current?.scrollIntoView({ behavior: "instant" });
+      else window.scrollTo({ top: 0, behavior: "instant" });
       const direction = lessonDirection.current;
       const navigationLink = direction
         ? (lessonNavigation.current?.querySelector<HTMLAnchorElement>(
             direction === "next" ? "a.lesson-next" : "a.lesson-previous",
           ) ?? lessonNavigation.current?.querySelector<HTMLAnchorElement>("a"))
         : null;
-      (navigationLink ?? document.getElementById("main"))?.focus({
+      const fallbackFocus = embedded
+        ? articleRef.current
+        : document.getElementById("main");
+      (navigationLink ?? fallbackFocus)?.focus({
         preventScroll: true,
       });
     }
     lessonDirection.current = null;
     previousScreen.current = { slug, screenIndex };
-  }, [slug, screenIndex, isScreenLesson]);
-  if (!post) return <NotFound />;
+  }, [slug, screenIndex, isScreenLesson, embedded]);
   const base = post.kind === "tech" ? "/blog" : "/life";
   const topic =
     post.kind === "tech"
@@ -239,8 +339,12 @@ export function Article() {
   const visibleSections = isScreenLesson
     ? [lessonSections[screenIndex]]
     : post.sections;
-  const screenUrl = (index: number) =>
-    `${base}/${post.slug}${index ? `?screen=${index + 1}` : ""}`;
+  const screenUrl = (index: number) => {
+    const screen = index ? String(index + 1) : undefined;
+    return embedded
+      ? graduateArticleUrl(slug, screen)
+      : `${base}/${slug}${screen ? `?screen=${screen}` : ""}`;
+  };
   const parent = posts.find((candidate) => candidate.slug === post.parentSlug);
   const childPosts = getTopicPosts(post.kind, post.group, post.slug);
   const listUrl = parent
@@ -258,14 +362,19 @@ export function Article() {
     previous = siblings[index - 1];
   return (
     <article
-      className={`container article-page${isConceptIntro ? " concept-intro" : ""}${isScreenLesson ? " screen-lesson" : ""}${isScreenLesson && screenIndex > 0 ? " lesson-continuation" : ""}`}
+      ref={articleRef}
+      tabIndex={embedded ? -1 : undefined}
+      aria-labelledby={embedded ? articleTitleId : undefined}
+      className={`article-page ${embedded ? "graduate-article" : "container"}${isConceptIntro ? " concept-intro" : ""}${isScreenLesson ? " screen-lesson" : ""}${isScreenLesson && screenIndex > 0 ? " lesson-continuation" : ""}`}
     >
       <header className="article-header">
         <div className="breadcrumbs">
-          <TextLink href={listUrl}>← {listLabel}</TextLink>
+          {!embedded && <TextLink href={listUrl}>← {listLabel}</TextLink>}
           <p className="eyebrow">{post.category}</p>
         </div>
-        <h1>{displayedTitle}</h1>
+        <ArticleTitle id={embedded ? articleTitleId : undefined}>
+          {title}
+        </ArticleTitle>
         {post.excerpt && (!isScreenLesson || screenIndex === 0) && (
           <p className="lead">{post.excerpt}</p>
         )}
@@ -305,7 +414,7 @@ export function Article() {
                 {String(i + 1).padStart(2, "0")} {s.title}
               </button>
             ))}
-            {post.source && (
+            {post.kind === "tech" && post.source && (
               <TextLink href={post.source}>
                 기록의 바탕 보기 <Arrow />
               </TextLink>
@@ -330,13 +439,13 @@ export function Article() {
               id={`section-${i}`}
               tabIndex={-1}
             >
-              <h2>
+              <SectionTitle>
                 {String((isScreenLesson ? screenIndex : i) + 1).padStart(
                   2,
                   "0",
                 )}{" "}
                 / {s.title}
-              </h2>
+              </SectionTitle>
               {s.illustration && articleIllustrations[s.illustration] && (
                 <figure className="article-illustration">
                   <img
@@ -449,6 +558,16 @@ export function Article() {
               )}
             </section>
           ))}
+          {post.kind === "life" && post.source && (
+            <TextLink
+              className="article-source"
+              href={post.source}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {post.sourceLabel ?? "참고 자료 보기"} <Arrow />
+            </TextLink>
+          )}
         </div>
       </div>
       {isScreenLesson && (
@@ -503,25 +622,28 @@ export function Article() {
           <Arrow />
         </TextLink>
       )}
-      {(!post.presentation || screenIndex === lessonSections.length - 1) && (
-        <nav className="article-pagination" aria-label="다른 글">
-          <Link to={previous ? `${base}/${previous.slug}` : listUrl}>
-            <span className="eyebrow">
-              ← {previous ? "PREVIOUS POST" : "BACK TO POSTS"}
-            </span>
-            <span>{previous?.title ?? listLabel}</span>
-          </Link>
-          {next && (
-            <Link to={`${base}/${next.slug}`}>
-              <span className="eyebrow">NEXT POST →</span>
-              <span>{next.title}</span>
+      {!embedded &&
+        (!post.presentation || screenIndex === lessonSections.length - 1) && (
+          <nav className="article-pagination" aria-label="다른 글">
+            <Link to={previous ? `${base}/${previous.slug}` : listUrl}>
+              <span className="eyebrow">
+                ← {previous ? "PREVIOUS POST" : "BACK TO POSTS"}
+              </span>
+              <span>{previous?.title ?? listLabel}</span>
             </Link>
-          )}
-        </nav>
+            {next && (
+              <Link to={`${base}/${next.slug}`}>
+                <span className="eyebrow">NEXT POST →</span>
+                <span>{next.title}</span>
+              </Link>
+            )}
+          </nav>
+        )}
+      {!embedded && (
+        <TextLink href={listUrl}>
+          목록으로 돌아가기 <Arrow />
+        </TextLink>
       )}
-      <TextLink href={listUrl}>
-        목록으로 돌아가기 <Arrow />
-      </TextLink>
     </article>
   );
 }

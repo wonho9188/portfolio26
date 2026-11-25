@@ -15,9 +15,6 @@ export function MainWork() {
         label="01 / SELECTED WORK"
         title="Main Work"
         subtitle="생각을 설계하고, 현실에서 작동하게."
-        description={
-          "제품의 시작부터 운영까지, 로봇의 움직임부터 교육 현장까지.\n실제로 만들어 연결해온 주요 작업을 소개합니다."
-        }
       />
       <nav className="section-jumps" aria-label="작업 섹션">
         {mainWork.map((p, i) => (
@@ -61,9 +58,6 @@ export function SideWork() {
         label="02 / PROJECT ARCHIVE"
         title="Side Work"
         subtitle="함께 만들고, 직접 부딪혀본 기록."
-        description={
-          "팀 프로젝트와 프리랜서 작업, 작은 도구와 실험까지.\n서로 다른 문제를 풀며 넓혀온 개발 경험을 모았습니다."
-        }
       />
       <section>
         <p className="eyebrow">PROJECTS & COLLABORATIONS</p>
@@ -123,9 +117,6 @@ export function Utilities() {
         label="03 / DESIGN & COMMUNICATION"
         title="Utilities"
         subtitle="구조를 읽고, 경험을 다듬습니다."
-        description={
-          "사용성을 배려한 앱 설계와 복잡한 구조를 설명하는 슬라이드.\n디자이너의 경험으로 개발 과정과 커뮤니케이션을 돕습니다."
-        }
       />
       <div className="utility-details">
         {utilities.map((u, i) => (

@@ -64,15 +64,13 @@ export function PageHeading({
   label,
   title,
   subtitle,
-  description,
 }: {
   label: string;
   title: string;
   subtitle: string;
-  description: string;
 }) {
   return (
-    <div className="page-heading">
+    <header className="page-heading page-heading--overview">
       <div className="breadcrumbs">
         <TextLink href="/">← Home</TextLink>
         <p className="eyebrow">{label}</p>
@@ -82,8 +80,7 @@ export function PageHeading({
         <span className="accent">.</span>
       </h1>
       <p className="page-subtitle">{subtitle}</p>
-      <p className="lead preserve-lines">{description}</p>
-    </div>
+    </header>
   );
 }
 export function scrollTo(id: string) {

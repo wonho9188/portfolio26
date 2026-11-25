@@ -320,6 +320,7 @@ export const mathTopic = {
   label: "수학",
   title: "수학",
 };
+export const aiMastersTopicId = "ai-masters";
 export function getTopicPosts(
   kind: Post["kind"],
   group: string,
@@ -342,11 +343,12 @@ export const techGroups = [
   [designTopic.id, designTopic.label, designTopic.title],
   [roboticsTopic.id, roboticsTopic.label, roboticsTopic.title],
   [mathTopic.id, mathTopic.label, mathTopic.title],
-  ["ai-masters", "인공지능 대학원(석사)", "인공지능 대학원(석사)"],
+  [aiMastersTopicId, "인공지능 대학원(석사)", "인공지능 대학원(석사)"],
 ];
 export const lifeGroups = [
   ["films", "영화·이야기", "영화와 이야기"],
   ["reading", "독서", "책으로 읽는 세상"],
-  ["thoughts", "생각", "삶을 돌아보는 질문들"],
+  ["thoughts", "철학", "철학"],
+  ["personal-thoughts", "나의 생각", "나의 생각"],
   ["activities", "활동", "만들고, 그리고, 연주하며"],
 ];

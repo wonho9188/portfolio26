@@ -12,6 +12,16 @@ for (const width of [320, 1440]) {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     for (const post of source.posts.filter((p) => p.kind === "tech")) {
+      const usesGraduateSidebar = post.group === "ai-masters";
+      const hasChildren = source.posts.some(
+        (child) => "parentSlug" in child && child.parentSlug === post.slug,
+      );
+      if (usesGraduateSidebar && hasChildren) continue;
+      const articleHeading = page.getByRole("heading", {
+        name: post.title,
+        exact: true,
+        level: usesGraduateSidebar ? 2 : 1,
+      });
       const slides = getLessonSlides(post as Post);
       expect(slides.flatMap((s) => s.p)).toEqual([
         ...post.sections.flatMap((s) => [
@@ -26,10 +36,7 @@ for (const width of [320, 1440]) {
           : `./#/blog?topic=${post.group}`;
         await page.goto(indexUrl);
         await page.getByRole("link", { name: post.title, exact: true }).click();
-        await expect(page.locator("h1")).toHaveText(post.title);
-        const hasChildren = source.posts.some(
-          (child) => "parentSlug" in child && child.parentSlug === post.slug,
-        );
+        await expect(articleHeading).toBeVisible();
         if (hasChildren) {
           await expect(
             page.getByRole("navigation", { name: `${post.title} 글 목록` }),
@@ -38,7 +45,7 @@ for (const width of [320, 1440]) {
           await expect(page.locator(".draft-notice")).toContainText("작성 예정");
         }
         await page.goto(`./#/blog/${post.slug}?screen=2`);
-        await expect(page.locator("h1")).toHaveText(post.title);
+        await expect(articleHeading).toBeVisible();
         await expect(page.locator(".article-body > section")).toHaveCount(0);
         await expect(page.locator(".lesson-navigation")).toHaveCount(0);
         continue;
@@ -46,8 +53,11 @@ for (const width of [320, 1440]) {
       for (const [index, slide] of slides.entries()) {
         await page.goto(`./#/blog/${post.slug}?screen=${index + 1}`);
         await expect(page.locator(".article-body > section")).toHaveCount(1);
-        await expect(page.locator("h1")).toHaveText(post.title);
-        await expect(page.locator(".article-body > section > h2")).toHaveText(
+        await expect(articleHeading).toBeVisible();
+        const sectionHeading = usesGraduateSidebar ? "h3" : "h2";
+        await expect(
+          page.locator(`.article-body > section > ${sectionHeading}`),
+        ).toHaveText(
           `${String(index + 1).padStart(2, "0")} / ${slide.title}`,
         );
         await expect(page.locator(".lesson-navigation .meta")).toHaveText(
@@ -76,7 +86,13 @@ for (const width of [320, 1440]) {
       await expect(
         page.getByRole("button", { name: "다음 화면 →", exact: true }),
       ).toBeDisabled();
-      await expect(page.locator(".article-pagination")).toBeVisible();
+      if (usesGraduateSidebar) {
+        await expect(
+          page.getByRole("navigation", { name: "대학원 과목" }),
+        ).toBeVisible();
+      } else {
+        await expect(page.locator(".article-pagination")).toBeVisible();
+      }
     }
     expect(errors).toEqual([]);
   });
